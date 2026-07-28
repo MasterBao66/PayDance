@@ -23,7 +23,7 @@
     "verify:metadata": "npm run version:check && npm run check:hygiene && npm run format:check && npx vitest run scripts/repository-metadata.test.js scripts/verify-scripts.test.js scripts/ci-change-scope.test.js scripts/ci-workflow.test.js scripts/source-header.test.js scripts/build-latest-json.test.js scripts/assert-build-target.test.js scripts/web-seo.test.js && git diff --check",
     "verify:push": "node scripts/push-workflow.mjs --verify-only",
     "push:main": "node scripts/push-workflow.mjs",
-    "verify:release": "npm run verify:fast && npm run version:check && npm run release:check && npm audit --omit=dev && cd src-tauri && cargo fmt --all -- --check && cargo check && cargo clippy --all-targets -- -D warnings && cargo test && cargo audit && cargo deny check",
+    "verify:release": "npm run verify:fast && npm run version:check && npm run release:check && npm audit --audit-level=high && cd src-tauri && cargo fmt --all -- --check && cargo check && cargo clippy --all-targets -- -D warnings && cargo test && cargo audit && cargo deny check",
     "verify:release:record": "npm run verify:release && node scripts/verification-evidence.mjs write verify:release",
     "release:publish": "node scripts/release-workflow.mjs",
     "qa:web-preview": "node scripts/qa-web-preview.mjs",
@@ -71,5 +71,8 @@
     "vite": "^8.0.14",
     "vitest": "^4.1.7",
     "vue-tsc": "^3.3.2"
+  },
+  "overrides": {
+    "brace-expansion": "^5.0.8"
   }
 }

@@ -60,8 +60,16 @@ describe("verification scripts", () => {
       "node scripts/assert-build-boundary.mjs desktop",
     );
 
+    const releaseCommands = packageJson.scripts["verify:release"]
+      .split("&&")
+      .map((command) => command.trim());
+
     expect(packageJson.scripts["verify:release"]).toContain("npm run version:check");
-    expect(packageJson.scripts["verify:release"]).toContain("npm audit --omit=dev");
+    expect(releaseCommands).toContain("npm audit --audit-level=high");
+    expect(releaseCommands).not.toContain("npm audit --omit=dev");
+    expect(packageJson.scripts["verify:release"]).not.toMatch(
+      /\bnpm audit\b[^&]*(?:--omit(?:=|\s+)dev)\b/,
+    );
     expect(packageJson.scripts["verify:release"]).toContain("cargo fmt --all -- --check");
     expect(packageJson.scripts["verify:release"]).toContain(
       "cargo clippy --all-targets -- -D warnings",

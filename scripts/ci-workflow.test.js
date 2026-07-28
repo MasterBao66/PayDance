@@ -83,6 +83,13 @@ describe("CI workflow routing", () => {
     expect(ciWorkflow).toContain("Upload Web Preview QA evidence");
     expect(ciWorkflow).toContain("Security audit");
     expect(ciWorkflow).toContain("if: needs.changes.outputs.requires_security == 'true'");
+    expect(ciWorkflow).toMatch(
+      /- name: Audit all npm dependencies\r?\n\s+run: npm audit --audit-level=high(?:\r?\n|$)/,
+    );
+    expect(ciWorkflow).not.toMatch(
+      /\bnpm audit\b[^\r\n]*(?:--omit(?:=|\s+)dev)\b/,
+    );
+    expect(ciWorkflow).not.toMatch(/\bNPM_CONFIG_OMIT:\s*dev\b/);
     expect(ciWorkflow).toContain("name: Rust checks");
     expect(ciWorkflow).toContain("if: needs.changes.outputs.requires_rust == 'true'");
     expect(ciWorkflow).toContain("Run Rust tests");

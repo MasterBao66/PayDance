@@ -18,7 +18,7 @@ Select the checks relevant to your change. Explain why an item is not applicable
 
 - [ ] `npm run verify:metadata`
 - [ ] `npm run verify:fast`
-- [ ] `npm audit --omit=dev`
+- [ ] `npm audit --audit-level=high`
 - [ ] `Push-Location src-tauri; cargo fmt --all -- --check; cargo check; cargo clippy --all-targets -- -D warnings; cargo audit --deny warnings; cargo deny check --hide-inclusion-graph; Pop-Location`
 - [ ] `npm run qa:web-preview`
 - [ ] Windows 桌面端人工冒烟 / Windows desktop manual smoke test
