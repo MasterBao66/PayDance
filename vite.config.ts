@@ -3,7 +3,7 @@
 //
 // Additional terms: see /legal/ADDITIONAL_TERMS.md
 
-import { defineConfig } from "vite";
+import { defineConfig } from "vitest/config";
 import vue from "@vitejs/plugin-vue";
 import tailwindcss from "@tailwindcss/vite";
 import { readFileSync } from "node:fs";
@@ -92,6 +92,16 @@ export default defineConfig(({ mode }) => {
       watch: {
         ignored: ["**/src-tauri/target/**"],
       },
+    },
+    test: {
+      // 白名单而非黑名单：只发现仓库自身的测试。
+      // 根目录下的 git worktree 与临时 clone（.worktrees/、tmp/）都带着各自的
+      // *.test.* 文件，vitest 不读 .gitignore，靠 exclude 补漏永远补不完。
+      include: [
+        "src/**/*.test.{ts,js}",
+        "scripts/**/*.test.{ts,js}",
+        "src-tauri/*.test.{ts,js}",
+      ],
     },
   };
 });

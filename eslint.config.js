@@ -12,6 +12,8 @@ import tseslint from "typescript-eslint";
 
 export default [
   {
+    // ESLint 不读 .gitignore，根目录下的构建产物、临时 clone 与 git worktree
+    // 会被一并 lint，需要在这里与 .gitignore 保持一致。
     ignores: [
       "dist/**",
       "node_modules/**",
@@ -20,6 +22,11 @@ export default [
       "src-tauri/gen/**",
       ".tools/**",
       ".claude/**",
+      ".playwright-cli/**",
+      ".vercel/**",
+      ".worktrees/**",
+      "output/**",
+      "tmp/**",
     ],
   },
   js.configs.recommended,

@@ -15,3 +15,11 @@ release-assets/
 .worktrees/
 paydance-updater-key
 paydance-updater-key.pub
+
+# 两者现已移出工作区，保留锚定规则作为再次落盘时的兜底：
+# 软著申请材料含真实姓名、住址与身份证号，FenCun 是另一个项目的嵌套 git 仓库。
+/软著申请材料/
+/FenCun/
+
+# AI 施工计划与设计稿只在本地留存，不进仓库
+/docs/superpowers/
