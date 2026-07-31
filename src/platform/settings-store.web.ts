@@ -6,6 +6,7 @@
 import type { ThemeMode } from "../lib/window-mode";
 
 export type SettingsStoreAdapter = {
+  delete?: (key: string) => Promise<void>;
   get: <Value>(key: string) => Promise<Value | undefined>;
   save: () => Promise<void>;
   set: (key: string, value: unknown) => Promise<void>;
@@ -38,6 +39,11 @@ export const createBrowserSettingsStore = (
   let state = readBrowserState(storageKey);
 
   return {
+    async delete(key: string) {
+      const nextState = { ...state };
+      delete nextState[key];
+      state = nextState;
+    },
     async get<Value>(key: string) {
       return state[key] as Value | undefined;
     },

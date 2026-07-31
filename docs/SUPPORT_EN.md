@@ -20,7 +20,7 @@ If you only want to confirm how a feature should work, search [GitHub Issues](ht
 
 Please use the Bug Report form when possible, and include:
 
-- Application version, for example `v0.9.7`
+- Application version, for example `v0.9.8`
 - System environment, for example Windows 11 23H2
 - Stable reproduction steps, or the approximate trigger
 - Expected behavior and actual behavior

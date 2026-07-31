@@ -47,7 +47,7 @@
 | &nbsp; | 入口 | 说明 |
 |:---:|:---:|:---:|
 | 🌐 | **[在线体验](https://paydance.vercel.app/)** | 网页端，含所有核心功能 |
-| ⬇️ | **[Windows 桌面版](https://github.com/MrBaoboer/PayDance/releases/latest/download/pay-dance-v0.9.7-windows-x64.exe)** | 便携 EXE，含托盘、置顶、迷你悬浮、开机自启动等完整能力 |
+| ⬇️ | **[Windows 桌面版](https://github.com/MrBaoboer/PayDance/releases/latest/download/pay-dance-v0.9.8-windows-x64.exe)** | 便携 EXE，含托盘、置顶、迷你悬浮、开机自启动等完整能力 |
 
 </div>
 

@@ -34,7 +34,8 @@ export function useAppShell({
   appWindow: ShellWindow;
   applyThemeMode: (mode: ThemeMode, options?: { persist?: boolean }) => Promise<void>;
   applyWindowMode: () => Promise<void>;
-  captureWindowPosition?: () => Promise<void>;
+  // Resolves false when the position was rejected (for example a minimized window).
+  captureWindowPosition?: () => Promise<unknown>;
   fullSize: Ref<WindowSize>;
   hasCompletedOnboarding: Ref<boolean>;
   isMiniMode: Ref<boolean>;

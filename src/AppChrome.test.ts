@@ -101,4 +101,41 @@ describe("app chrome", () => {
     expect(windowPositionRecoverySource).toContain("miniPosition");
     expect(desktopAppSource).toContain("recordWindowPosition(position)");
   });
+
+  // Windows reports (-32000, -32000) for a minimized window. Persisting that stranded the
+  // window offscreen, and every recovery path went through a show() that cannot unminimize.
+  it("never persists a minimized window position and can always recover the window", () => {
+    // The move listener must drop the sentinel instead of scheduling a save for it.
+    expect(desktopAppSource).toContain(
+      "if (!windowPosition.recordWindowPosition(position)) return;",
+    );
+    expect(windowPositionRecoverySource).toContain("sanitizeWindowPosition");
+    expect(windowPositionRecoverySource).toContain("isWindowMinimized");
+    expect(windowPositionRecoverySource).toContain("ensureWindowOnScreen");
+
+    // Showing the window again must re-check that it is actually reachable.
+    expect(windowLifecycleSource).toContain("windowShownEventName");
+    expect(windowLifecycleSource).toContain("ensureWindowOnScreen()");
+
+    // A minimized window reports a collapsed client area; saving it would shrink the window.
+    expect(windowLifecycleSource).toContain("if (await isWindowMinimized()) return;");
+
+    // Startup must not be abandoned midway, or the ticker and tray actions never register.
+    expect(desktopAppSource).toContain("applyWindowMode().catch(() => undefined)");
+
+    // show() is SW_SHOW and leaves a minimized window minimized.
+    const traySource = readFileSync(
+      new URL("../src-tauri/src/tray.rs", import.meta.url),
+      "utf8",
+    );
+    const showWindow = traySource.slice(
+      traySource.indexOf("pub(crate) fn show_window"),
+      traySource.indexOf("fn dispatch_tray_action"),
+    );
+    expect(showWindow).toContain("window.unminimize()");
+    expect(showWindow).toContain("WINDOW_SHOWN_EVENT");
+    expect(showWindow.indexOf("window.unminimize()")).toBeLessThan(
+      showWindow.indexOf("window.show()"),
+    );
+  });
 });

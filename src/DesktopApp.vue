@@ -209,6 +209,7 @@ const startResize = async (direction: ResizeDirection) => {
 const { clearWindowLifecycleTimers, registerWindowLifecycle } = useAppWindowLifecycle(
   appWindow,
   {
+    ensureWindowOnScreen: windowPosition.ensureWindowOnScreen,
     fullSize,
     isMiniMode,
     isSettingsReady,
@@ -233,7 +234,9 @@ onMounted(async () => {
   miniPosition.value = windowPreferences.miniPosition;
   await refreshAutostart();
   await applyThemeMode(themeMode.value, { persist: false });
-  await applyWindowMode();
+  // Never let a window call abort the rest of startup: the listeners, tray actions and ticker
+  // registered below are what keep the app usable and let tray Quit exit the process at all.
+  await applyWindowMode().catch(() => undefined);
   await windowPosition.restoreWindowPosition().catch(() => undefined);
 
   unlisteners.push(
@@ -246,7 +249,8 @@ onMounted(async () => {
       }
     }),
     await appWindow.onMoved(({ payload: position }) => {
-      windowPosition.recordWindowPosition(position);
+      // A minimize reports the sentinel position; recording it would persist a lost window.
+      if (!windowPosition.recordWindowPosition(position)) return;
       scheduleSaveState();
     }),
     ...(await registerWindowLifecycle()),

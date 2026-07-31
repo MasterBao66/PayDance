@@ -13,6 +13,7 @@ use tauri::{
 const TRAY_OPEN_SETTINGS_EVENT: &str = "tray-open-settings";
 const TRAY_TOGGLE_ALWAYS_ON_TOP_EVENT: &str = "tray-toggle-always-on-top";
 const TRAY_TOGGLE_MINI_MODE_EVENT: &str = "tray-toggle-mini-mode";
+const WINDOW_SHOWN_EVENT: &str = "window-shown";
 
 struct TrayState {
     handle: Mutex<Option<tauri::tray::TrayIcon>>,
@@ -90,8 +91,14 @@ fn build_tray_menu(
 }
 
 pub(crate) fn show_window(window: &WebviewWindow) {
+    // Windows parks a minimized window at (-32000, -32000) and `show()` maps to SW_SHOW, which
+    // leaves it minimized. Every recovery path (tray menu, tray click, second launch) funnels
+    // through here, so unminimize first or none of them can bring the window back.
+    let _ = window.unminimize();
     let _ = window.show();
     let _ = window.set_focus();
+    // Let the frontend re-check that the window really landed somewhere reachable.
+    let _ = window.emit(WINDOW_SHOWN_EVENT, ());
 }
 
 fn dispatch_tray_action(window: &WebviewWindow, action: TrayAction) {

@@ -12,6 +12,8 @@
     "core:window:allow-close",
     "core:window:allow-hide",
     "core:window:allow-minimize",
+    "core:window:allow-is-minimized",
+    "core:window:allow-unminimize",
     "core:window:allow-inner-position",
     "core:window:allow-inner-size",
     "core:window:allow-outer-position",
@@ -31,6 +33,7 @@
       "identifier": "opener:allow-open-url",
       "allow": [{ "url": "https://github.com/MrBaoboer/PayDance" }]
     },
+    "store:allow-delete",
     "store:allow-get",
     "store:allow-get-store",
     "store:allow-load",

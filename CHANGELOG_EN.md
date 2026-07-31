@@ -8,6 +8,13 @@ Build artifacts and verification files are available in [GitHub Releases](https:
 
 ## Unreleased
 
+### v0.9.8
+
+- **Fixed the window disappearing after a full-screen game**: Windows parks a minimized window at the sentinel position `-32000, -32000` and reports it verbatim through the window move event. That coordinate was being treated as a real position and written to `salary-settings.json`, leaving the window stranded offscreen and invisible on the desktop. The move event, the position capture, and the settings write now all reject it, and a coordinate poisoned by an older build is cleared on the next save.
+- **The tray and a second launch can always bring the window back**: `show()` does not un-minimize on Windows, so the tray menu, a tray left-click, and re-running the app all failed to recover a window a full-screen game had minimized. All three paths now un-minimize first and re-check that the window really lands inside a visible monitor work area. A window that is already partly visible is left exactly where the user put it.
+- **Window size no longer shrinks after minimizing**: minimizing collapses the window client area, and that size was being recorded and saved, so the window came back at its minimum size. Minimized and zero-size states are no longer persisted.
+- **Hardened settings against corrupt values**: window sizes now reject `NaN`, `Infinity`, and non-numeric content and are capped at a sane maximum, while coordinates also reject non-finite values and absurd magnitudes. A failure while applying the window mode at startup no longer aborts the rest of initialization, so the ticker, tray actions, and exit-save always register.
+- **Regression tests**: added coverage for the minimize sentinel, corrupt sizes, offscreen recovery, and tray un-minimize. None of these write paths had any test before.
 - **Website demo mode**: Web Preview now opens directly into the full wage dashboard with neutral demo salary, schedule, and preference defaults plus all seven workdays selected, without overwriting existing browser settings.
 - **Onboarding remains available**: Web Preview Settings now includes a First-time setup action that reopens the existing three-step flow; Windows desktop first-run behavior is unchanged.
 

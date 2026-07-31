@@ -4,6 +4,7 @@
 // Additional terms: see /legal/ADDITIONAL_TERMS.md
 
 import type { Ref } from "vue";
+import { windowShownEventName } from "../lib/app-events";
 import {
   normalizeFullSize,
   normalizeMiniOpacityPercent,
@@ -15,6 +16,7 @@ type UnlistenFn = () => void;
 
 type LifecycleWindow = {
   hide: () => Promise<void>;
+  isMinimized?: () => Promise<boolean>;
   listen: <T>(
     event: string,
     handler: (event: { payload: T }) => void,
@@ -28,6 +30,7 @@ type LifecycleWindow = {
 export function useAppWindowLifecycle(
   appWindow: LifecycleWindow,
   {
+    ensureWindowOnScreen = async () => false,
     fullSize,
     isMiniMode,
     isSettingsReady,
@@ -35,6 +38,7 @@ export function useAppWindowLifecycle(
     saveStateNow,
     updateMiniOpacityPercent,
   }: {
+    ensureWindowOnScreen?: () => Promise<boolean>;
     fullSize: Ref<WindowSize>;
     isMiniMode: Ref<boolean>;
     isSettingsReady: Ref<boolean>;
@@ -44,6 +48,31 @@ export function useAppWindowLifecycle(
   },
 ) {
   let saveWindowSizeTimer = 0;
+
+  const isWindowMinimized = async () => {
+    try {
+      return (await appWindow.isMinimized?.()) === true;
+    } catch {
+      return false;
+    }
+  };
+
+  // Windows resizes a minimized window's client area to nothing before parking it offscreen.
+  // Persisting that would silently shrink the saved window size to its minimum, so skip it.
+  const persistWindowSize = async () => {
+    if (await isWindowMinimized()) return;
+
+    const size = { width: window.innerWidth, height: window.innerHeight };
+    if (size.width <= 0 || size.height <= 0) return;
+
+    if (isMiniMode.value) {
+      miniSize.value = normalizeMiniSize(size);
+    } else {
+      fullSize.value = normalizeFullSize(size);
+    }
+
+    await saveStateNow();
+  };
 
   const registerWindowLifecycle = async () => {
     const unlisteners: UnlistenFn[] = [];
@@ -66,23 +95,24 @@ export function useAppWindowLifecycle(
       ),
     );
 
+    // The Rust side shows the window from the tray, a tray click, or a second launch. Any of
+    // those can surface a window that a full-screen app left minimized and parked offscreen,
+    // so re-check reachability every time instead of only at startup.
+    unlisteners.push(
+      await appWindow.listen(windowShownEventName, () => {
+        void ensureWindowOnScreen().then((moved) => {
+          if (moved) return saveStateNow();
+        });
+      }),
+    );
+
     unlisteners.push(
       await appWindow.onResized(() => {
         if (!isSettingsReady.value) return;
 
         window.clearTimeout(saveWindowSizeTimer);
         saveWindowSizeTimer = window.setTimeout(() => {
-          const size = {
-            width: window.innerWidth,
-            height: window.innerHeight,
-          };
-
-          if (isMiniMode.value) {
-            miniSize.value = normalizeMiniSize(size);
-          } else {
-            fullSize.value = normalizeFullSize(size);
-          }
-          void saveStateNow();
+          void persistWindowSize();
         }, 180);
       }),
     );

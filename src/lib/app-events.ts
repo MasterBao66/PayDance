@@ -8,3 +8,6 @@ export const trayEventNames = {
   toggleAlwaysOnTop: "tray-toggle-always-on-top",
   toggleMiniMode: "tray-toggle-mini-mode",
 } as const;
+
+// Emitted by the Rust side every time the window is shown from the tray or a second launch.
+export const windowShownEventName = "window-shown";

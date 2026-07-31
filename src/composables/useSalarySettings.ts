@@ -6,6 +6,7 @@
 import { ref } from "vue";
 import {
   resolveWindowPreferences,
+  sanitizeWindowPosition,
   type ThemeMode,
   type WindowPosition,
   type WindowSize,
@@ -74,6 +75,22 @@ export function useSalarySettings(
     amountMode.value = "rolling";
     locale.value = "zh-CN";
     hasCompletedOnboarding.value = false;
+  };
+
+  const persistWindowPosition = async (
+    store: SettingsStoreAdapter,
+    key: string,
+    position: WindowPosition | undefined,
+  ) => {
+    const usablePosition = sanitizeWindowPosition(position);
+    if (usablePosition) {
+      await store.set(key, usablePosition);
+      return;
+    }
+
+    // Nothing worth keeping: also clears a value an older build poisoned with the
+    // minimize sentinel, so the settings file stops advertising a lost window.
+    await store.delete?.(key);
   };
 
   const persistRecoveredConfig = async (
@@ -221,12 +238,10 @@ export function useSalarySettings(
       await store.set(settingsStoreKeys.locale, locale.value);
       await store.set(settingsStoreKeys.miniSize, miniSize);
       await store.set(settingsStoreKeys.miniOpacityPercent, miniOpacityPercent);
-      if (mainPosition) {
-        await store.set(settingsStoreKeys.mainPosition, mainPosition);
-      }
-      if (miniPosition) {
-        await store.set(settingsStoreKeys.miniPosition, miniPosition);
-      }
+      // Last gate before disk: never let a minimize sentinel or corrupt coordinate land in the
+      // settings file, and clear a value poisoned by an older build so it stops being visible.
+      await persistWindowPosition(store, settingsStoreKeys.mainPosition, mainPosition);
+      await persistWindowPosition(store, settingsStoreKeys.miniPosition, miniPosition);
       await store.set(
         settingsStoreKeys.hasCompletedOnboarding,
         hasCompletedOnboarding.value,

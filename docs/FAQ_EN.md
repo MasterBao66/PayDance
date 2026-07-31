@@ -30,7 +30,7 @@ Use the [Web Preview](https://paydance.vercel.app/) if you want to try the core 
 
 ### Which Windows file should I download?
 
-Download `pay-dance-v0.9.7-windows-x64.exe` from the [latest Release](https://github.com/MrBaoboer/PayDance/releases/latest). The Release page also includes a SHA256 checksum file so you can verify the download.
+Download `pay-dance-v0.9.8-windows-x64.exe` from the [latest Release](https://github.com/MrBaoboer/PayDance/releases/latest). The Release page also includes a SHA256 checksum file so you can verify the download.
 
 ### Why a portable EXE instead of an installer?
 
