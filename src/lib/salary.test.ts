@@ -365,10 +365,10 @@ describe("createWorkSpans", () => {
 });
 
 describe("validateSalaryConfig", () => {
-  it("uses the v0.5 first-launch defaults", () => {
+  it("uses the current first-launch defaults", () => {
     expect(defaultSalaryConfig).toMatchObject({
       salaryType: "monthly",
-      monthlySalary: 8000,
+      monthlySalary: 10_000,
       dailySalary: 360,
       hourlyRate: 45,
       workDaysPerMonth: 22,

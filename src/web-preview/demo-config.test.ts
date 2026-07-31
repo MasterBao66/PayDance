@@ -39,7 +39,8 @@ describe("Web Preview demo config", () => {
     });
     expect(config.workdays).not.toBe(defaultSalaryConfig.workdays);
     expect(defaultSalaryConfig.workdays).toEqual([1, 2, 3, 4, 5]);
-    expect(defaultSalaryConfig.monthlySalary).toBe(8000);
+    // Matches the demo value on purpose; workdays and times below stay the mutation canaries.
+    expect(defaultSalaryConfig.monthlySalary).toBe(10_000);
     expect(defaultSalaryConfig.startTime).toBe("09:30");
     expect(defaultSalaryConfig.endTime).toBe("18:30");
   });

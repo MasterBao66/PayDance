@@ -49,7 +49,7 @@ export type SalaryConfigIssue = {
 
 export const defaultSalaryConfig: SalaryConfig = {
   salaryType: "monthly",
-  monthlySalary: 8000,
+  monthlySalary: 10000,
   dailySalary: 360,
   hourlyRate: 45,
   workDaysPerMonth: 22,
