@@ -4,6 +4,7 @@
 // Additional terms: see /legal/ADDITIONAL_TERMS.md
 
 import { describe, expect, it } from "vitest";
+import { settingsSchemaVersion } from "./settings-migration";
 import {
   currentSettingsSchemaVersion,
   defaultMiniOpacityPercent,
@@ -24,6 +25,7 @@ import {
   resolveVisibleWindowPosition,
   resolveWindowPreferences,
   sanitizeWindowPosition,
+  windowSettingsSchemaVersion,
 } from "./window-mode";
 
 describe("window mode preferences", () => {
@@ -164,6 +166,33 @@ describe("window mode preferences", () => {
         workAreas: [{ x: 0, y: 0, width: 1_920, height: 1_080 }],
       }),
     ).toEqual({ x: 80, y: 80 });
+  });
+});
+
+describe("window settings schema gate", () => {
+  it("stays at or below the shared settings schema version it is compared against", () => {
+    // resolveWindowPreferences gates on `savedSettingsVersion >= windowSettingsSchemaVersion`,
+    // but the stored `settingsVersion` key only ever holds settingsSchemaVersion. If this gate
+    // ever exceeded that value it would fail for every install and reset all window sizes.
+    expect(windowSettingsSchemaVersion).toBeLessThanOrEqual(settingsSchemaVersion);
+  });
+
+  it("discards window sizes saved before the gate version", () => {
+    const preferences = resolveWindowPreferences({
+      savedFullSize: { width: 720, height: 540 },
+      savedSettingsVersion: windowSettingsSchemaVersion - 1,
+    });
+
+    expect(preferences.fullSize).toEqual(fullWindowSize);
+  });
+
+  it("keeps window sizes for every version the app actually writes", () => {
+    const preferences = resolveWindowPreferences({
+      savedFullSize: { width: 720, height: 540 },
+      savedSettingsVersion: settingsSchemaVersion,
+    });
+
+    expect(preferences.fullSize).toEqual({ width: 720, height: 540 });
   });
 });
 

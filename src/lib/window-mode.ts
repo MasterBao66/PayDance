@@ -20,6 +20,11 @@ export type WindowWorkArea = WindowPosition &
     scaleFactor?: number;
   };
 
+// Gate for discarding window sizes saved before the v0.4 compact mini layout. It is compared
+// against the shared `settingsVersion` store key, which is written with settingsSchemaVersion
+// from settings-migration.ts — a different, higher counter. Raising this above that counter
+// would make the gate fail for every existing install and silently reset everyone's window
+// sizes, so window-mode.test.ts asserts the two stay ordered.
 export const windowSettingsSchemaVersion = 2;
 export const currentSettingsSchemaVersion = windowSettingsSchemaVersion;
 

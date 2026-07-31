@@ -12,6 +12,7 @@ import {
 } from "../lib/window-mode";
 
 const storeMocks = {
+  delete: vi.fn(),
   get: vi.fn(),
   save: vi.fn(),
   set: vi.fn(),
@@ -21,6 +22,7 @@ const createMockStore = () => Promise.resolve(storeMocks);
 
 describe("useSalarySettings", () => {
   beforeEach(() => {
+    storeMocks.delete.mockReset();
     storeMocks.get.mockReset();
     storeMocks.set.mockReset();
     storeMocks.save.mockReset();
@@ -168,5 +170,41 @@ describe("useSalarySettings", () => {
     });
 
     expect(storeMocks.get).toHaveBeenCalledWith("config");
+  });
+
+  // A build before v0.9.8 could store the Windows minimize sentinel as a window position.
+  it("clears a stored minimize sentinel position while loading", async () => {
+    storeMocks.get.mockImplementation(async (key: string) =>
+      key === "mainPosition" || key === "miniPosition"
+        ? { x: -32_000, y: -32_000 }
+        : undefined,
+    );
+
+    const { loadSettings } = await import("./useSalarySettings").then((module) =>
+      module.useSalarySettings(createMockStore),
+    );
+
+    const windowPreferences = await loadSettings();
+
+    expect(storeMocks.delete).toHaveBeenCalledWith("mainPosition");
+    expect(storeMocks.delete).toHaveBeenCalledWith("miniPosition");
+    expect(storeMocks.save).toHaveBeenCalled();
+    expect(windowPreferences.mainPosition).toBeUndefined();
+    expect(windowPreferences.miniPosition).toBeUndefined();
+  });
+
+  it("keeps a usable stored position untouched while loading", async () => {
+    storeMocks.get.mockImplementation(async (key: string) =>
+      key === "mainPosition" ? { x: 320, y: 200 } : undefined,
+    );
+
+    const { loadSettings } = await import("./useSalarySettings").then((module) =>
+      module.useSalarySettings(createMockStore),
+    );
+
+    const windowPreferences = await loadSettings();
+
+    expect(storeMocks.delete).not.toHaveBeenCalled();
+    expect(windowPreferences.mainPosition).toEqual({ x: 320, y: 200 });
   });
 });

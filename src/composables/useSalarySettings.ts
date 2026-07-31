@@ -93,6 +93,22 @@ export function useSalarySettings(
     await store.delete?.(key);
   };
 
+  // Clears a stored position an older build poisoned with the Windows minimize sentinel.
+  // Doing it at load makes the repair deterministic: waiting for the next save would leave
+  // the bad value visible in salary-settings.json until the user happened to move the window.
+  const purgeUnusableWindowPosition = async (
+    store: SettingsStoreAdapter,
+    key: string,
+    savedPosition: unknown,
+  ) => {
+    if (savedPosition === undefined || sanitizeWindowPosition(savedPosition))
+      return false;
+
+    await store.delete?.(key);
+
+    return true;
+  };
+
   const persistRecoveredConfig = async (
     store: SettingsStoreAdapter,
     recoveredConfig: SalaryConfig,
@@ -190,6 +206,26 @@ export function useSalarySettings(
 
       const savedLocale = await store.get<string>(settingsStoreKeys.locale);
       locale.value = detectLocale(savedLocale);
+
+      try {
+        const purged = [
+          await purgeUnusableWindowPosition(
+            store,
+            settingsStoreKeys.mainPosition,
+            savedMainPosition,
+          ),
+          await purgeUnusableWindowPosition(
+            store,
+            settingsStoreKeys.miniPosition,
+            savedMiniPosition,
+          ),
+        ].some(Boolean);
+
+        if (purged) await store.save();
+      } catch (error) {
+        // A failed cleanup must not cost the user their settings; the value is inert anyway.
+        console.error("Failed to clear an unusable stored window position", error);
+      }
 
       return resolveWindowPreferences({
         savedIsMiniMode,
