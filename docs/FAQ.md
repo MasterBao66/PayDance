@@ -30,7 +30,7 @@
 
 ### Windows 桌面版下载哪个文件？
 
-从 [最新 Release](https://github.com/MrBaoboer/PayDance/releases/latest) 下载 `pay-dance-v0.9.8-windows-x64.exe`。Release 页面同时提供 SHA256 校验文件，可用于验证下载完整性。
+从 [最新 Release](https://github.com/MrBaoboer/PayDance/releases/latest) 下载 `pay-dance-v0.9.9-windows-x64.exe`。Release 页面同时提供 SHA256 校验文件，可用于验证下载完整性。
 
 ### 为什么是便携 EXE，而不是安装包？
 
