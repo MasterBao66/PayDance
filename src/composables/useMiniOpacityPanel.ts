@@ -19,6 +19,7 @@ import {
   type MiniOpacityRect,
 } from "../lib/mini-opacity-position";
 import type { ThemeMode } from "../lib/window-mode";
+import type { Locale } from "./useI18n";
 
 type MiniOpacityHostWindow = {
   innerPosition: () => Promise<{ x: number; y: number }>;
@@ -51,6 +52,7 @@ export function useMiniOpacityPanel(
   appWindow: MiniOpacityHostWindow,
   miniOpacityPercent: Ref<number>,
   themeMode: Ref<ThemeMode>,
+  locale: Ref<Locale>,
 ) {
   const resolveMiniOpacityPanelPlacement = async (opacityWindow: WebviewWindow) => {
     await opacityWindow.setSize(
@@ -117,9 +119,13 @@ export function useMiniOpacityPanel(
     }
 
     await opacityWindow.setPosition(new PhysicalPosition(position.x, position.y));
+    // The companion window shares index.html but never loads settings of its own: its startup
+    // bails out before the store is read, so without the locale in this payload it would be
+    // stuck on the zh-CN default no matter what the user picked.
     await opacityWindow.emit("mini-opacity-panel-open", {
       value: miniOpacityPercent.value,
       themeMode: themeMode.value,
+      locale: locale.value,
     });
     await opacityWindow.show();
     await opacityWindow.setFocus();

@@ -13,6 +13,7 @@ import {
 } from "../composables/useI18n";
 import type { UpdaterStatus } from "#updater";
 import type { Messages } from "../i18n/types";
+import CurrencySymbolField from "./settings/CurrencySymbolField.vue";
 import LunchBreakFields from "./settings/LunchBreakFields.vue";
 import SalaryAmountFields from "./settings/SalaryAmountFields.vue";
 import SalaryModeControl from "./settings/SalaryModeControl.vue";
@@ -32,6 +33,7 @@ const props = withDefaults(
     autostartEnabled: boolean;
     autostartError: string;
     config: SalaryConfig;
+    currencySymbol: string;
     firstIssue: string;
     hasIssue: (field: SalaryConfigIssue["field"]) => boolean;
     isAutostartUpdating: boolean;
@@ -52,6 +54,7 @@ const emit = defineEmits<{
   "update:autostartEnabled": [enabled: boolean];
   "update:amountMode": [mode: "rolling" | "plain"];
   "update:config": [config: SalaryConfig];
+  "update:currencySymbol": [symbol: string];
   "update:locale": [locale: Locale];
 }>();
 
@@ -145,6 +148,13 @@ const updateConfig = <Key extends keyof SalaryConfig>(
         :config="config"
         :has-issue="hasIssue"
         @update:config="emit('update:config', $event)"
+      />
+    </SettingsGroup>
+
+    <SettingsGroup :title="t('settings.currency')">
+      <CurrencySymbolField
+        :model-value="currencySymbol"
+        @update:model-value="emit('update:currencySymbol', $event)"
       />
     </SettingsGroup>
 

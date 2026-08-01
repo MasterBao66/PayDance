@@ -4,6 +4,10 @@
 //
 // Additional terms: see /legal/ADDITIONAL_TERMS.md
 import { computed, onBeforeUnmount, ref, watch } from "vue";
+import { useCurrency } from "../composables/useCurrency";
+import { withCurrencySymbol } from "../lib/currency";
+
+const { currencySymbol } = useCurrency();
 
 const props = withDefaults(
   defineProps<{
@@ -90,9 +94,14 @@ onBeforeUnmount(() => {
   <span
     class="rolling-amount"
     :class="[`rolling-amount--${variant}`, { 'is-ticking': isTicking }]"
-    :aria-label="`¥${value}`"
+    :aria-label="withCurrencySymbol(currencySymbol, value)"
   >
-    <span class="rolling-amount__currency" aria-hidden="true">¥</span>
+    <span
+      v-if="currencySymbol"
+      class="rolling-amount__currency"
+      aria-hidden="true"
+      v-text="currencySymbol"
+    />
     <span v-if="variant === 'hero'" class="rolling-amount__value" aria-hidden="true">
       <span class="rolling-amount__integer">
         <span

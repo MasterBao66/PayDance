@@ -35,10 +35,12 @@ export function useAppWindowLifecycle(
     isMiniMode,
     isSettingsReady,
     miniSize,
+    reapplyTaskbarVisibility = async () => undefined,
     saveStateNow,
     updateMiniOpacityPercent,
   }: {
     ensureWindowOnScreen?: () => Promise<boolean>;
+    reapplyTaskbarVisibility?: () => Promise<void>;
     fullSize: Ref<WindowSize>;
     isMiniMode: Ref<boolean>;
     isSettingsReady: Ref<boolean>;
@@ -100,6 +102,8 @@ export function useAppWindowLifecycle(
     // so re-check reachability every time instead of only at startup.
     unlisteners.push(
       await appWindow.listen(windowShownEventName, () => {
+        // Showing the window again re-adds the taskbar button Windows dropped for mini mode.
+        void reapplyTaskbarVisibility();
         void ensureWindowOnScreen().then((moved) => {
           if (moved) return saveStateNow();
         });

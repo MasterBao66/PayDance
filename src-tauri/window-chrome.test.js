@@ -71,6 +71,32 @@ describe("desktop window chrome", () => {
     expect(quitBranch).not.toContain("handle.exit(0)");
   });
 
+  it("exits instead of leaving a live process behind an unresponsive tray", () => {
+    // Every tray action resolves the "main" window and returns when it is missing, and the
+    // hidden mini-opacity window keeps tao's window list non-empty so the runtime never exits
+    // on its own. Without this handler a destroyed main window is only killable via Task
+    // Manager. The frontend must hide rather than close so a destroy stays exceptional.
+    expect(libRs).toContain(".on_window_event(exit_when_main_window_destroyed)");
+    expect(trayRs).toContain("fn exit_when_main_window_destroyed");
+    expect(trayRs).toContain('window.label() != "main"');
+    expect(trayRs).toContain("WindowEvent::Destroyed");
+    expect(trayRs).toContain("app_handle().exit(0)");
+
+    const desktopApp = readFileSync(
+      resolve(tauriDir, "..", "src", "DesktopApp.vue"),
+      "utf8",
+    );
+    expect(desktopApp).toContain('@close="appWindow.hide()"');
+    expect(desktopApp).not.toContain("appWindow.close()");
+    expect(defaultCapability.permissions).not.toContain("core:window:allow-close");
+  });
+
+  it("resolves the tray language from an exact locale match", () => {
+    // A substring test would misfire on the first locale that merely contains "en".
+    expect(trayRs).toContain("serde_json::from_str::<String>(event.payload())");
+    expect(trayRs).not.toContain('event.payload().contains("en")');
+  });
+
   it("defines a hidden companion window for the mini opacity slider", () => {
     const opacityWindow = tauriConfig.app.windows.find(
       (window) => window.label === "mini-opacity",
@@ -82,6 +108,10 @@ describe("desktop window chrome", () => {
     expect(opacityWindow.transparent).toBe(true);
     expect(opacityWindow.shadow).toBe(false);
     expect(opacityWindow.skipTaskbar).toBe(true);
+  });
+
+  it("lets the main window drop its taskbar button while in mini mode", () => {
+    expect(defaultCapability.permissions).toContain("core:window:allow-set-skip-taskbar");
   });
 
   it("keeps the mini opacity companion window compact", () => {

@@ -16,4 +16,19 @@ describe("global focus styles", () => {
     expect(styleSource).toContain(':where(button, [role="button"]):focus-visible');
     expect(styleSource).not.toContain('button, input, [role="button"]');
   });
+
+  it("never strips the focus ring from controls that have no replacement ring", () => {
+    // Text fields opt out because their wrapper draws `.field-input-wrap:focus-within`.
+    // Checkboxes, radios, ranges and selects have no wrapper, so the blanket
+    // `input:not([type="range"])` reset used to leave keyboard users with no indicator at all.
+    expect(styleSource).not.toContain(':where(input:not([type="range"])');
+    expect(styleSource).toContain(
+      ':where(input:is([type="checkbox"], [type="radio"])):focus-visible',
+    );
+  });
+
+  it("degrades the always-on-top window's endless animations under reduced motion", () => {
+    expect(styleSource).toContain("@media (prefers-reduced-motion: reduce)");
+    expect(styleSource).toContain("animation-iteration-count: 1 !important");
+  });
 });

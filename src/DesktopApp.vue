@@ -6,11 +6,6 @@
 import { computed, onBeforeUnmount, onMounted, ref, watch } from "vue";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import {
-  readAutostartEnabled,
-  setAutostartEnabled,
-  tauriAutostartAdapter,
-} from "./lib/autostart";
-import {
   miniDefaultSize,
   fullWindowSize,
   defaultMiniOpacityPercent,
@@ -20,8 +15,11 @@ import {
   type WindowSize,
 } from "./lib/window-mode";
 import { appName } from "./lib/app-meta";
+import { localeChangedEventName } from "./lib/app-events";
 import { useAppShell } from "./composables/useAppShell";
 import { useAppWindowLifecycle } from "./composables/useAppWindowLifecycle";
+import { useAutostart } from "./composables/useAutostart";
+import { provideCurrency } from "./composables/useCurrency";
 import { useDashboardModel } from "./composables/useDashboardModel";
 import { provideI18n } from "./composables/useI18n";
 import { useMiniWindowDrag } from "./composables/useMiniWindowDrag";
@@ -53,6 +51,7 @@ const {
   amountMode,
   alwaysOnTop,
   config,
+  currencySymbol,
   hasCompletedOnboarding,
   isSettingsReady,
   loadSettings,
@@ -62,15 +61,27 @@ const {
   themeMode,
 } = useSalarySettings(undefined, () => t.value);
 
-const { t } = provideI18n(locale, (next) => {
-  locale.value = next;
-  void appWindow.emit("locale-changed", next);
+const { t } = provideI18n(locale);
+
+// Watch the ref rather than hooking setLocale: restoring the saved language at startup — and
+// auto-detecting it from the system on a first run — assigns this ref directly and never goes
+// through setLocale, so hooking the setter left the Rust tray stuck on Chinese after every
+// relaunch. The companion window stays silent; its locale is pushed to it, not chosen there.
+watch(locale, (next) => {
+  if (isOpacityPanelWindow) return;
+  void appWindow.emit(localeChangedEventName, next);
 });
 
+provideCurrency(currencySymbol);
+
 const isMiniMode = ref(false);
-const autostartEnabled = ref(false);
-const autostartError = ref("");
-const isAutostartUpdating = ref(false);
+const {
+  autostartEnabled,
+  autostartError,
+  isAutostartUpdating,
+  refreshAutostart,
+  updateAutostartEnabled,
+} = useAutostart(() => t.value("autostart.error"));
 const fullSize = ref<WindowSize>({ ...fullWindowSize });
 const miniSize = ref<WindowSize>({ ...miniDefaultSize });
 const miniOpacityPercent = ref(defaultMiniOpacityPercent);
@@ -78,7 +89,7 @@ const mainPosition = ref<WindowPosition | undefined>(undefined);
 const miniPosition = ref<WindowPosition | undefined>(undefined);
 const defaultWindowPreferences = resolveWindowPreferences({});
 const { snapshot, startTicker, stopTicker } = useSalaryTicker(config, t.value);
-const { applyWindowMode, setAlwaysOnTop } = useWindowMode(
+const { applyWindowMode, reapplyTaskbarVisibility, setAlwaysOnTop } = useWindowMode(
   appWindow,
   isMiniMode,
   miniSize,
@@ -141,6 +152,7 @@ const { showMiniOpacityPanel } = useMiniOpacityPanel(
   appWindow,
   miniOpacityPercent,
   themeMode,
+  locale,
 );
 const { clearMiniDrag, startMiniDrag } = useMiniWindowDrag(appWindow);
 const {
@@ -174,27 +186,6 @@ const toggleAlwaysOnTop = async () => {
   await saveStateNow();
 };
 
-const refreshAutostart = async () => {
-  const result = await readAutostartEnabled(tauriAutostartAdapter);
-  autostartEnabled.value = result.enabled;
-  autostartError.value = result.error;
-};
-
-const updateAutostartEnabled = async (enabled: boolean) => {
-  if (isAutostartUpdating.value) return;
-
-  isAutostartUpdating.value = true;
-  const result = await setAutostartEnabled(
-    tauriAutostartAdapter,
-    enabled,
-    autostartEnabled.value,
-    t.value("autostart.error"),
-  );
-  autostartEnabled.value = result.enabled;
-  autostartError.value = result.error;
-  isAutostartUpdating.value = false;
-};
-
 const startDrag = async (event: MouseEvent) => {
   const target = event.target as HTMLElement;
   if (target.closest("button, input, label")) return;
@@ -214,16 +205,26 @@ const { clearWindowLifecycleTimers, registerWindowLifecycle } = useAppWindowLife
     isMiniMode,
     isSettingsReady,
     miniSize,
+    reapplyTaskbarVisibility,
     saveStateNow,
     updateMiniOpacityPercent,
   },
 );
 
 watch(config, scheduleSaveState, { deep: true });
+// These three live outside the window state the persistence layer watches, and nothing else
+// saves after they change: without this, picking a currency symbol, an amount animation or a
+// language and then losing the process would silently roll the choice back.
+watch([amountMode, currencySymbol, locale], scheduleSaveState);
 const unlisteners: Array<() => void> = [];
 
 onMounted(async () => {
   if (isOpacityPanelWindow) return;
+
+  // Registered before any await: until the close interceptor inside exists, a close request
+  // (Alt+F4, the taskbar context menu) destroys the window instead of hiding it, and a
+  // destroyed main window used to leave a live process behind a tray that no longer responds.
+  unlisteners.push(...(await registerWindowLifecycle()));
 
   const windowPreferences = await loadWindowPreferences();
   isMiniMode.value = windowPreferences.isMiniMode;
@@ -253,7 +254,6 @@ onMounted(async () => {
       if (!windowPosition.recordWindowPosition(position)) return;
       scheduleSaveState();
     }),
-    ...(await registerWindowLifecycle()),
     ...(await registerTrayActions(appWindow, {
       openSettings,
       toggleAlwaysOnTop,
@@ -308,6 +308,7 @@ onBeforeUnmount(() => {
       v-model:always-on-top="alwaysOnTop"
       v-model:amount-mode="amountMode"
       v-model:config="config"
+      v-model:currency-symbol="currencySymbol"
       v-model:show-salary-info="showSalaryInfo"
       v-model:show-settings="showSettings"
       :app-name="appName"
@@ -331,7 +332,7 @@ onBeforeUnmount(() => {
       :status-text="statusText"
       :theme-mode="themeMode"
       :worked-time-text="workedTimeText"
-      @close="appWindow.close()"
+      @close="appWindow.hide()"
       @complete-onboarding="completeOnboarding"
       @drag-start="startDrag"
       @minimize="appWindow.minimize()"

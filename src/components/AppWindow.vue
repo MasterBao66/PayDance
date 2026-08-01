@@ -36,6 +36,7 @@ withDefaults(
     autostartEnabled: boolean;
     autostartError: string;
     config: SalaryConfig;
+    currencySymbol: string;
     dailyEarnText: string;
     earnedText: string;
     firstConfigIssue: string;
@@ -81,6 +82,7 @@ const emit = defineEmits<{
   "update:amountMode": [value: AmountMode];
   "update:autostartEnabled": [value: boolean];
   "update:config": [config: SalaryConfig];
+  "update:currencySymbol": [symbol: string];
   "update:showSalaryInfo": [value: boolean];
   "update:showSettings": [value: boolean];
   "update:themeMode": [mode: ThemeMode];
@@ -152,6 +154,7 @@ const emit = defineEmits<{
               :autostart-enabled="autostartEnabled"
               :autostart-error="autostartError"
               :config="config"
+              :currency-symbol="currencySymbol"
               :first-issue="firstConfigIssue"
               :has-issue="hasIssue"
               :is-autostart-updating="isAutostartUpdating"
@@ -163,6 +166,7 @@ const emit = defineEmits<{
               @update:amount-mode="emit('update:amountMode', $event)"
               @update:autostart-enabled="emit('update:autostartEnabled', $event)"
               @update:config="emit('update:config', $event)"
+              @update:currency-symbol="emit('update:currencySymbol', $event)"
             />
           </div>
         </section>

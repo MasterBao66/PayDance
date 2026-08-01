@@ -17,6 +17,7 @@ const {
   autostartError,
   completeWebOnboarding,
   config,
+  currencySymbol,
   dailyEarnText,
   earnedText,
   firstConfigIssue,
@@ -92,6 +93,7 @@ watch(
         v-model:always-on-top="alwaysOnTop"
         v-model:amount-mode="amountMode"
         v-model:config="config"
+        v-model:currency-symbol="currencySymbol"
         v-model:show-salary-info="showSalaryInfo"
         v-model:show-settings="showSettings"
         :app-name="appName"

@@ -6,14 +6,18 @@
 import type { AmountMode } from "../composables/useSalarySettings";
 import type { DashboardMiddleStat } from "../composables/useDashboardModel";
 import type { SalarySnapshot } from "../lib/salary";
+import { computed } from "vue";
+import { useCurrency } from "../composables/useCurrency";
 import { useI18n } from "../composables/useI18n";
+import { withCurrencySymbol } from "../lib/currency";
 import IncomeProgress from "./IncomeProgress.vue";
 import RollingAmount from "./RollingAmount.vue";
 import StatsPanel from "./StatsPanel.vue";
 
 const { t } = useI18n();
+const { currencySymbol } = useCurrency();
 
-defineProps<{
+const props = defineProps<{
   amountMode: AmountMode;
   dailyEarnText: string;
   earnedText: string;
@@ -27,6 +31,15 @@ const emit = defineEmits<{
   openSalaryInfo: [];
   setMiniMode: [value: boolean];
 }>();
+
+// Every digit inside RollingAmount is aria-hidden, and this button's own label replaces its
+// content for assistive tech. Without the amount here, a screen reader user can reach the
+// control that shows today's earnings and never be told what those earnings are.
+const amountAriaLabel = computed(() =>
+  t.value("dashboard.tapToMini", {
+    amount: withCurrencySymbol(currencySymbol.value, props.earnedText),
+  }),
+);
 </script>
 
 <template>
@@ -37,7 +50,7 @@ const emit = defineEmits<{
 
     <button
       class="amount-display"
-      :aria-label="t('dashboard.tapToMini')"
+      :aria-label="amountAriaLabel"
       :title="t('dashboard.doubleClickMini')"
       type="button"
       @dblclick="emit('setMiniMode', true)"

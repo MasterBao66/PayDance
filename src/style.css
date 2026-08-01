@@ -46,6 +46,32 @@ input {
   box-shadow: 0 0 0 4px var(--focus-ring, var(--income-accent-ring));
 }
 
-:where(input:not([type="range"]), textarea, select):focus-visible {
+/* Text fields draw their own ring on the wrapper (.field-input-wrap:focus-within), so the
+   native outline would double up. Checkboxes, radios, ranges and selects have no such
+   wrapper — stripping their outline left keyboard users with no focus indication at all. */
+:where(
+  input:is([type="text"], [type="number"], [type="time"], [type="search"]),
+  textarea
+):focus-visible {
   outline: none;
+}
+
+:where(input:is([type="checkbox"], [type="radio"])):focus-visible {
+  outline: 2px solid var(--focus-outline, var(--income-accent));
+  outline-offset: 2px;
+}
+
+/* The main window is always-on-top and permanently visible, so an infinite decorative
+   animation (the progress-bar shine) never stops burning GPU time. Honour the OS
+   reduced-motion setting globally instead of per component: users who still want the
+   rolling digits have the explicit "amount animation" setting for that. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

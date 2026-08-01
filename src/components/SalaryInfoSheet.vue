@@ -6,9 +6,11 @@
 import { computed } from "vue";
 import { Banknote, CircleDollarSign, Clock3, TimerReset, X } from "@lucide/vue";
 import type { SalarySnapshot } from "../lib/salary";
+import { useCurrency } from "../composables/useCurrency";
 import { useI18n } from "../composables/useI18n";
 
 const { t } = useI18n();
+const { currencySymbol } = useCurrency();
 
 const props = defineProps<{
   modeLabel: string;
@@ -72,7 +74,11 @@ const salaryItems = computed(() => [
         <component :is="item.icon" :size="24" />
         <span class="salary-info-card__label">{{ item.label }}</span>
         <strong class="salary-info-money">
-          <span class="salary-info-money__symbol">¥</span>
+          <span
+            v-if="currencySymbol"
+            class="salary-info-money__symbol"
+            v-text="currencySymbol"
+          />
           <span class="salary-info-money__value">{{ item.value }}</span>
         </strong>
       </article>

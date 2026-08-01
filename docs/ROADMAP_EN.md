@@ -18,6 +18,8 @@ This document records PayDance's development direction. It is not a release-date
 - Bilingual website entries: the Vercel primary site uses `/` and `/en/`, while the GitHub Pages mirror keeps `/PayDance/` and `/PayDance/en/`; both pages expose independent SEO metadata, reciprocal hreflang links, automatic dates, and sitemap entries.
 - Maintenance evidence: Web Preview now has deterministic time/viewport pixel-diff gates; Rust tray actions have behavior-level tests, and EXE smoke records window responsiveness and single-instance results as JSON.
 - Contributor entry points: bilingual architecture change maps connect common work to files and checks, while starter issues require a user-visible result, before evidence, acceptance criteria, and a verification command.
+- Custom currency symbol: Settings takes any symbol as free text, or nothing at all, with a live preview, applied consistently across the dashboard, estimated daily earnings, salary details, and the mini window. No exchange-rate conversion.
+- Mini mode no longer keeps a taskbar button: the main window drops its taskbar entry on entering mini mode and restores it on exit, with the tray icon remaining the recovery path.
 
 ## Now
 
@@ -37,7 +39,7 @@ This document records PayDance's development direction. It is not a release-date
 
 ## Later
 
-- Multi-currency support, while keeping the main interface lightweight and avoiding exchange-rate, tax, or financial-analysis complexity.
+- Advanced per-currency formatting (grouping separators and decimal rules per currency), while keeping the main interface lightweight and avoiding exchange-rate, tax, or financial-analysis complexity.
 
 ## Long-Term Exclusions
 

@@ -13,7 +13,7 @@ const en: Messages = {
   // ── Dashboard ───────────────────────────────────────────────────────────
   "dashboard.todayEarnings": "Today's Earnings",
   "dashboard.tapToMini":
-    "Today's earnings. Double-click or press Enter to enter mini floating mode",
+    "Today's earnings {amount}. Double-click or press Enter to enter mini floating mode",
   "dashboard.doubleClickMini": "Double-click for mini floating mode",
   "dashboard.statsLabel": "Today's Dashboard",
   "dashboard.salaryInfo": "Salary Info",
@@ -56,6 +56,7 @@ const en: Messages = {
   "settings.lunchBreak": "Lunch Break",
   "settings.amountAnimation": "Animation",
   "settings.amountAnimationDesc": "Amount display animation",
+  "settings.currency": "Currency symbol",
   "settings.startup": "Startup",
   "settings.autostart": "Launch at startup",
   "settings.autostartError": "Failed to update autostart setting",
@@ -106,8 +107,13 @@ const en: Messages = {
   "amountMode.rolling": "Rolling",
   "amountMode.plain": "Instant",
 
+  // ── Settings → currency symbol ─────────────────────────────────────────
+  "currency.placeholder": "e.g. ¥ $ € £",
+  "currency.hint": "Leave empty to hide the symbol. Up to 4 characters.",
+
   // ── Settings → about footer ────────────────────────────────────────────
   "about.appVersion": "Version",
+  "about.labelSeparator": ": ",
   "about.appAuthor": "Author",
   "about.openRepo": "Open GitHub repository",
   "about.repoError": "Unable to open GitHub repository. Please try again later.",
@@ -149,7 +155,7 @@ const en: Messages = {
 
   // ── Mini window ────────────────────────────────────────────────────────
   "mini.ariaLabel":
-    "Mini floating amount. Press Enter to restore full window. Right-click for transparency.",
+    "Mini floating amount {amount}. Press Enter to restore full window. Right-click for transparency.",
   "mini.restoreTitle": "Double-click to restore",
 
   // ── Mini opacity ──────────────────────────────────────────────────────

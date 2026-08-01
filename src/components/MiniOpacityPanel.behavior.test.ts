@@ -48,7 +48,7 @@ describe("MiniOpacityPanel behavior", () => {
     await nextTick();
 
     tauriMocks.listeners.get("mini-opacity-panel-open")?.({
-      payload: { themeMode: "dark", value: 63 },
+      payload: { themeMode: "dark", value: 63, locale: "zh-CN" },
     });
     await nextTick();
 
@@ -73,5 +73,31 @@ describe("MiniOpacityPanel behavior", () => {
       commit: true,
       value: 42,
     });
+  });
+
+  // This window's startup bails out before settings are read, so the language can only ever
+  // reach it through the payload the main window sends when it opens the panel.
+  it("follows the language the main window sends with the open payload", async () => {
+    const wrapper = mount(MiniOpacityPanel);
+    await nextTick();
+
+    tauriMocks.listeners.get("mini-opacity-panel-open")?.({
+      payload: { themeMode: "light", value: 50, locale: "en" },
+    });
+    await nextTick();
+
+    expect(wrapper.get('input[type="range"]').attributes("aria-label")).toBe(
+      "Mini floating window opacity",
+    );
+    expect(wrapper.text()).toContain("Opacity");
+
+    tauriMocks.listeners.get("mini-opacity-panel-open")?.({
+      payload: { themeMode: "light", value: 50, locale: "zh-CN" },
+    });
+    await nextTick();
+
+    expect(wrapper.get('input[type="range"]').attributes("aria-label")).toBe(
+      "迷你悬浮透明度",
+    );
   });
 });

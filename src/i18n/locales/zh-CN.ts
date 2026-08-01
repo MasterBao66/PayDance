@@ -12,7 +12,7 @@ const zhCN: Messages = {
 
   // ── Dashboard ───────────────────────────────────────────────────────────
   "dashboard.todayEarnings": "今日入账",
-  "dashboard.tapToMini": "今日入账金额，双击或按 Enter 进入迷你悬浮模式",
+  "dashboard.tapToMini": "今日入账 {amount}，双击或按 Enter 进入迷你悬浮模式",
   "dashboard.doubleClickMini": "双击进入迷你悬浮模式",
   "dashboard.statsLabel": "今日收入看板",
   "dashboard.salaryInfo": "薪资说明",
@@ -55,6 +55,7 @@ const zhCN: Messages = {
   "settings.lunchBreak": "午休",
   "settings.amountAnimation": "金额变换",
   "settings.amountAnimationDesc": "金额数字变化方式",
+  "settings.currency": "货币符号",
   "settings.startup": "启动",
   "settings.autostart": "开机自动启动",
   "settings.autostartError": "自启动设置失败",
@@ -105,8 +106,13 @@ const zhCN: Messages = {
   "amountMode.rolling": "滚动变换",
   "amountMode.plain": "直接变换",
 
+  // ── Settings → currency symbol ─────────────────────────────────────────
+  "currency.placeholder": "如 ¥ $ € £",
+  "currency.hint": "留空即不显示货币符号，最多 4 个字符",
+
   // ── Settings → about footer ────────────────────────────────────────────
   "about.appVersion": "版本",
+  "about.labelSeparator": "：",
   "about.appAuthor": "作者",
   "about.openRepo": "打开 GitHub 仓库",
   "about.repoError": "无法打开 GitHub 仓库，请稍后重试。",
@@ -147,7 +153,7 @@ const zhCN: Messages = {
   "titlebar.closeToTray": "关闭到托盘",
 
   // ── Mini window ────────────────────────────────────────────────────────
-  "mini.ariaLabel": "迷你悬浮金额，按 Enter 恢复完整窗口，右键调整透明度",
+  "mini.ariaLabel": "迷你悬浮金额 {amount}，按 Enter 恢复完整窗口，右键调整透明度",
   "mini.restoreTitle": "双击恢复完整窗口",
 
   // ── Mini opacity ──────────────────────────────────────────────────────

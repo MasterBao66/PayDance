@@ -18,6 +18,7 @@ type ManagedWindow = {
   setMinSize: (size: LogicalSize) => Promise<void>;
   setResizable: (resizable: boolean) => Promise<void>;
   setSize: (size: LogicalSize) => Promise<void>;
+  setSkipTaskbar?: (skip: boolean) => Promise<void>;
 };
 
 export function useWindowMode(
@@ -27,6 +28,19 @@ export function useWindowMode(
   fullSize: Ref<WindowSize>,
   alwaysOnTop: Ref<boolean>,
 ) {
+  // Mini mode is meant to be a low-presence corner widget, so it must not keep a taskbar
+  // button. The tray icon stays the recovery path either way, so hiding the button can never
+  // strand the window. Runs last and swallows its own error: an older build whose capability
+  // file lacks `core:window:allow-set-skip-taskbar` would otherwise reject here and skip the
+  // geometry calls above, which is a far worse failure than an extra taskbar button.
+  const applyTaskbarVisibility = async (skip: boolean) => {
+    try {
+      await appWindow.setSkipTaskbar?.(skip);
+    } catch {
+      // Keeping a taskbar button is only cosmetic; never let it break a mode switch.
+    }
+  };
+
   const applyWindowMode = async () => {
     await appWindow.setResizable(true);
 
@@ -36,6 +50,7 @@ export function useWindowMode(
       await appWindow.setMinSize(new LogicalSize(miniMinSize.width, miniMinSize.height));
       await appWindow.setSize(new LogicalSize(size.width, size.height));
       await appWindow.setAlwaysOnTop(true);
+      await applyTaskbarVisibility(true);
       return;
     }
 
@@ -46,6 +61,7 @@ export function useWindowMode(
     );
     await appWindow.setSize(new LogicalSize(size.width, size.height));
     await appWindow.setAlwaysOnTop(alwaysOnTop.value);
+    await applyTaskbarVisibility(false);
   };
 
   const setAlwaysOnTop = async (value: boolean) => {
@@ -53,8 +69,13 @@ export function useWindowMode(
     await appWindow.setAlwaysOnTop(isMiniMode.value ? true : alwaysOnTop.value);
   };
 
+  // Windows re-creates the taskbar button whenever a window is shown again, so hiding to the
+  // tray and coming back from it would restore the button even though nothing left mini mode.
+  const reapplyTaskbarVisibility = () => applyTaskbarVisibility(isMiniMode.value);
+
   return {
     applyWindowMode,
+    reapplyTaskbarVisibility,
     setAlwaysOnTop,
   };
 }

@@ -3,11 +3,14 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 //
 // Additional terms: see /legal/ADDITIONAL_TERMS.md
+import { computed } from "vue";
+import { useCurrency } from "../composables/useCurrency";
 import { useI18n } from "../composables/useI18n";
 
 const { t } = useI18n();
+const { currencySymbol } = useCurrency();
 
-defineProps<{
+const props = defineProps<{
   expectedEarn: string;
   middleLabel: string;
   middleValue: string;
@@ -20,16 +23,25 @@ type MetricSegment = {
 };
 
 const formatMetricSegments = (value: string): MetricSegment[] => {
-  const matches = value.match(/¥|:|\d+(?:\.\d+)?|[a-zA-Z%]+|\s+|./g) ?? [value];
+  const matches = value.match(/:|\d+(?:\.\d+)?|[a-zA-Z%]+|\s+|./g) ?? [value];
 
   return matches.map((text) => {
-    if (text === "¥") return { kind: "symbol", text };
     if (text === ":") return { kind: "separator", text };
     if (/^\d/.test(text)) return { kind: "number", text };
     if (/^[a-zA-Z%]+$/.test(text)) return { kind: "unit", text };
     return { kind: "plain", text };
   });
 };
+
+// The symbol is prepended as its own segment instead of being matched out of the string:
+// a multi-character symbol such as "HK$" would otherwise be split across a unit and a plain
+// segment and pick up the wrong typography.
+const expectedEarnSegments = computed<MetricSegment[]>(() => [
+  ...(currencySymbol.value
+    ? [{ kind: "symbol" as const, text: currencySymbol.value }]
+    : []),
+  ...formatMetricSegments(props.expectedEarn),
+]);
 </script>
 
 <template>
@@ -61,7 +73,7 @@ const formatMetricSegments = (value: string): MetricSegment[] => {
         <span class="stat-item__label">{{ t("stats.estimated") }}</span>
         <strong class="stat-item__value stat-item__value--money">
           <span
-            v-for="(segment, index) in formatMetricSegments(`¥${expectedEarn}`)"
+            v-for="(segment, index) in expectedEarnSegments"
             :key="`expected-${index}`"
             :class="`stat-value__${segment.kind}`"
             v-text="segment.text"

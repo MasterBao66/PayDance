@@ -9,6 +9,7 @@ export const settingsStoreKeys = {
   alwaysOnTop: "alwaysOnTop",
   amountMode: "amountMode",
   config: "config",
+  currencySymbol: "currencySymbol",
   fullSize: "fullSize",
   hasCompletedOnboarding: "hasCompletedOnboarding",
   isMiniMode: "isMiniMode",

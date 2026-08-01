@@ -48,18 +48,21 @@ const openRepository = async () => {
       <strong>{{ appName }} {{ appEnglishName }}</strong>
       <span class="about-footer__version-line">
         <span class="about-footer__version-text"
-          >{{ t("about.appVersion") }}：{{ appVersion }}</span
+          >{{ t("about.appVersion") }}{{ t("about.labelSeparator")
+          }}{{ appVersion }}</span
         >
         <UpdateActionBadge :update-status="updateStatus" />
       </span>
-      <span>{{ t("about.appAuthor") }}：{{ appAuthor }}</span>
+      <span
+        >{{ t("about.appAuthor") }}{{ t("about.labelSeparator") }}{{ appAuthor }}</span
+      >
     </div>
     <div class="about-footer__repo-card">
       <button
         class="repository-button"
         :aria-label="t('about.openRepo')"
         :disabled="isOpeningRepository"
-        :title="`${t('about.openRepo')}：${repositoryUrl}`"
+        :title="`${t('about.openRepo')}${t('about.labelSeparator')}${repositoryUrl}`"
         type="button"
         @click="openRepository"
       >

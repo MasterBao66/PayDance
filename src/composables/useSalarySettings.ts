@@ -16,6 +16,7 @@ import {
   validateSalaryConfig,
   type SalaryConfig,
 } from "../lib/salary";
+import { defaultCurrencySymbol, normalizeCurrencySymbol } from "../lib/currency";
 import {
   migrateSalaryConfig,
   recoverVersionedSalaryConfig,
@@ -51,6 +52,7 @@ export function useSalarySettings(
   getT: () => TFunc = () => fallbackT,
 ) {
   const config = ref<SalaryConfig>({ ...defaultSalaryConfig });
+  const currencySymbol = ref(defaultCurrencySymbol);
   const alwaysOnTop = ref(true);
   const themeMode = ref<ThemeMode>("light");
   const amountMode = ref<AmountMode>("rolling");
@@ -70,6 +72,7 @@ export function useSalarySettings(
       ...defaultSalaryConfig,
       workdays: [...defaultSalaryConfig.workdays],
     };
+    currencySymbol.value = defaultCurrencySymbol;
     alwaysOnTop.value = true;
     themeMode.value = "light";
     amountMode.value = "rolling";
@@ -128,6 +131,7 @@ export function useSalarySettings(
       const store = await getStore();
       const windowPreferences = resolveWindowPreferences({});
       await store.set(settingsStoreKeys.config, config.value);
+      await store.set(settingsStoreKeys.currencySymbol, currencySymbol.value);
       await store.set(settingsStoreKeys.alwaysOnTop, alwaysOnTop.value);
       await store.set(settingsStoreKeys.themeMode, themeMode.value);
       await store.set(settingsStoreKeys.amountMode, amountMode.value);
@@ -156,6 +160,9 @@ export function useSalarySettings(
       const store = await getStore();
       const savedConfig = await store.get<Partial<SalaryConfig>>(
         settingsStoreKeys.config,
+      );
+      const savedCurrencySymbol = await store.get<string>(
+        settingsStoreKeys.currencySymbol,
       );
       const savedTop = await store.get<boolean>(settingsStoreKeys.alwaysOnTop);
       const savedTheme = await store.get<ThemeMode>(settingsStoreKeys.themeMode);
@@ -191,6 +198,10 @@ export function useSalarySettings(
       if (recoveredConfig.recoveryReason) {
         await persistRecoveredConfig(store, recoveredConfig.config);
       }
+
+      // A missing key normalizes back to the default symbol, so upgrading from a build without
+      // this setting keeps showing ¥ instead of silently dropping it.
+      currencySymbol.value = normalizeCurrencySymbol(savedCurrencySymbol);
 
       if (typeof savedTop === "boolean") {
         alwaysOnTop.value = savedTop;
@@ -266,6 +277,10 @@ export function useSalarySettings(
         console.error("Skipped saving invalid salary settings", configIssues);
       }
 
+      await store.set(
+        settingsStoreKeys.currencySymbol,
+        normalizeCurrencySymbol(currencySymbol.value),
+      );
       await store.set(settingsStoreKeys.alwaysOnTop, alwaysOnTop.value);
       await store.set(settingsStoreKeys.fullSize, fullSize);
       await store.set(settingsStoreKeys.isMiniMode, isMiniMode);
@@ -307,6 +322,7 @@ export function useSalarySettings(
     amountMode,
     alwaysOnTop,
     config,
+    currencySymbol,
     hasCompletedOnboarding,
     isSettingsReady,
     loadSettings,

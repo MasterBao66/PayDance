@@ -7,9 +7,12 @@ import { computed, useId } from "vue";
 import { parseNumberInput } from "../../lib/number-input";
 import type { SalaryConfig, SalaryConfigIssue } from "../../lib/salary";
 import { createGetSalaryAmountLabel } from "../../lib/settings-form";
+import { defaultCurrencySymbol } from "../../lib/currency";
+import { useCurrency } from "../../composables/useCurrency";
 import { useI18n } from "../../composables/useI18n";
 
 const { t } = useI18n();
+const { currencySymbol } = useCurrency();
 
 const props = defineProps<{
   config: SalaryConfig;
@@ -23,6 +26,15 @@ const emit = defineEmits<{
 
 const salaryAmountLabel = computed(() =>
   createGetSalaryAmountLabel(t.value)(props.config.salaryType),
+);
+
+// "元" / "CNY" is only correct while the user is on the default symbol. Once they pick another
+// one, that symbol is the honest unit; when they hide the symbol entirely there is nothing to
+// show instead, so the localized word stays.
+const amountUnit = computed(() =>
+  currencySymbol.value && currencySymbol.value !== defaultCurrencySymbol
+    ? currencySymbol.value
+    : t.value("salaryAmount.unitYuan"),
 );
 const idPrefix = useId();
 
@@ -58,7 +70,7 @@ const updateNumberConfig = <Key extends keyof SalaryConfig>(key: Key, event: Eve
           type="number"
           @input="updateNumberConfig('monthlySalary', $event)"
         />
-        <span class="field-unit">{{ t("salaryAmount.unitYuan") }}</span>
+        <span class="field-unit">{{ amountUnit }}</span>
       </span>
     </label>
     <label
@@ -77,7 +89,7 @@ const updateNumberConfig = <Key extends keyof SalaryConfig>(key: Key, event: Eve
           type="number"
           @input="updateNumberConfig('dailySalary', $event)"
         />
-        <span class="field-unit">{{ t("salaryAmount.unitYuan") }}</span>
+        <span class="field-unit">{{ amountUnit }}</span>
       </span>
     </label>
     <label
@@ -96,7 +108,7 @@ const updateNumberConfig = <Key extends keyof SalaryConfig>(key: Key, event: Eve
           type="number"
           @input="updateNumberConfig('hourlyRate', $event)"
         />
-        <span class="field-unit">{{ t("salaryAmount.unitYuan") }}</span>
+        <span class="field-unit">{{ amountUnit }}</span>
       </span>
     </label>
     <label

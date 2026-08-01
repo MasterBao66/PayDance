@@ -9,7 +9,7 @@ mod portable_update;
 mod tray;
 
 use portable_update::install_portable_update;
-use tray::show_window;
+use tray::{exit_when_main_window_destroyed, show_window};
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -33,6 +33,7 @@ pub fn run() {
         .plugin(tauri_plugin_store::Builder::new().build())
         .plugin(tauri_plugin_updater::Builder::new().build())
         .invoke_handler(tauri::generate_handler![install_portable_update])
+        .on_window_event(exit_when_main_window_destroyed)
         .setup(|app| {
             tray::setup(app)?;
             Ok(())

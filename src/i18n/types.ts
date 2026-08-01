@@ -60,6 +60,7 @@ export interface Messages {
   "settings.lunchBreak": string;
   "settings.amountAnimation": string;
   "settings.amountAnimationDesc": string;
+  "settings.currency": string;
   "settings.startup": string;
   "settings.autostart": string;
   "settings.autostartError": string;
@@ -110,8 +111,13 @@ export interface Messages {
   "amountMode.rolling": string;
   "amountMode.plain": string;
 
+  // ── Settings → currency symbol ─────────────────────────────────────────
+  "currency.placeholder": string;
+  "currency.hint": string;
+
   // ── Settings → about footer ────────────────────────────────────────────
   "about.appVersion": string;
+  "about.labelSeparator": string;
   "about.appAuthor": string;
   "about.openRepo": string;
   "about.repoError": string;

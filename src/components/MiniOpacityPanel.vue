@@ -6,7 +6,7 @@
 import { computed, onBeforeUnmount, onMounted, ref } from "vue";
 import { emitTo } from "@tauri-apps/api/event";
 import { getCurrentWindow } from "@tauri-apps/api/window";
-import { useI18n } from "../composables/useI18n";
+import { detectLocale, useI18n } from "../composables/useI18n";
 import {
   defaultMiniOpacityPercent,
   maxMiniOpacityPercent,
@@ -18,9 +18,10 @@ import {
 type MiniOpacityPanelPayload = {
   value?: number;
   themeMode?: ThemeMode;
+  locale?: string;
 };
 
-const { t } = useI18n();
+const { locale, t } = useI18n();
 const appWindow = getCurrentWindow();
 const opacityPercent = ref(defaultMiniOpacityPercent);
 const themeMode = ref<ThemeMode>("light");
@@ -69,6 +70,10 @@ onMounted(async () => {
       if (event.payload.themeMode === "dark" || event.payload.themeMode === "light") {
         themeMode.value = event.payload.themeMode;
       }
+      // This window never reads the settings store, so the main window is the only source of
+      // truth for the language. Assign the ref directly instead of going through setLocale:
+      // that would re-broadcast locale-changed from a window that never changed anything.
+      locale.value = detectLocale(event.payload.locale);
     },
   );
   window.addEventListener("blur", hidePanel);

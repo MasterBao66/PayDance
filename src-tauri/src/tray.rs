@@ -7,7 +7,7 @@ use std::sync::Mutex;
 use tauri::{
     menu::MenuBuilder,
     tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent},
-    App, AppHandle, Emitter, Listener, Manager, WebviewWindow,
+    App, AppHandle, Emitter, Listener, Manager, WebviewWindow, Window, WindowEvent,
 };
 
 const TRAY_OPEN_SETTINGS_EVENT: &str = "tray-open-settings";
@@ -90,6 +90,24 @@ fn build_tray_menu(
         .build()
 }
 
+// Every tray action, the tray click handler and the single-instance callback resolve the
+// "main" window and give up when it is gone. The hidden `mini-opacity` companion window is
+// created at startup and never destroyed, so tao never sees an empty window list and never
+// exits either: destroying the main window used to leave a live process behind a tray icon
+// where all five menu entries silently did nothing, recoverable only via Task Manager.
+// The frontend hides instead of closing, so a real destroy only happens when the user asked
+// the OS to close the window before the frontend could intercept it — and then quitting is
+// exactly what they asked for.
+pub(crate) fn exit_when_main_window_destroyed(window: &Window, event: &WindowEvent) {
+    if window.label() != "main" {
+        return;
+    }
+
+    if matches!(event, WindowEvent::Destroyed) {
+        window.app_handle().exit(0);
+    }
+}
+
 pub(crate) fn show_window(window: &WebviewWindow) {
     // Windows parks a minimized window at (-32000, -32000) and `show()` maps to SW_SHOW, which
     // leaves it minimized. Every recovery path (tray menu, tray click, second launch) funnels
@@ -168,7 +186,11 @@ pub(crate) fn setup(app: &mut App) -> Result<(), tauri::Error> {
     let handle = app.handle().clone();
     if let Some(window) = app.get_webview_window("main") {
         let _id = window.listen("locale-changed", move |event| {
-            let use_en = event.payload().contains("en");
+            // The payload is a JSON-encoded locale string. A substring match would start
+            // misfiring the moment a locale like "en-GB" or "sv" is added.
+            let use_en = serde_json::from_str::<String>(event.payload())
+                .map(|locale| locale == "en")
+                .unwrap_or(false);
             if let Ok(guard) = handle.state::<TrayState>().handle.lock() {
                 if let Some(tray) = guard.as_ref() {
                     if let Ok(menu) = build_tray_menu(&handle, use_en) {

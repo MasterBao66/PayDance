@@ -5,6 +5,7 @@
 
 import { computed, onBeforeUnmount, onMounted, ref, watch } from "vue";
 import { useAppShell } from "../composables/useAppShell";
+import { provideCurrency } from "../composables/useCurrency";
 import { useDashboardModel } from "../composables/useDashboardModel";
 import { useI18n } from "../composables/useI18n";
 import { useSalarySettings } from "../composables/useSalarySettings";
@@ -42,6 +43,7 @@ export function useWebPreviewState() {
     amountMode,
     alwaysOnTop,
     config,
+    currencySymbol,
     hasCompletedOnboarding,
     isSettingsReady,
     loadSettings,
@@ -49,6 +51,7 @@ export function useWebPreviewState() {
     themeMode,
   } = useSalarySettings(() => Promise.resolve(previewStore));
   themeMode.value = readBrowserThemeMode();
+  provideCurrency(currencySymbol);
 
   const { locale, t } = useI18n();
 
@@ -225,6 +228,7 @@ export function useWebPreviewState() {
   };
 
   watch(config, scheduleSaveState, { deep: true });
+  watch([amountMode, currencySymbol], scheduleSaveState);
   watch(isMiniMode, (value) => {
     if (value) {
       resetMiniPosition();
@@ -258,6 +262,7 @@ export function useWebPreviewState() {
     autostartError,
     completeWebOnboarding,
     config,
+    currencySymbol,
     dailyEarnText,
     earnedText,
     firstConfigIssue,

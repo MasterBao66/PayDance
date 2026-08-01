@@ -6,6 +6,7 @@
 // @vitest-environment happy-dom
 import { mount } from "@vue/test-utils";
 import { describe, expect, it, vi } from "vitest";
+import { defaultCurrencySymbol } from "../lib/currency";
 import { defaultSalaryConfig } from "../lib/salary";
 
 vi.mock("#updater", () => ({
@@ -29,6 +30,7 @@ const mountSettingsPanel = (
       autostartEnabled: false,
       autostartError: "",
       config: { ...config, workdays: [...config.workdays] },
+      currencySymbol: defaultCurrencySymbol,
       firstIssue: "",
       hasIssue,
       isAutostartUpdating: false,

@@ -52,7 +52,12 @@ const readMonitorWorkAreas = async (): Promise<WindowWorkArea[]> => {
       x: monitor.workArea.position.x,
       y: monitor.workArea.position.y,
     }));
-  } catch {
+  } catch (error) {
+    // An empty result makes every visibility check answer "cannot prove it is lost", which
+    // turns the whole rescue into a silent no-op. That is exactly how a missing capability
+    // grant hid here for several releases, so never swallow the reason.
+    console.error("Failed to read monitor work areas", error);
+
     return [];
   }
 };

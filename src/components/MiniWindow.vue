@@ -8,6 +8,8 @@ import RollingAmount from "./RollingAmount.vue";
 import { maxMiniOpacityPercent, normalizeMiniOpacityPercent } from "../lib/window-mode";
 import type { MiniOpacityPanelAnchor } from "../lib/mini-opacity-position";
 import { useI18n } from "../composables/useI18n";
+import { useCurrency } from "../composables/useCurrency";
+import { withCurrencySymbol } from "../lib/currency";
 
 const props = defineProps<{
   amount: string;
@@ -16,6 +18,15 @@ const props = defineProps<{
 }>();
 
 const { t } = useI18n();
+const { currencySymbol } = useCurrency();
+
+// The mini window is a single control whose only content is aria-hidden digits, so the amount
+// has to live in its accessible name or it is invisible to a screen reader.
+const miniAriaLabel = computed(() =>
+  t.value("mini.ariaLabel", {
+    amount: withCurrencySymbol(currencySymbol.value, props.amount),
+  }),
+);
 
 const emit = defineEmits<{
   restore: [];
@@ -63,7 +74,7 @@ const handleOpacityMenu = (event: MouseEvent) => {
     class="mini-window"
     :class="{ 'is-opaque': isOpaque }"
     :style="panelStyle"
-    :aria-label="t('mini.ariaLabel')"
+    :aria-label="miniAriaLabel"
     role="button"
     tabindex="0"
     :title="t('mini.restoreTitle')"
