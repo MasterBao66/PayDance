@@ -51,7 +51,7 @@
     "@eslint/js": "^10.0.1",
     "@tailwindcss/vite": "^4.3.0",
     "@tauri-apps/cli": "^2.11.2",
-    "@types/node": "^25.9.1",
+    "@types/node": "^26.2.0",
     "@types/pngjs": "^6.0.5",
     "@vitejs/plugin-vue": "^6.0.7",
     "@vue/test-utils": "^2.4.10",
@@ -73,6 +73,6 @@
     "vue-tsc": "^3.3.2"
   },
   "overrides": {
-    "brace-expansion": "^5.0.8"
+    "brace-expansion": "^5.0.9"
   }
 }

@@ -106,13 +106,11 @@ export function validateSalaryConfig(
     const normalizedLunchStart = normalizeTimeInsideWorkWindow(lunchStart, start);
     const normalizedLunchEnd = normalizeBreakEnd(normalizedLunchStart, lunchEnd);
 
-    if (
-      !(
-        start < normalizedLunchStart &&
-        normalizedLunchStart < normalizedLunchEnd &&
-        normalizedLunchEnd < workEnd
-      )
-    ) {
+    if (!(
+      start < normalizedLunchStart &&
+      normalizedLunchStart < normalizedLunchEnd &&
+      normalizedLunchEnd < workEnd
+    )) {
       issues.push({
         field: "workTime",
         message: t(
