@@ -17,6 +17,9 @@ const dependabotSettings = dependabotConfig
   .split(/\r?\n/)
   .filter((line) => !line.trim().startsWith("#"))
   .join("\n");
+// Collapsed so adjacency can be asserted with plain substring matching; building
+// a RegExp from these names would reintroduce js/incomplete-sanitization.
+const collapsedDependabotSettings = dependabotSettings.replace(/\s+/g, " ");
 const versionedDesktopAssetName = `pay-dance-v${packageJson.version}-windows-x64.exe`;
 const desktopDownloadUrl = `https://github.com/MrBaoboer/PayDance/releases/latest/download/${versionedDesktopAssetName}`;
 const legacyAdditionalTermsReference = `see /${["ADDITIONAL_TERMS", "md"].join(".")}`;
@@ -90,10 +93,8 @@ describe("repository metadata", () => {
     expect(packageJson.devDependencies.typescript).toMatch(/^\^6\./);
     expect(packageJson.devDependencies["@types/node"]).toMatch(/^\^24\./);
     for (const name of ["typescript", '"@types/node"']) {
-      expect(dependabotSettings).toMatch(
-        new RegExp(
-          `dependency-name: ${name.replace(/[@/"]/g, "\\$&")}\\s+update-types:\\s+- version-update:semver-major`,
-        ),
+      expect(collapsedDependabotSettings).toContain(
+        `dependency-name: ${name} update-types: - version-update:semver-major`,
       );
     }
     expect(
