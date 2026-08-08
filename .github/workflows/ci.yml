@@ -161,7 +161,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Setup Rust
-        uses: dtolnay/rust-toolchain@29eef336d9b2848a0b548edc03f92a220660cdb8 # stable
+        uses: dtolnay/rust-toolchain@4360b52568e2003a75bf9bc1d59f33a8e3fc893c # stable
 
       - name: Cache Rust build
         uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
@@ -209,7 +209,11 @@ jobs:
       - name: Audit all npm dependencies
         run: npm audit --audit-level=high
 
+      # 后续审计步骤统一带 `if: '!cancelled()'`：任一审计失败时其余仍然执行，
+      # 一次 CI 就能拿到 npm / gitleaks / cargo-audit / cargo-deny 的完整结论，
+      # 而不是修完第一个才发现还有第二个。任一步失败该 job 依然是红的。
       - name: Install gitleaks (pre-built)
+        if: "!cancelled()"
         run: |
           version="8.30.1"
           url="https://github.com/gitleaks/gitleaks/releases/download/v${version}/gitleaks_${version}_linux_x64.tar.gz"
@@ -221,9 +225,11 @@ jobs:
           sudo mv gitleaks /usr/local/bin/
 
       - name: Run gitleaks (detect secrets in git history)
+        if: "!cancelled()"
         run: gitleaks detect --config .gitleaks.toml --verbose
 
       - name: Install cargo-audit (pre-built)
+        if: "!cancelled()"
         run: |
           version="0.22.2"
           url="https://github.com/rustsec/rustsec/releases/download/cargo-audit/v${version}/cargo-audit-x86_64-unknown-linux-gnu-v${version}.tgz"
@@ -234,10 +240,12 @@ jobs:
           sudo mv "cargo-audit-x86_64-unknown-linux-gnu-v${version}/cargo-audit" /usr/local/bin/
 
       - name: Audit Rust dependencies
+        if: "!cancelled()"
         run: cargo audit
         working-directory: src-tauri
 
       - name: Install cargo-deny (pre-built)
+        if: "!cancelled()"
         run: |
           version="0.20.2"
           url="https://github.com/EmbarkStudios/cargo-deny/releases/download/${version}/cargo-deny-${version}-x86_64-unknown-linux-musl.tar.gz"
@@ -248,6 +256,7 @@ jobs:
           sudo mv "cargo-deny-${version}-x86_64-unknown-linux-musl/cargo-deny" /usr/local/bin/
 
       - name: Check Rust dependency licenses and sources
+        if: "!cancelled()"
         run: cargo deny check
         working-directory: src-tauri
 

@@ -1,0 +1,106 @@
+# Dependabot 依赖更新配置
+# https://docs.github.com/code-security/dependabot/dependabot-version-updates
+#
+# 为什么是 Dependabot 而不是 Renovate：.github/renovate.json 从未被任何机器人执行过
+# （仓库里 app/renovate 活动数为 0）。Dependabot 是 GitHub 原生能力，合并本文件即生效，
+# 不需要安装任何 App。分组、标签、人工审核策略与 renovate.json 保持一致。
+#
+# 三个 ecosystem 都不开 automerge：升级 PR 必须过 CI 门禁并由人确认后再合。
+
+version: 2
+
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: Asia/Shanghai
+    labels:
+      - dependencies
+    open-pull-requests-limit: 10
+    commit-message:
+      prefix: chore(deps)
+      prefix-development: chore(deps-dev)
+    groups:
+      tauri:
+        patterns:
+          - "@tauri-apps/*"
+      vue:
+        patterns:
+          - vue
+          - vue-tsc
+          - "@vitejs/plugin-vue"
+          - "@vue/test-utils"
+          - eslint-plugin-vue
+          - eslint-plugin-vuejs-accessibility
+      build-tooling:
+        patterns:
+          - vite
+          - vitest
+          - happy-dom
+          - "@tailwindcss/vite"
+          - tailwindcss
+      linting:
+        patterns:
+          - eslint
+          - prettier
+          - typescript-eslint
+          - "@eslint/js"
+          - eslint-config-prettier
+    # 只挡主版本跳跃，6.x / 24.x 范围内的小版本照常提 PR。
+    # 解除封锁时删掉对应条目即可。
+    ignore:
+      # TypeScript 7 是原生移植版：vue-tsc 无法从中解析 tsc.js
+      # （ERR_PACKAGE_PATH_NOT_EXPORTED），typescript-eslint 直接抛
+      # "does not support TS 7.0" 拒绝启动。等两者宣布支持后删掉本条。
+      - dependency-name: typescript
+        update-types:
+          - version-update:semver-major
+      # @types/node 跟随运行时主版本：CI 与本地都是 Node 24 LTS，
+      # 类型版本超前会让编译期接受运行时并不存在的 API。
+      # 升级 CI 的 node-version 时同步放开本条。
+      - dependency-name: "@types/node"
+        update-types:
+          - version-update:semver-major
+
+  - package-ecosystem: cargo
+    directory: /src-tauri
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: Asia/Shanghai
+    labels:
+      - dependencies
+    open-pull-requests-limit: 10
+    commit-message:
+      prefix: chore(deps)
+    groups:
+      tauri:
+        patterns:
+          - tauri
+          - tauri-build
+          - "tauri-plugin-*"
+      rust-serde:
+        patterns:
+          - serde
+          - serde_json
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: Asia/Shanghai
+    labels:
+      - dependencies
+    open-pull-requests-limit: 10
+    commit-message:
+      prefix: chore(ci)
+    groups:
+      github-actions:
+        patterns:
+          - "*"

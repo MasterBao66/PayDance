@@ -49,7 +49,16 @@
     {
       "matchPackageNames": ["typescript"],
       "groupName": "TypeScript",
-      "groupSlug": "typescript"
+      "groupSlug": "typescript",
+      "allowedVersions": "<7",
+      "description": "TypeScript 7 是原生移植版：vue-tsc 无法从中解析 tsc.js，typescript-eslint 直接拒绝启动。等两者宣布支持 TS 7 后再放开此上限。"
+    },
+    {
+      "matchPackageNames": ["@types/node"],
+      "groupName": "Node types",
+      "groupSlug": "node-types",
+      "allowedVersions": "<25",
+      "description": "锁定在运行时主版本上：CI 与本地均使用 Node 24 LTS，类型版本超前会让编译期接受运行时不存在的 API。"
     },
     {
       "matchPackageNames": ["@lucide/vue"],
