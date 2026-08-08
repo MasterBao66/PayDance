@@ -12,6 +12,7 @@
 - 更新与发布链路加固：更新器区分开发配置缺失、正式版签名失败、清单异常和网络失败；Release dry-run 增加本次构建产物烟测，发布后烟测不再把 dry-run 误判为公开 Release 验证。
 - Web Preview 与可访问性修复：语言切换同步 HTML `lang`，更新角标改为语义按钮。
 - 供应链、品牌与许可基线治理：`cargo audit`、`cargo deny`、gitleaks、依赖锁定、元数据测试、官方素材边界和中英文镜像文档。
+- CI 安全工具的下载全部带 SHA256 校验：gitleaks 此前只下载不校验，现已补齐，三个预编译工具（gitleaks、cargo-audit、cargo-deny）的版本与校验和一并升级到当前版本。
 - 首次体验与设置恢复：移动端首次向导 Footer 固定可见，Web Preview 每次默认打开完整看板；损坏或未来版本设置会静默按项修复并写回。
 - 发布与供应链自动化：Rust 核心更新逻辑已有真实单元测试；Release 会执行 Windows EXE 自动启动冒烟、单实例检查并生成 SPDX SBOM；CodeQL 已覆盖 TypeScript 与 Rust，GitHub Actions 全部固定到 Commit SHA。
 - 官网发现性：分享图改为三步设置海报，页面标题与结构化数据调整为 Windows 桌面效率工具语义。
@@ -34,7 +35,7 @@
 - Authenticode 代码签名，降低 Windows SmartScreen 误报。
 - 迷你悬浮窗口右键菜单：透明度、重置位置、恢复主窗口。
 - 继续扩展只能在真实 Windows 会话验证的能力：系统托盘点击、重启后自启动和真实休眠恢复。
-- 更新签名真实验签与 gitleaks 下载校验。
+- 更新签名真实验签。
 - 发布经过产品边界审核的用户可见新手任务，形成公开反馈闭环。
 
 ## 以后

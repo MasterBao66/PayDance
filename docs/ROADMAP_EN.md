@@ -12,6 +12,7 @@ This document records PayDance's development direction. It is not a release-date
 - Stronger updater and release chain: updater errors now distinguish missing development config, production signature failures, invalid manifests, and network failures; Release dry-runs include smoke checks for the current build artifacts, while post-release smoke no longer mistakes dry-runs for published Release verification.
 - Web Preview and accessibility fixes: locale switching now syncs the HTML `lang` attribute, and updater badges use semantic buttons.
 - Supply-chain, brand, and licensing baseline governance: `cargo audit`, `cargo deny`, gitleaks, locked dependencies, metadata tests, official asset boundaries, and bilingual documentation mirrors.
+- Every CI security tool download is now SHA256-verified: gitleaks was previously downloaded without any checksum. All three pre-built tools (gitleaks, cargo-audit, cargo-deny) were upgraded along with their checksums.
 - First-run and settings recovery: the mobile onboarding footer stays visible, Web Preview always opens in the full dashboard, and damaged or future-version settings are silently repaired field by field and written back.
 - Release and supply-chain automation: real Rust unit tests cover update helpers; Release runs an automated Windows EXE launch smoke and single-instance check, generates an SPDX SBOM, and CodeQL analyzes TypeScript and Rust. All GitHub Actions are pinned to commit SHAs.
 - Website discovery: the sharing image now uses the three-step setup poster, while the title and structured data describe a Windows desktop utility more accurately.
@@ -34,7 +35,7 @@ This document records PayDance's development direction. It is not a release-date
 - Authenticode code signing to reduce Windows SmartScreen warnings.
 - Mini floating-window context menu: opacity, reset position, and restore main window.
 - Continue coverage that requires a real Windows session: system-tray clicks, autostart after reboot, and actual sleep/resume.
-- Add real updater signature verification and gitleaks download checksum verification.
+- Add real updater signature verification.
 - Publish product-boundary-reviewed, user-visible starter tasks and build a public feedback loop.
 
 ## Later
