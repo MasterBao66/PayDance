@@ -48,9 +48,15 @@ The Release workflow also runs `scripts/smoke-windows-exe.ps1` to confirm that t
 - Product features, bug fixes, dependency upgrades, release workflows, and security-related changes should normally use a PR and wait for CI and CodeQL.
 - Documentation-only changes still report `CI gate` and `CodeQL gate`, while CodeQL skips the expensive JavaScript and Rust analysis jobs.
 
-## Renovate
+## Dependency Updates
 
-- Configuration lives in `.github/renovate.json`; validate it with `npx --yes --package renovate renovate-config-validator .github/renovate.json`.
-- Renovate runs immediately with unlimited concurrent PRs and mandatory human merge assessment. Automerge is disabled.
-- Public evidence of a working hosted app is a Renovate PR or a `Dependency Dashboard` Issue. A config file alone does not prove installation.
-- After the configuration reaches `main`, confirm the Dashboard and first PR batch immediately. If nothing appears, reconfirm repository access in the GitHub App settings.
+- **Dependabot is the live automation.** Configuration lives in `.github/dependabot.yml` and covers the npm, cargo, and github-actions ecosystems, checking every Monday at 09:00 Asia/Shanghai. Grouping and human-review policy mirror renovate.json; automerge is disabled.
+- `.github/renovate.json` is kept but **has never run**. Verified on 2026-08-08: the repository shows zero activity from `app/renovate`, no historical PR came from it, and issue #25 "Dependency Dashboard" is a hand-written placeholder rather than renovate[bot] output. The previous note — a config file alone does not prove installation — was correct but nobody ever checked.
+- If the Renovate hosted app is genuinely installed later, delete `.github/dependabot.yml` at the same time, otherwise both bots will raise duplicate PRs.
+- Upgrades that are deliberately held back live in three places that must stay in sync: the `ignore` block in `dependabot.yml`, `allowedVersions` in `renovate.json`, and the "keeps the upgrades that are blocked upstream pinned with a reason" test in `scripts/repository-metadata.test.js`. Two entries today: `typescript` is held at 6.x (TypeScript 7 is the native port — vue-tsc cannot resolve `tsc.js` from it and typescript-eslint refuses to load), and `@types/node` is held at 24.x to track the runtime major.
+- **October 2026 follow-up**: once Node 26 reaches LTS, move every CI `node-version` to 26, lift the `@types/node` major block, and drop the matching test assertion.
+
+## Local Toolchain Alignment
+
+- CI uses Rust `stable`. A lagging local toolchain makes `cargo clippy -D warnings` disagree with CI. Run `rustup check` to see the gap and `rustup update stable` to close it.
+- `npm run verify:release` invokes the **local** cargo-audit and cargo-deny, while CI installs pinned versions. When the two differ, the local result does not count — realign with `cargo install cargo-audit cargo-deny --locked`.

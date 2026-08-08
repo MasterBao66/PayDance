@@ -5,9 +5,9 @@
 
 use std::sync::Mutex;
 use tauri::{
+    App, AppHandle, Emitter, Listener, Manager, WebviewWindow, Window, WindowEvent,
     menu::MenuBuilder,
     tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent},
-    App, AppHandle, Emitter, Listener, Manager, WebviewWindow, Window, WindowEvent,
 };
 
 const TRAY_OPEN_SETTINGS_EVENT: &str = "tray-open-settings";
@@ -191,13 +191,12 @@ pub(crate) fn setup(app: &mut App) -> Result<(), tauri::Error> {
             let use_en = serde_json::from_str::<String>(event.payload())
                 .map(|locale| locale == "en")
                 .unwrap_or(false);
-            if let Ok(guard) = handle.state::<TrayState>().handle.lock() {
-                if let Some(tray) = guard.as_ref() {
-                    if let Ok(menu) = build_tray_menu(&handle, use_en) {
-                        let _ = tray.set_menu(Some(menu));
-                        let _ = tray.set_tooltip(Some(tray_tooltip(use_en)));
-                    }
-                }
+            if let Ok(guard) = handle.state::<TrayState>().handle.lock()
+                && let Some(tray) = guard.as_ref()
+                && let Ok(menu) = build_tray_menu(&handle, use_en)
+            {
+                let _ = tray.set_menu(Some(menu));
+                let _ = tray.set_tooltip(Some(tray_tooltip(use_en)));
             }
         });
     }

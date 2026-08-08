@@ -48,9 +48,15 @@ Release workflow 还会运行 `scripts/smoke-windows-exe.ps1`，自动确认便�
 - 程序功能、Bug 修复、依赖升级、发布流程和安全相关修改优先走 PR，并等待 CI 与 CodeQL 通过。
 - 纯文档变更仍保留 `CI gate` 与 `CodeQL gate`，但 CodeQL 会跳过耗时的 JavaScript 和 Rust 分析。
 
-## Renovate
+## 依赖更新
 
-- 配置位于 `.github/renovate.json`，可运行 `npx --yes --package renovate renovate-config-validator .github/renovate.json` 验证。
-- 当前采用立即检查、无限并发 PR、全部人工评估的模式；禁止 Renovate 自动合并。
-- Hosted App 正常运行的公开证据是 Renovate PR 或 `Dependency Dashboard` Issue；仅存在配置文件不等于机器人已经安装。
-- 配置合入 `main` 后应立即确认 Dashboard 和首轮 PR；没有活动时，在 GitHub App 设置中重新确认仓库授权。
+- **生效中的是 Dependabot**，配置位于 `.github/dependabot.yml`，覆盖 npm、cargo、github-actions 三个 ecosystem，每周一 09:00（Asia/Shanghai）检查，分组与人工评估策略照搬 renovate.json，不开自动合并。
+- `.github/renovate.json` 保留但**从未被执行过**：2026-08-08 查证，仓库内 `app/renovate` 活动数为 0，历史 PR 无一来自它，issue #25「依赖更新面板」是手写的占位 issue 而非 renovate[bot] 产出。上一条约定「仅存在配置文件不等于机器人已经安装」当时写对了，但一直没人去验证。
+- 若日后真的安装了 Renovate Hosted App，需同时删除 `.github/dependabot.yml`，否则两边会重复提 PR。
+- 被上游卡住、故意不升的依赖写在三处并保持同步：`dependabot.yml` 的 `ignore`、`renovate.json` 的 `allowedVersions`、以及 `scripts/repository-metadata.test.js` 里 “keeps the upgrades that are blocked upstream pinned with a reason”。当前有两条：`typescript` 锁在 6.x（TS 7 是原生移植版，vue-tsc 解析不到 `tsc.js`，typescript-eslint 拒绝加载），`@types/node` 锁在 24.x（跟随运行时主版本）。
+- **2026-10 待办**：Node 26 转为 LTS 后，把 CI 各处 `node-version` 推到 26，同步放开 `@types/node` 的 major 封锁并删掉对应测试断言。
+
+## 本地工具链对齐
+
+- CI 的 Rust 用 `stable`，本地落后会导致 `cargo clippy -D warnings` 的结论与 CI 不一致。定期 `rustup update stable`（含 `rustup check` 先看差距）。
+- `npm run verify:release` 调用的是**本地**的 cargo-audit / cargo-deny，而 CI 装的是固定版本。两边版本不一致时本地结论不作数，用 `cargo install cargo-audit cargo-deny --locked` 追平。
