@@ -227,8 +227,8 @@ describe("repository metadata", () => {
     expect(read(".github/CONTRIBUTING.md")).toContain("验收标准");
     expect(read(".github/CONTRIBUTING.md")).toContain("验证命令");
     expect(read("docs/CONTRIBUTING_EN.md")).toContain("user-visible result");
-    expect(read("docs/CONTRIBUTING_EN.md")).toContain("Acceptance criteria");
-    expect(read("docs/CONTRIBUTING_EN.md")).toContain("Verification command");
+    expect(read("docs/CONTRIBUTING_EN.md")).toMatch(/acceptance criteria/i);
+    expect(read("docs/CONTRIBUTING_EN.md")).toMatch(/verification command/i);
     expect(read(".github/ISSUE_TEMPLATE.md")).toContain("用户影响");
     expect(read(".github/ISSUE_TEMPLATE.md")).toContain("验收标准");
     expect(read(".github/ISSUE_TEMPLATE.md")).toContain("验证命令");
@@ -256,25 +256,24 @@ describe("repository metadata", () => {
     const contributing = read(".github/CONTRIBUTING.md");
     const githubBlobBase = "https://github.com/MrBaoboer/PayDance/blob/main";
 
-    expect(contributing).toContain(
-      `[CODE_OF_CONDUCT.md](${githubBlobBase}/CODE_OF_CONDUCT.md)`,
-    );
-    expect(contributing).toContain(
-      `[docs/MAINTAINERS.md](${githubBlobBase}/docs/MAINTAINERS.md)`,
-    );
-    expect(contributing).toContain(
-      `[docs/GOVERNANCE.md](${githubBlobBase}/docs/GOVERNANCE.md)`,
-    );
-    expect(contributing).toContain(
-      `[docs/MAINTENANCE.md](${githubBlobBase}/docs/MAINTENANCE.md)`,
-    );
+    for (const path of [
+      "CODE_OF_CONDUCT.md",
+      "docs/MAINTAINERS.md",
+      "docs/GOVERNANCE.md",
+      "docs/MAINTENANCE.md",
+    ]) {
+      expect(contributing).toContain(`${githubBlobBase}/${path}`);
+    }
     expect(contributing).not.toContain("github.com/MrBaoboer/PayDance/blob/docs/");
   });
 
-  it("keeps issue template version hints aligned with the current release line", () => {
-    const currentVersion = `v${packageJson.version}`;
-    expect(read(".github/ISSUE_TEMPLATE.md")).toContain(currentVersion);
-    expect(read(".github/ISSUE_TEMPLATE/bug_report.yml")).toContain(currentVersion);
+  it("keeps issue templates independent of the current release version", () => {
+    const blankIssue = read(".github/ISSUE_TEMPLATE.md");
+    const bugReport = read(".github/ISSUE_TEMPLATE/bug_report.yml");
+
+    expect(blankIssue).not.toMatch(/v\d+\.\d+\.\d+/);
+    expect(bugReport).toContain("vX.Y.Z");
+    expect(bugReport).not.toContain(`v${packageJson.version}`);
   });
 
   it("keeps repository markdown links resolvable after documentation moves", () => {
@@ -304,20 +303,12 @@ describe("repository metadata", () => {
     expect(config).not.toContain("PayDance#");
   });
 
-  it("keeps brand asset documentation Chinese-first with English mirrors", () => {
+  it("keeps official brand asset documentation Chinese-first with an English mirror", () => {
     expect(read("docs/brand/official.md")).toContain("# 官方品牌资产");
     expect(read("docs/brand/official.md")).toContain(
       "> [English version →](official_EN.md)",
     );
     expect(read("docs/brand/official_EN.md")).toContain("# Official Brand Assets");
-
-    expect(read("docs/brand/community-placeholder.md")).toContain("# 社区占位资产");
-    expect(read("docs/brand/community-placeholder.md")).toContain(
-      "> [English version →](community-placeholder_EN.md)",
-    );
-    expect(read("docs/brand/community-placeholder_EN.md")).toContain(
-      "# Community Placeholder Assets",
-    );
   });
 
   it("keeps maintainer contact guidance on the public GitHub profile email", () => {
@@ -367,7 +358,9 @@ describe("repository metadata", () => {
     ];
 
     expect(read("README.md")).toContain("网页端，含所有核心功能");
-    expect(read("docs/README_EN.md")).toContain("Browser-based, all core features");
+    expect(read("docs/README_EN.md")).toContain(
+      "Try the interface and salary calculations in a browser",
+    );
     expect(read("docs/ROADMAP.md")).toContain("长期排除方向");
     expect(read("docs/ROADMAP_EN.md")).toContain("Long-Term Exclusions");
 

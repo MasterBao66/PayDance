@@ -2,58 +2,61 @@
 
 > [中文版 →](ARCHITECTURE.md)
 
-## Runtime Shape
+## Runtime Boundaries
 
 ```mermaid
 flowchart LR
-  User["User action"] --> Vue["Vue UI and composables"]
-  Vue --> Salary["Salary calculation core"]
-  Vue --> Settings["Settings and migration"]
-  Vue --> Platform["Platform adapters"]
-  Platform --> Web["Web Preview / localStorage"]
-  Platform --> Tauri["Tauri desktop capabilities"]
-  Tauri --> Tray["Tray and windows"]
-  Tauri --> Update["Portable updater"]
+  Entry["main.ts / App.vue"] --> Target["#runtime-app"]
+  Target --> Desktop["DesktopApp.vue"]
+  Target --> Web["WebPreviewApp.vue"]
+  Desktop --> Shared["components / composables"]
+  Web --> Preview["Web Preview page and simulated state"]
+  Preview --> Shared
+  Shared --> Salary["lib/salary calculation core"]
+  Shared --> Adapters["platform adapters"]
+  Adapters --> Browser["*.web.ts / localStorage"]
+  Adapters --> Tauri["Tauri plugins"]
+  Desktop --> Window["desktop window logic"]
+  Tauri --> Rust["tray.rs / portable_update.rs"]
 ```
 
-- `src/lib/salary/`: pure salary calculation for monthly, daily, hourly, lunch, overnight, and workday rules.
-- `src/composables/`: application behavior that combines calculation, settings, window state, and UI state.
-- `src/components/`: Vue UI shared by desktop and Web Preview.
-- `src/platform/`: the Web/Tauri boundary; Web adapters must not import Tauri modules.
-- `src/web-preview/`: website page, browser-side state, and section stylesheets.
-- `src-tauri/src/tray.rs`: tray menu, localization, and tray actions.
-- `src-tauri/src/portable_update.rs`: Windows portable update flow.
-- `src-tauri/src/lib.rs`: plugin and command registration plus startup wiring only.
+- `src/App.vue` uses the Vite `#runtime-app` alias to select the desktop or Web Preview entry point.
+- `src/lib/salary/` is the pure salary-calculation core; `src/lib/salary.ts` only exports its public API.
+- `src/composables/` owns application behavior for settings, time, themes, and windows. Desktop window composables may depend on Tauri.
+- `src/components/` contains the dashboard, settings, onboarding, mini window, and related UI.
+- `src/web-preview/` contains the website, browser-side interaction simulation, and section styles.
+- `src/platform/` provides target adapters for settings storage, external links, and updates. Web builds select the `*.web.ts` variants.
+- `src-tauri/src/tray.rs` handles the tray, single-instance wake-up, and main-window destruction.
+- `src-tauri/src/portable_update.rs` handles Windows portable updates. `src-tauri/src/lib.rs` only wires plugins, commands, and startup modules.
 
-## Data Flow
+## Main Data Flow
 
-1. `useSalarySettings.ts` loads configuration from the platform settings store.
-2. `settings-migration.ts` normalizes legacy or corrupt values, falling back to defaults only where needed.
-3. `useSalaryTicker.ts` drives salary snapshots with a monotonic wall clock.
-4. `src/lib/salary/` calculates earnings, progress, and the next state transition.
-5. `useDashboardModel.ts` turns calculation results into display text.
-6. Window mode, position, and opacity persist through their own composables and never enter the salary core.
+1. Vite selects the runtime entry point and platform adapters from the build mode.
+2. `useSalarySettings.ts` loads settings from Tauri Store or `localStorage`.
+3. `settings-migration.ts` repairs salary settings, while `window-mode.ts` normalizes window preferences.
+4. `useSalaryTicker.ts` obtains time from the hybrid monotonic clock and calls `src/lib/salary/` to calculate earnings, progress, and the next state transition.
+5. `useDashboardModel.ts` converts calculation results into UI state and copy.
+6. Desktop windows, tray behavior, autostart, and updates remain in composables, platform adapters, and Rust; they do not enter the salary core.
 
 ## Change Map
 
-| Change | Primary ownership | Minimum checks |
+| Change | Primary location | Minimum validation |
 |---|---|---|
-| Salary rules, lunch, overnight shifts | `src/lib/salary/` | `npm test -- src/lib/salary` |
-| Settings fields or migration | `src/lib/settings-migration.ts`, `src/composables/useSalarySettings.ts` | `npm test -- settings` |
-| Main window or settings UI | `src/components/` | `npm test`, `npm run build:desktop` |
-| Website layout or CSS | `src/web-preview/` | `npm run build:web`, `npm run qa:web-preview` |
-| Tray or desktop window behavior | `src-tauri/src/tray.rs`, `src/composables/useWindowMode.ts` | `cargo test`, focused Vitest |
-| Autostart | `src/lib/autostart.ts` | `npm test -- autostart` |
-| Updates and releases | `src-tauri/src/portable_update.rs`, `.github/workflows/release.yml` | `npm run verify:release` |
-| Dependency updates | `.github/dependabot.yml` (when changing a hold, sync `scripts/repository-metadata.test.js`) | `npm run verify:metadata` |
+| Salary rules, lunch, or overnight shifts | `src/lib/salary/` | `npm test -- src/lib/salary` |
+| Salary settings or migration | `src/lib/settings-migration.ts`, `src/lib/settings-store.ts`, `src/composables/useSalarySettings.ts` | `npm test -- src/lib/settings-migration.test.ts src/composables/useSalarySettings.test.ts` |
+| Window size, position, or mini mode | `src/lib/window-mode.ts`, `src/composables/useWindow*.ts` | `npm test -- src/lib/window-mode.test.ts src/composables/useWindowMode.test.ts src/composables/useWindowPositionRecovery.test.ts` |
+| Main window, settings, or onboarding | `src/components/`, `src/styles/`, `src/DesktopApp.vue` | `npm test`, `npm run build:desktop` |
+| Web Preview page, routing, or styles | `src/web-preview/`, `src/WebPreviewApp.vue`, `index.html`, `en/index.html` | `npm run build:web`, `npm run qa:web-preview` |
+| Tray, single instance, or Rust window events | `src-tauri/src/tray.rs`, `src-tauri/src/lib.rs` | `cargo test --manifest-path src-tauri/Cargo.toml`, focused Vitest |
+| Autostart | `src/lib/autostart.ts`, `src/composables/useAutostart.ts` | `npm test -- autostart` |
+| Portable updates and releases | `src/platform/updater.ts`, `src-tauri/src/portable_update.rs`, `.github/workflows/release.yml` | `npm run verify:release` |
+| Dependencies or workflow metadata | `package.json`, `src-tauri/Cargo.toml`, `.github/` | `npm run verify:metadata` |
 
-## Important Boundaries
+## Required Boundaries
 
-- Salary calculations stay pure and cannot read window, storage, or Tauri APIs.
-- Web Preview accesses browser capabilities only through `*.web.ts` adapters.
-- Every persisted field starts with a migration test; old settings must never block launch.
-- `src/web-preview/web-preview.css` imports CSS sections in a fixed order; order changes require visual regression QA.
-- The Rust entrypoint does not own tray or updater implementation details.
-- Automation cannot reliably prove real sleep/resume, system-tray clicks, or post-reboot autostart. Release smoke testing still covers them manually.
+- Salary calculations must not read storage, window, or Tauri APIs.
+- Vite aliases and platform adapters isolate target differences. Web builds must not contain the desktop entry point or Tauri runtime code.
+- Import order in `src/web-preview/web-preview.css` affects the cascade; run Web Preview QA after changing it.
+- Tray and portable-updater implementation stays in dedicated Rust modules, not `src-tauri/src/lib.rs`.
 
-Before changing the UI, read [DESIGN.md](DESIGN.md) (Chinese only) — it constrains the visual direction of the main window, mini floating window, settings, and Web Preview.
+UI changes follow [DESIGN.md](DESIGN.md) (Chinese only). Release and persistence rules are in [MAINTENANCE_EN.md](MAINTENANCE_EN.md).

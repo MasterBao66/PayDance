@@ -2,23 +2,24 @@
 
 > [中文版 →](MAINTAINERS.md)
 
-PayDance is maintained by one person. Decision rules live in [Governance](GOVERNANCE_EN.md).
+See [Governance](GOVERNANCE_EN.md) for decision rules.
 
 ## Current Maintainer
 
 - Mr.Baoboer / MrBaoboer
-- GitHub profile: <https://github.com/MrBaoboer>
+- GitHub: <https://github.com/MrBaoboer>
 
-## Response Priorities
+## Triage Order
 
-- Security reports: handled under the [Security Policy](SECURITY_EN.md).
-- Reproducible bugs: reviewed ahead of feature requests.
-- Pull requests: scoped, fully verified changes that fit the [Product Boundaries](PRODUCT_EN.md) come first; see the [Contributing Guide](CONTRIBUTING_EN.md) for the requirements.
+1. Security reports submitted privately under the [Security Policy](SECURITY_EN.md)
+2. Reproducible bugs affecting the currently supported surfaces
+3. Focused pull requests with relevant verification complete that fit the [Product Boundaries](PRODUCT_EN.md)
+4. Feature requests and other discussions
 
-There is no fixed response-time promise.
+The project has a single maintainer and does not promise a fixed response time.
 
-## Release Cadence
+## Releases
 
-There is no fixed release train. A release is cut once a coherent set of changes has been verified.
+There is no fixed release cadence; a release ships once a complete, fully verified set of changes has accumulated.
 
-Every release must first pass CI, Web Preview QA, the desktop smoke checks, and release metadata checks.
+Before release, run `npm run verify:release`, complete Web Preview QA and the [Windows desktop smoke checklist](desktop-smoke-checklist_EN.md), and pass the required GitHub checks. See [Maintenance](MAINTENANCE_EN.md) for details.

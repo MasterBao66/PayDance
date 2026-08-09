@@ -2,11 +2,11 @@
 
 > [中文版 →](TRADEMARK.md)
 
-This policy protects "薪跳 PayDance" as an official independent product and helps prevent users from confusing modified, rebranded, or third-party distributions with the official release. It does not change the code rights granted by `LICENSE`.
+This policy defines how PayDance names, marks, and official channels may be used and helps distinguish third-party versions from official releases. It does not change the code rights granted by `LICENSE`.
 
 ## Protected marks
 
-The following names, marks, and source-identifying elements are reserved by the project author, Mr.Baoboer:
+The following names, marks, and source-identifying elements are reserved by the author, Mr.Baoboer:
 
 - **"薪跳"**
 - **"PayDance"**
@@ -15,7 +15,7 @@ The following names, marks, and source-identifying elements are reserved by the 
 - Official marketing posters, social preview images, and website visual identity
 - Complete product visual composition visible in official screenshots
 - Official GitHub repository, Vercel primary website, GitHub Pages mirror, Release download channels, update endpoints, and signed release chain
-- Application identifiers, package metadata, and official release asset names that identify official versions
+- Application identifiers, package metadata, and release asset names that identify official versions
 
 ## Permitted factual uses
 
@@ -26,21 +26,21 @@ You may, without prior written permission:
 - Refer to "薪跳" or "PayDance" in discussions, reviews, tutorials, news, academic materials, or security reports
 - Reproduce the names where necessary to preserve license, copyright, and source notices
 
-These uses must be clear and accurate, and must not imply official endorsement, partnership, or certification.
+These uses must be clear and accurate and must not imply official endorsement, partnership, or certification.
 
 ## Uses requiring prior written permission
 
 Without explicit prior written permission, you may not:
 
-- Publish a modified version or derivative product under "薪跳", "PayDance", "薪跳 PayDance", or confusingly similar names
+- Publish a modified version or derivative product under "薪跳", "PayDance", "薪跳 PayDance", or a confusingly similar name
 - Use the official logo, application icon, tray icon, posters, or website visuals as the identity of a modified product
-- Use official release channels, update endpoints, signing chains, or release asset naming to distribute modified versions
+- Distribute modified versions through official release channels, update endpoints, signing chains, or release asset naming
 - State or imply that a modified version is produced, approved, sponsored, certified, or endorsed by Mr.Baoboer or the PayDance project
-- Use PayDance branding to market unrelated products, services, courses, communities, or commercial activities
+- Use PayDance branding to promote unrelated products, services, courses, communities, or commercial activities
 
 ## Minimum distinction requirements for modified versions and forks
 
-If you distribute a modified version, binary build, installer, portable executable, or hosted version, ordinary users must be able to clearly distinguish it from official PayDance. In practice, replace or modify at least:
+When distributing a modified version, binary build, installer, portable executable, or hosted version, ordinary users must be able to distinguish it clearly from official PayDance. At a minimum, replace or modify:
 
 - Product name
 - Application icon and tray icon
@@ -49,13 +49,13 @@ If you distribute a modified version, binary build, installer, portable executab
 - Release asset names, installer names, and updater manifests
 - Any official-status wording in the README, About view, and legal notices
 
-Acceptable examples:
+Acceptable name examples:
 
 - `MySalary (based on PayDance)`
 - `工资助手 (forked from PayDance)`
-- `Acme Wage Board, based on PayDance`
+- `Acme Earnings Display, based on PayDance`
 
-Unacceptable examples:
+Unacceptable name or identity examples:
 
 - `PayDance Plus`
 - `薪跳 Pro`
@@ -64,10 +64,10 @@ Unacceptable examples:
 
 ## Official version statement
 
-Unless otherwise announced, only the `MrBaoboer/PayDance` repository, that repository's GitHub Releases, the `paydance.vercel.app` primary website, and the `mrbaoboer.github.io/PayDance` mirror represent official PayDance release channels. The canonical user-facing and search-facing website is `https://paydance.vercel.app/`.
+Unless otherwise announced, official PayDance release channels are limited to the [MrBaoboer/PayDance repository](https://github.com/MrBaoboer/PayDance), its [GitHub Releases](https://github.com/MrBaoboer/PayDance/releases), the [Vercel website](https://paydance.vercel.app/), and the [GitHub Pages mirror](https://mrbaoboer.github.io/PayDance/). The Vercel website is canonical.
 
 ## Authorization
 
-To use the PayDance name, logo, icon, visual assets, or official release channels beyond factual reference, contact via the email listed on the [author's GitHub profile](https://github.com/MrBaoboer) for written permission. Authorization is granted case by case and may include limits on scope, term, territory, and presentation.
+To use the PayDance name, logo, icon, visual assets, or official release channels beyond factual reference, request written permission through the email listed on the [author's GitHub profile](https://github.com/MrBaoboer). Permission is granted case by case and may carry scope, term, territory, and presentation limits.
 
-See also: `LICENSE`, `ADDITIONAL_TERMS_EN.md`, `BRAND-ASSETS_EN.md`.
+See also: [`LICENSE`](../LICENSE), [ADDITIONAL_TERMS_EN.md](ADDITIONAL_TERMS_EN.md), [BRAND-ASSETS_EN.md](BRAND-ASSETS_EN.md).

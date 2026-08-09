@@ -1,50 +1,46 @@
 name: 功能建议 / Feature Request
-description: 提出薪跳 PayDance 的功能、交互或平台适配建议 / Propose new features, UX improvements, or platform adaptations
+description: 提出功能、交互或平台适配建议 / Propose a feature, interaction, or platform adaptation
 title: "[Feature] "
 labels: ["enhancement"]
 body:
   - type: markdown
     attributes:
       value: |
-        欢迎提出建议。薪跳 PayDance 的核心边界是“桌面实时工资看板”：轻量、本地优先、低打扰。
-        Welcome! PayDance focuses on one core boundary: a desktop real-time wage board. Lightweight, local-first, low-distraction.
-
-        快捷键、提醒通知、历史图表、打卡考勤、账号同步等方向当前不在产品边界内；如果你的需求接近这些范围，请先说明为什么它仍服务于核心体验。
-        Shortcuts, notifications, historical charts, attendance tracking, and cloud sync are outside the product boundary. Explain why your request still aligns with core experience.
+        快捷键、提醒通知、历史图表、打卡考勤、账号同步等方向当前不在产品边界内；如果你的需求接近这些范围，请先说明为什么它仍服务于核心体验。完整边界见[产品边界](https://github.com/MrBaoboer/PayDance/blob/main/docs/PRODUCT.md)。
+        Shortcuts, notifications, historical charts, attendance tracking, and cloud sync are outside the product boundary. If your request is close to these, explain why it still serves the core experience. See the [Product Boundaries](https://github.com/MrBaoboer/PayDance/blob/main/docs/PRODUCT_EN.md) for the full list.
   - type: textarea
     id: problem
     attributes:
-      label: 需求场景 / Use Case
-      description: 你在什么情况下需要这个能力？现在的使用阻碍是什么？ / Describe the situation where this feature is needed and current obstacles.
-      placeholder: 例如：多显示器切换后，迷你悬浮窗口希望能更稳地回到原来的屏幕角落。 / Example: After switching monitors, I want the mini floating window to return reliably to its previous corner.
+      label: 使用场景 / Use Case
+      description: 你在什么情况下需要它？当前有什么阻碍？ / When do you need this, and what blocks you today?
     validations:
       required: true
   - type: textarea
-    id: proposal
+    id: outcome
     attributes:
-      label: 期望方案 / Proposed Solution
-      description: 你期待它如何工作？请尽量描述用户可见的行为，而不是只写实现方式。 / How should it work from a user perspective? Avoid only describing implementation.
+      label: 期望结果 / Desired Outcome
+      description: 说明用户可以看到或完成什么，不必限定实现方式。 / Describe what the user should see or accomplish without prescribing the implementation.
     validations:
       required: true
-  - type: textarea
-    id: alternatives
-    attributes:
-      label: 可接受的轻量替代方案 / Acceptable Lightweight Alternatives
-      description: 如果完整方案太重，是否有更小的做法也能解决主要问题？ / If a full implementation is heavy, what minimal alternatives might work?
   - type: dropdown
     id: surface
     attributes:
       label: 影响范围 / Surface
       options:
-        - Windows 桌面端 / Windows desktop app
-        - 平台适配建议 / Platform adaptation suggestion
+        - Windows 桌面版 / Windows desktop app
+        - 平台适配 / Platform adaptation
         - Web Preview
         - 首次配置或设置中心 / First-run setup or Settings
         - 构建、发布或文档 / Build, release, or docs
     validations:
       required: true
   - type: textarea
-    id: extra
+    id: platform
     attributes:
-      label: 补充信息 / Additional Context
-      description: 可以附草图、竞品参考或你希望避免的体验。 / Attach sketches, competitor references, or unwanted experiences.
+      label: 平台适配说明 / Platform Adaptation Details
+      description: "仅平台适配建议填写：目标系统、构建与验证方式、更新方式和可承担的维护范围。 / For platform adaptations only: target system, build and validation method, update method, and maintenance scope."
+  - type: textarea
+    id: evidence
+    attributes:
+      label: 补充材料 / Supporting Material
+      description: 可附脱敏后的草图、截图或相关链接。 / Add redacted sketches, screenshots, or relevant links.

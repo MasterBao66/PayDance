@@ -2,45 +2,83 @@
 
 > [中文版 →](web-preview-qa.md)
 
-The Web Preview QA flow checks that the storefront works in a real browser: the page renders, theme and language switching work, key copy is present, and primary layout bounds stay inside the viewport.
+Web Preview QA validates the website showcase's content, layout, themes, languages, accessibility, and visual baselines. `npm run qa:web-preview` starts a local Vite server and uses Playwright Chromium. The default URL is `http://127.0.0.1:4174/PayDance/`, and the script stops the server when it finishes.
 
-Headless Chrome, CDP, and command-line screenshots do not replace this flow: they have returned all-white captures while exiting successfully, so they are not a reliable release signal.
+Do not replace this workflow with ad hoc headless Chrome, CDP, or command-line screenshots. The repository script does use headless Chromium, but also runs DOM, interaction, accessibility, console, and pixel-difference assertions.
 
-## Validation Flow
+## Coverage
 
-1. Start the local Web Preview dev server and record the local URL.
-2. Open the page with the Playwright devDependency owned by this project; for special debugging environments, `PLAYWRIGHT_NODE_MODULES` can point to an external `node_modules`.
-3. Capture fixed viewports in both light and dark themes: desktop `1440x900`, medium `960x760`, and mobile `390x844`.
-4. Check the DOM: the page title, `Web Preview · appVersion`, software preview area, and mobile layout must remain present and stable.
-5. Run the real language-switching path: for local and GitHub Pages mirror QA, open `/PayDance/`, click `Switch to English`, and confirm navigation to `/PayDance/en/` with `data-locale="en"`; for the Vercel primary site smoke test, confirm the same language state through `/` and `/en/`. At both entries, check the page title, canonical URL, reciprocal `zh-CN` / `en` / `x-default` hreflang links, and JSON-LD language and build date.
-6. Use `@axe-core/playwright` for serious automated accessibility findings. This is not a full WCAG compliance claim.
-7. Collect console errors and page errors, and confirm there are no severe errors.
-8. Save screenshots and `summary.json` to a per-run directory under the system temp directory: `paydance-web-preview-qa-{version}-{commit}-{timestamp}`, rooted at `%LOCALAPPDATA%\Temp` locally and at `RUNNER_TEMP` in CI.
-9. Compare four canonical visual states: desktop and mobile for Chinese light mode and English dark mode.
-10. Stop the local service after validation so the port is not left occupied.
+The script validates every combination of:
 
-## Command
+- Chinese and English.
+- Light and dark themes.
+- `1440x900`, `960x760`, and `390x844` viewports.
+- Real mobile navigation from Chinese `/PayDance/` to English `/PayDance/en/`.
+
+Each combination checks:
+
+- The page title, canonical URL, `zh-CN` / `en` / `x-default` hreflang links, and JSON-LD.
+- Version, locale state, core copy, download action, software preview, and feature descriptions.
+- Key elements for overflow, overlap, unexpected wrapping, and vertical misalignment.
+- Stable first theme paint and consistent preview-window edges through repeated theme changes.
+- Critical or serious accessibility findings from `@axe-core/playwright`.
+- Browser console errors and page errors; any such error fails the run.
+
+Local and GitHub Pages routes use `/PayDance/` for Chinese and `/PayDance/en/` for English. The Vercel primary site uses `/` and `/en/`. This command accesses only the local server and does not validate either deployed site.
+
+## Run
+
+On the first run, install dependencies and Chromium:
+
+```powershell
+npm ci
+npx playwright install chromium
+```
+
+The script prefers Playwright from the project's `node_modules`. Use `PLAYWRIGHT_NODE_MODULES` to select another `node_modules` only when diagnosing an external runtime.
+
+Run QA:
 
 ```powershell
 npm run qa:web-preview
 ```
 
-Update baselines only after confirming that the visual change is intentional:
+If the default port is occupied, select another one for the run:
+
+```powershell
+$env:PAYDANCE_WEB_QA_PORT = 4175
+npm run qa:web-preview
+```
+
+## Visual Baselines
+
+Pixel comparison covers four fixed states:
+
+- Chinese light mode on desktop and mobile.
+- English dark mode on desktop and mobile.
+
+Minor antialiasing differences are ignored; more than `0.5%` changed pixels fails the run. Update baselines only after confirming that the visual change is intentional:
 
 ```powershell
 npm run qa:web-preview:update
 ```
 
-Normal QA never accepts new screenshots automatically. On a mismatch, the temporary evidence directory keeps the expected, actual, and diff images. `summary.json` records the run id, commit, current Chinese/English copy, screenshot paths, and visual comparison results.
+Normal QA never accepts new screenshots automatically.
+
+## Result Files
+
+Screenshots are stored in a per-run directory under the system temporary directory, typically `%LOCALAPPDATA%\Temp` on Windows and `RUNNER_TEMP` in CI:
+
+```text
+paydance-web-preview-qa-{version}-{commit}-{timestamp}
+```
+
+On success, `summary.json` in the same directory records the version, commit, local URL, observed Chinese and English page copy, screenshot paths, and visual comparisons. A failed visual comparison retains the expected, actual, and diff images.
 
 ## Passing Criteria
 
-- All three viewports have non-empty screenshots, with no overlapping text, overflowing buttons, or collapsed main content.
-- Chinese and English copy is read from the current DOM, not inferred from an old screenshot.
-- After entering in Chinese and clicking EN, the mirror path must become `/PayDance/en/`, the Vercel primary path must become `/en/`, and the root `data-locale` must become `en`.
-- Both entries must expose language-specific titles, canonicals, hreflang links, and JSON-LD.
-- There are no critical/serious axe automated accessibility violations.
-- After light/dark theme switching, the preview window edge has no obvious flash, color mismatch, or residue.
-- `summary.json` contains no severe console error or page error.
-- Canonical states ignore minor antialiasing noise and may differ from reviewed baselines by no more than `0.5%` of pixels; expected, actual, and diff images are retained on failure.
-- The local dev server exits after validation.
+- All 12 locale, theme, and viewport combinations plus the language-switch flow complete.
+- DOM, SEO, layout, theme-switching, and accessibility checks pass.
+- Each of the four fixed visual states stays within the `0.5%` pixel-difference budget.
+- There are no console errors or page errors.
+- The local server exits when the script finishes.
