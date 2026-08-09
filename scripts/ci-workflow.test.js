@@ -116,6 +116,20 @@ describe("CI workflow routing", () => {
     );
   });
 
+  // 商业 / OEM / 白标授权只有在权属链条完整时才成立，而无签署提交造成的
+  // 授权失效是静默的。DCO 必须留在 PR 门禁上，不能退回成纯文档约定。
+  it("gates pull requests on DCO sign-off without blocking maintainer pushes", () => {
+    const ciWorkflow = readRoot(".github/workflows/ci.yml");
+
+    expect(ciWorkflow).toContain("name: DCO sign-off");
+    expect(ciWorkflow).toContain("if: github.event_name == 'pull_request'");
+    expect(ciWorkflow).toContain("node scripts/check-dco.mjs");
+    expect(ciWorkflow).toContain("fetch-depth: 0");
+    expect(ciWorkflow).toContain("needs.dco.result");
+    // push 事件里该 job 是 skipped，gate 必须放行，否则 main 永远红。
+    expect(ciWorkflow).toContain('[ "$DCO_RESULT" != "skipped" ]');
+  });
+
   it("does not cancel main validation or deployment runs", () => {
     const ciWorkflow = readRoot(".github/workflows/ci.yml");
     const codeqlWorkflow = readRoot(".github/workflows/codeql.yml");

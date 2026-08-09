@@ -1,4 +1,4 @@
-blank_issues_enabled: false
+blank_issues_enabled: true
 contact_links:
   - name: 下载最新正式版 / Download Latest Release
     url: https://github.com/MrBaoboer/PayDance/releases/latest

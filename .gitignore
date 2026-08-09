@@ -23,3 +23,6 @@ paydance-updater-key.pub
 
 # AI 施工计划与设计稿只在本地留存，不进仓库
 /docs/superpowers/
+
+# README 产品截图暂只在本地留存，待确定是否纳入仓库
+/docs/screenshots/

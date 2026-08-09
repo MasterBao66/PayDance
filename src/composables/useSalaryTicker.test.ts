@@ -10,21 +10,19 @@ import { ref } from "vue";
 import { defaultSalaryConfig, emptySnapshot, type SalarySnapshot } from "../lib/salary";
 
 const calculateSalarySnapshotMock = vi.hoisted(() =>
-  vi.fn(
-    (): SalarySnapshot => ({
-      ...emptySnapshot,
-      dailySalary: 360,
-      earnedToday: 120,
-      hourlyRate: 45,
-      isWorking: true,
-      minuteRate: 0.75,
-      nextTransitionMs: 60_000,
-      progress: 0.33,
-      secondRate: 1,
-      status: "working",
-      workMsToday: 28_800_000,
-    }),
-  ),
+  vi.fn((): SalarySnapshot => ({
+    ...emptySnapshot,
+    dailySalary: 360,
+    earnedToday: 120,
+    hourlyRate: 45,
+    isWorking: true,
+    minuteRate: 0.75,
+    nextTransitionMs: 60_000,
+    progress: 0.33,
+    secondRate: 1,
+    status: "working",
+    workMsToday: 28_800_000,
+  })),
 );
 
 vi.mock("../lib/salary", async () => {

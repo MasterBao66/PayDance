@@ -89,7 +89,6 @@ function affectsSecurity(file) {
     file === "npm-shrinkwrap.json" ||
     file === ".gitleaks.toml" ||
     file === ".github/dependabot.yml" ||
-    file === ".github/renovate.json" ||
     file === SHARED_CI_WORKFLOW ||
     file === RELEASE_WORKFLOW ||
     file === CODEQL_WORKFLOW ||

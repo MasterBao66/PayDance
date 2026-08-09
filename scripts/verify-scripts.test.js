@@ -193,9 +193,10 @@ describe("verification scripts", () => {
     expect(qaGuide).toContain("PLAYWRIGHT_NODE_MODULES");
     expect(qaGuide).toContain("@axe-core/playwright");
     expect(qaGuide).toContain("不要用 headless Chrome、CDP 或命令行截图");
-    expect(qaGuide).toContain(
-      "C:\\Users\\mrbao\\AppData\\Local\\Temp\\paydance-web-preview-qa-{version}-{commit}-{timestamp}",
-    );
+    // 只钉运行目录的命名约定和两个环境根，不钉维护者本机的绝对路径。
+    expect(qaGuide).toContain("paydance-web-preview-qa-{version}-{commit}-{timestamp}");
+    expect(qaGuide).toContain("%LOCALAPPDATA%\\Temp");
+    expect(qaGuide).toContain("RUNNER_TEMP");
     expect(qaGuide).toContain("页面实际读取到的中英文文案");
     expect(qaGuide).toContain("截图路径和视觉比较结果");
   });

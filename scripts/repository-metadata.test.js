@@ -11,7 +11,14 @@ import { describe, expect, it } from "vitest";
 const repoRoot = resolve(import.meta.dirname, "..");
 const read = (path) => readFileSync(resolve(repoRoot, path), "utf8");
 const packageJson = JSON.parse(read("package.json"));
-const renovateConfig = JSON.parse(read(".github/renovate.json"));
+const dependabotConfig = read(".github/dependabot.yml");
+const dependabotSettings = dependabotConfig
+  .split(/\r?\n/)
+  .filter((line) => !line.trim().startsWith("#"))
+  .join("\n");
+// Collapsed so adjacency can be asserted with plain substring matching; building
+// a RegExp from these names would reintroduce js/incomplete-sanitization.
+const collapsedDependabotSettings = dependabotSettings.replace(/\s+/g, " ");
 const versionedDesktopAssetName = `pay-dance-v${packageJson.version}-windows-x64.exe`;
 const desktopDownloadUrl = `https://github.com/MrBaoboer/PayDance/releases/latest/download/${versionedDesktopAssetName}`;
 const legacyAdditionalTermsReference = `see /${["ADDITIONAL_TERMS", "md"].join(".")}`;
@@ -57,15 +64,27 @@ function resolveMarkdownLink(file, rawTarget) {
 }
 
 describe("repository metadata", () => {
-  it("keeps Renovate immediate, unlimited, and human-reviewed", () => {
-    expect(renovateConfig.dependencyDashboard).toBe(true);
-    expect(renovateConfig.automerge).toBe(false);
-    expect(renovateConfig.prConcurrentLimit).toBe(0);
-    expect(renovateConfig.prHourlyLimit).toBe(0);
-    expect(renovateConfig.schedule).toBeUndefined();
-    expect(
-      renovateConfig.packageRules.some((rule) => rule.automerge === true),
-    ).toBe(false);
+  it("keeps Dependabot covering every ecosystem and human-reviewed", () => {
+    for (const ecosystem of ["npm", "cargo", "github-actions"]) {
+      expect(dependabotConfig).toContain(`package-ecosystem: ${ecosystem}`);
+    }
+    expect(dependabotConfig).toContain("directory: /src-tauri");
+    expect(dependabotConfig).toMatch(/interval: weekly/);
+    // Comments mention automerge on purpose; only actual settings must not.
+    expect(dependabotSettings).not.toMatch(/automerge/i);
+  });
+
+  it("keeps the upgrades that are blocked upstream pinned with a reason", () => {
+    // TypeScript 7 breaks vue-tsc (ERR_PACKAGE_PATH_NOT_EXPORTED) and
+    // typescript-eslint refuses to load against it. @types/node must track the
+    // Node 24 LTS runtime that CI and local development both use.
+    expect(packageJson.devDependencies.typescript).toMatch(/^\^6\./);
+    expect(packageJson.devDependencies["@types/node"]).toMatch(/^\^24\./);
+    for (const name of ["typescript", '"@types/node"']) {
+      expect(collapsedDependabotSettings).toContain(
+        `dependency-name: ${name} update-types: - version-update:semver-major`,
+      );
+    }
   });
 
   it("keeps README desktop download links on the versioned Windows release executable", () => {
@@ -94,9 +113,7 @@ describe("repository metadata", () => {
     expect(englishReadme).not.toContain(
       '<a href="https://paydance.vercel.app/"><strong>Live Preview</strong></a>',
     );
-    expect(englishReadme).toContain(
-      'src="posters/poster-02-three-step-setup-en-v1.png"',
-    );
+    expect(englishReadme).toContain('src="posters/poster-02-three-step-setup-en-v1.png"');
     expect(existsInWorktree(posterPath)).toBe(true);
   });
 

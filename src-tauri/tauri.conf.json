@@ -60,6 +60,12 @@
   "bundle": {
     "active": true,
     "targets": [],
-    "createUpdaterArtifacts": true
+    "createUpdaterArtifacts": true,
+    "publisher": "Mr.Baoboer",
+    "homepage": "https://github.com/MrBaoboer/PayDance",
+    "shortDescription": "桌面实时工资看板",
+    "longDescription": "薪跳 PayDance 是一款桌面实时工资看板。配置薪资与上下班时间后，实时显示当日已赚金额。",
+    "copyright": "Copyright (C) 2026 Mr.Baoboer. Licensed under AGPL-3.0-only.",
+    "license": "AGPL-3.0-only"
   }
 }
