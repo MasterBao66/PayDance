@@ -2,8 +2,6 @@
 
 > [中文版 →](MAINTENANCE.md)
 
-This document records the recurring PayDance maintenance rules: what to keep in sync when changing settings, writing diagnostics, or preparing a release.
-
 ## Settings Migration
 
 - `settingsSchemaVersion` in `src/lib/settings-migration.ts` tracks the salary settings schema.

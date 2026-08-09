@@ -6,7 +6,7 @@
 <h1 align="center">PayDance 薪跳</h1>
 
 <p align="center">
-  Put "what you have earned today" on your desktop, and watch every second of it grow
+  Put "the money you are earning today" on your desktop, and watch it grow, second by second
 </p>
 
 <p align="center">
@@ -41,10 +41,10 @@ The main window shows today's earnings, work progress, time remaining, and daily
 
 ## Why Use It
 
-- **Earnings made visible** — Today's income is shown to 2 decimal places and keeps ticking, giving each workday a more tangible sense of value.
+- **Earnings made visible** — Today's income is shown to 2 decimal places and keeps ticking.
 - **Realistic work schedules** — Monthly, daily, and hourly pay convert automatically, with weekly workdays, lunch break exclusion, and overnight shifts supported.
 - **Mini floating mode** — Amount only, draggable, always-on-top, and adjustable from 10%–100% opacity. Double-click to restore the main window.
-- **Local-first privacy** — No accounts, no uploads, no telemetry. Your salary settings stay on your machine.
+- **Local-first privacy** — No accounts. Your salary settings stay on your machine.
 - **Bilingual UI** — Full Simplified Chinese and English coverage across the interface, tray menu, and validation messages.
 - **Windows 11 experience** — Frameless rounded windows, light/dark themes, system tray, auto-start, and silent background updates.
 
@@ -55,7 +55,7 @@ The main window shows today's earnings, work progress, time remaining, and daily
 | &nbsp; | Link | Notes |
 |:---:|:---:|:---:|
 | 🌐 | **[Live Preview](https://paydance.vercel.app/en/)** | Browser-based, all core features available, nothing to install |
-| ⬇️ | **[Windows Desktop](https://github.com/MrBaoboer/PayDance/releases/latest)** | Portable EXE with tray, pinning, mini float, auto-start |
+| ⬇️ | **[Windows Desktop](https://github.com/MrBaoboer/PayDance/releases/latest)** | Portable EXE with tray, always-on-top, mini float, and auto-start |
 
 </div>
 
@@ -75,7 +75,7 @@ Each release includes a SHA256 checksum file so you can verify the download.
 
 </div>
 
-The Web Preview and desktop app share the same core salary logic and frontend UI. The primary website is deployed on Vercel, while GitHub Pages can remain available as a repository mirror and release-validation entry.
+The Web Preview and desktop app share the same core salary logic and frontend UI.
 
 ## Development
 
@@ -128,7 +128,6 @@ PayDance requires no login, uploads no data, and includes no telemetry. All conf
 - [Product Positioning & Boundaries](PRODUCT_EN.md)
 - [Roadmap](ROADMAP_EN.md)
 - [Changelog](../CHANGELOG_EN.md)
-- [License & Legal](../legal/LEGAL_EN.md)
 
 ## License
 

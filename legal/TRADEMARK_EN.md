@@ -70,8 +70,4 @@ Unless otherwise announced, only the `MrBaoboer/PayDance` repository, that repos
 
 To use the PayDance name, logo, icon, visual assets, or official release channels beyond factual reference, contact via the email listed on the [author's GitHub profile](https://github.com/MrBaoboer) for written permission. Authorization is granted case by case and may include limits on scope, term, territory, and presentation.
 
-## Rationale
-
-AGPL-3.0-only protects software freedom: anyone can use, study, modify, and share the code. This trademark policy protects source clarity: when users see "薪跳" or "PayDance", they should be able to trust that it points to the official product maintained by the original author.
-
 See also: `LICENSE`, `ADDITIONAL_TERMS_EN.md`, `BRAND-ASSETS_EN.md`.

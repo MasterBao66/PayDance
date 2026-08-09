@@ -57,10 +57,6 @@ Build, test, and verification only. Not shipped in the distributed artifact.
 
 ## Rust direct dependencies
 
-See `src-tauri/Cargo.lock` for the full dependency tree and their respective
-licenses. `cargo deny check` enforces the license allowlist across that whole
-tree in CI.
-
 | Crate | License |
 |-------|---------|
 | `serde` | Apache-2.0 OR MIT |

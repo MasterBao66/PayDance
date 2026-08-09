@@ -2,7 +2,7 @@
 
 > [中文版 →](ROADMAP.md)
 
-This document records PayDance's development direction. It is not a release-date promise; it helps maintainers, contributors, and users quickly understand current priorities.
+This document records PayDance's development direction. It is not a release-date promise.
 
 ## Recently Completed
 
@@ -24,9 +24,8 @@ Where the product stands today. For the per-version detail, see the [CHANGELOG](
 ## Next
 
 - Authenticode code signing to reduce Windows SmartScreen warnings.
-- Mini floating-window context menu: opacity, reset position, restore main window.
+- Mini floating-window context menu: reset position, restore main window.
 - Extend coverage that only a real Windows session can validate: tray clicks, autostart after reboot, real sleep/resume.
-- Real updater signature verification.
 - Publish product-boundary-reviewed, user-visible starter tasks to build a public feedback loop.
 
 ## Later
@@ -35,4 +34,4 @@ Where the product stands today. For the per-version detail, see the [CHANGELOG](
 
 ## Long-Term Exclusions
 
-See the product boundaries in [PRODUCT_EN.md](PRODUCT_EN.md). Related proposals start with an Issue explaining why they still serve the core desktop real-time wage-board experience; for the submission process, see the [Contributing Guide](CONTRIBUTING_EN.md).
+See the product boundaries in [PRODUCT_EN.md](PRODUCT_EN.md). Related proposals start with an Issue explaining why they still serve the core experience of a desktop real-time salary dashboard; for the submission process, see the [Contributing Guide](CONTRIBUTING_EN.md).

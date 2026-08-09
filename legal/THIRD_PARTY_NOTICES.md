@@ -52,8 +52,6 @@ PayDance 依赖以下第三方软件和素材，各项均受各自许可条款�
 
 ## Rust 直接依赖
 
-完整依赖树及各自许可证见 `src-tauri/Cargo.lock`；`cargo deny check` 会在 CI 里对整棵树执行许可证白名单策略。
-
 | Crate | 许可证 |
 |-------|--------|
 | `serde` | Apache-2.0 OR MIT |

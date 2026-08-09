@@ -2,7 +2,7 @@
 
 > [中文版 →](FAQ.md)
 
-This page answers the most common questions before and after using PayDance. For product scope, see [PRODUCT_EN.md](PRODUCT_EN.md); for support and feedback paths, see [SUPPORT_EN.md](SUPPORT_EN.md).
+For product scope, see [PRODUCT_EN.md](PRODUCT_EN.md); for support and feedback paths, see [SUPPORT_EN.md](SUPPORT_EN.md).
 
 ## Product and Use Cases
 
@@ -26,7 +26,7 @@ From the [latest Release](https://github.com/MrBaoboer/PayDance/releases/latest)
 
 ### Why a portable EXE instead of an installer?
 
-A portable EXE runs straight after download and saves the cost of maintaining an installer. To remove it, delete the EXE and the local settings file.
+A portable EXE runs straight after download. To remove it, delete the EXE and the local settings file.
 
 ### How do I open the first-run wizard again?
 
@@ -44,7 +44,7 @@ No. The Web Preview keeps settings in browser `localStorage`; the desktop app us
 
 ### How is today's amount calculated?
 
-Choose monthly, daily, or hourly pay. PayDance turns your workdays, start and end times, and lunch-break setting into an effective work period for the day, then reads the current time against it — which is why the amount keeps rising during work hours.
+Choose monthly, daily, or hourly pay. PayDance turns your workdays, start and end times, and lunch-break setting into an effective work period for the day, then reads the current time against it.
 
 ### Is the lunch break paid?
 
@@ -52,7 +52,7 @@ It depends on your settings. With lunch-break exclusion on, the break is not cou
 
 ### Are night shifts and work past midnight supported?
 
-Yes. PayDance handles shifts that cross midnight, so today's progress and the ticking amount stay within a sensible boundary.
+Yes. PayDance handles shifts that cross midnight.
 
 ### Does the amount match my actual paycheck?
 
@@ -96,7 +96,7 @@ Yes, but a modified version must preserve the required legal notices, state that
 
 ### How do I report a bug?
 
-Use the repository's Bug Report form and include the version, system environment, reproduction steps, expected result, and actual result. Issues are public, so salary data and settings files do not need to be attached.
+Use the repository's Bug Report form; [SUPPORT_EN.md](SUPPORT_EN.md) lists what to include. Issues are public, so salary data and settings files do not need to be attached.
 
 ### What should I read before suggesting a feature?
 
@@ -105,7 +105,3 @@ Start with the product scope in [PRODUCT_EN.md](PRODUCT_EN.md). Describing the s
 ### Where can developers start?
 
 Read the [Contributing Guide](CONTRIBUTING_EN.md), then pick up an issue labeled `good first issue` or `help wanted`. Copy, documentation, tests, the release workflow, and Windows desktop reliability are all good entry points.
-
-### What should a platform-adaptation proposal include?
-
-The target system, build flow, validation scope, manual smoke items, update path, and the maintenance scope you can take on.

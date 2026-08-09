@@ -4,7 +4,7 @@
 
 ## Supported Versions
 
-Only the latest release receives security fixes. Older versions do not get separate security patches.
+Only the latest release receives security fixes.
 
 ## Supported Platforms
 
@@ -33,8 +33,6 @@ Include a description of the vulnerability, steps to reproduce, the affected ver
 PayDance is a local-first application. Salary figures, work schedules, and preferences stay in `salary-settings.json` under the local app data directory and are never sent to a remote server. That file contains personal information, so keep it private.
 
 Do not paste salary data, configuration files, logs, private keys, or signing keys into any public channel.
-
-If you find a vulnerability that could expose local configuration to unauthorized access, report it through the private channels above.
 
 ## Signing Key Compromise
 

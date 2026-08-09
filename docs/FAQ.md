@@ -2,7 +2,7 @@
 
 > [English version →](FAQ_EN.md)
 
-本文回答使用薪跳 PayDance 前后最常见的问题。产品边界见 [PRODUCT.md](PRODUCT.md)，故障与反馈路径见 [SUPPORT.md](SUPPORT.md)。
+产品边界见 [PRODUCT.md](PRODUCT.md)，故障与反馈路径见 [SUPPORT.md](SUPPORT.md)。
 
 ## 产品与适用场景
 
@@ -26,7 +26,7 @@
 
 ### 为什么是便携 EXE，而不是安装包？
 
-便携 EXE 下载即可运行，也省去安装器的维护成本。不再需要时，删除 EXE 和本地配置即可。
+便携 EXE 下载即可运行。不再需要时，删除 EXE 和本地配置即可。
 
 ### 如何重新进入首次启动向导？
 
@@ -44,7 +44,7 @@ Remove-Item "$env:APPDATA\com.masterbao.paydance\salary-settings.json"
 
 ### 今日入账是怎么算出来的？
 
-你可以选择月薪、日薪或时薪。PayDance 结合每周工作日、上下班时间和午休设置换算出当天的有效工作时段，再按当前时间给出今日入账，所以金额会在工作时间内持续增长。
+你可以选择月薪、日薪或时薪。PayDance 结合每周工作日、上下班时间和午休设置换算出当天的有效工作时段，再按当前时间给出今日入账。
 
 ### 午休时间会算进收入吗？
 
@@ -52,7 +52,7 @@ Remove-Item "$env:APPDATA\com.masterbao.paydance\salary-settings.json"
 
 ### 支持夜班或跨零点工作吗？
 
-支持。PayDance 会处理跨零点的夜班场景，让今日工作进度和收入跳动保持在合理边界内。
+支持。PayDance 会处理跨零点的夜班场景。
 
 ### 显示金额等于真实到账工资吗？
 
@@ -96,7 +96,7 @@ Windows 桌面版通过 Tauri Store 把配置保存在本机应用数据目录�
 
 ### 发现 Bug 怎么反馈？
 
-用仓库里的 Bug 反馈表单，写清版本、系统环境、复现步骤、期望结果和实际结果。Issue 是公开的，薪资数据和配置文件不需要附上。
+用仓库里的 Bug 反馈表单，需要提供的信息见 [SUPPORT.md](SUPPORT.md)。Issue 是公开的，薪资数据和配置文件不需要附上。
 
 ### 想提功能建议，先看什么？
 
@@ -105,7 +105,3 @@ Windows 桌面版通过 Tauri Store 把配置保存在本机应用数据目录�
 ### 开发者从哪里开始？
 
 先读 [贡献指南](../.github/CONTRIBUTING.md)，再从 `good first issue` 或 `help wanted` 标签的 Issue 入手。文案、文档、测试、发布流程和 Windows 桌面可靠性都是合适的切入点。
-
-### 平台适配建议需要提供哪些信息？
-
-目标系统、构建方式、验证范围、人工冒烟项、更新路径，以及你愿意维护的范围。

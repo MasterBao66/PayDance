@@ -2,7 +2,7 @@
 
 > [中文版 →](../.github/CONTRIBUTING.md)
 
-Thanks for your interest in PayDance. This project is intentionally small: it puts today's live earnings on the desktop in a calm, clear way. Please read the boundaries and workflow below before opening an Issue or PR.
+Thanks for your interest in PayDance. This project is intentionally small: it puts today's live earnings on the desktop in a calm, clear way.
 
 > **License in one sentence: Ordinary contributions only need a DCO sign-off; no CLA is required upfront.**
 
@@ -44,7 +44,7 @@ cargo deny check
 
 Push to `main` with `npm run push:main`; it decides the check scope from the paths being pushed. To verify without pushing, run `npm run verify:push`.
 
-Before a formal release, run `npm run verify:release` for the full path: desktop and Web builds, npm/Rust security audits, Rust formatting, compile checks, Clippy, and tests. Release audits depend on these local tools:
+Before a formal release, run `npm run verify:release`, which covers desktop and Web builds, npm/Rust security audits, Rust formatting, compile checks, Clippy, and tests. Release audits depend on these local tools:
 
 ```powershell
 cargo install cargo-audit --version 0.22.2 --locked
@@ -68,7 +68,7 @@ Changes we welcome:
 - Tests for clock changes, config migration, night shifts, and similar boundaries
 - Chinese/English copy, documentation, release workflow, and community templates
 
-PayDance is not a time tracker, personal finance manager, payroll system, attendance system, or task manager, and keyboard shortcuts, reminders, history charts, clock-in tracking, and cloud sync all sit outside its boundary. See [PRODUCT_EN.md](PRODUCT_EN.md) for the full scope.
+PayDance is not a time tracker, personal finance manager, payroll system, attendance system, or task manager. See [PRODUCT_EN.md](PRODUCT_EN.md) for the full scope.
 
 Small changes can go straight to a PR. Larger features, platform adaptations, or direction changes should start with an Issue describing the use case and its boundary — as should anything that feels borderline.
 
@@ -87,7 +87,7 @@ A claimed Issue may be released after seven days without a plan, commit, or prog
 
 1. **One change per PR.** Do not mix a bug fix, refactor, and documentation sweep.
 2. **Write tests.** New behavior needs coverage; bug fixes need a regression test.
-3. **Follow existing code style.** Prefer established patterns in the codebase.
+3. **Follow existing code style.**
 4. **Update [CHANGELOG.md](../CHANGELOG.md) and [CHANGELOG_EN.md](../CHANGELOG_EN.md)** under `## Unreleased`; for internal verification or tiny doc polish, note why it does not apply.
 5. **Include screenshots for UI changes**, covering at least light/dark mode and Chinese/English.
 6. **State the validation boundary for platform adaptations**: target OS, build command, manual smoke items, update endpoint, and brand-distinction approach.

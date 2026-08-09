@@ -2,8 +2,6 @@
 
 > [English version →](ARCHITECTURE_EN.md)
 
-本文不是技术栈介绍，而是一张“想改什么，去哪里改”的导航图。
-
 ## 运行结构
 
 ```mermaid

@@ -15,7 +15,7 @@ PayDance is maintained by one person. Decision rules live in [Governance](GOVERN
 - Reproducible bugs: reviewed ahead of feature requests.
 - Pull requests: scoped, fully verified changes that fit the [Product Boundaries](PRODUCT_EN.md) come first; see the [Contributing Guide](CONTRIBUTING_EN.md) for the requirements.
 
-There is no fixed response-time promise. Response quality and release quality come first.
+There is no fixed response-time promise.
 
 ## Release Cadence
 

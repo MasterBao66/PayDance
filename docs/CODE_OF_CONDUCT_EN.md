@@ -23,8 +23,8 @@ PayDance welcomes specific, respectful, evidence-backed discussion about the pro
 
 Reach the maintainer through the channels in [Support](SUPPORT_EN.md) or the [Security Policy](SECURITY_EN.md).
 
-The maintainer may remove comments, close discussions, reject contributions, or limit account participation. The point is not punishment; it is keeping discussion safe and focused.
+The maintainer may remove comments, close discussions, reject contributions, or limit account participation.
 
 ## Attribution
 
-Adapted from Contributor Covenant 2.1 and simplified for the way PayDance is maintained today.
+Adapted from Contributor Covenant 3.0.

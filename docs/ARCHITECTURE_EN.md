@@ -2,8 +2,6 @@
 
 > [中文版 →](ARCHITECTURE.md)
 
-This is not a tech-stack tour. It maps the change you want to make to the code that owns it.
-
 ## Runtime Shape
 
 ```mermaid

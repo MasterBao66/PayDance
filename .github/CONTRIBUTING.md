@@ -2,7 +2,7 @@
 
 > [English version →](https://github.com/MrBaoboer/PayDance/blob/main/docs/CONTRIBUTING_EN.md)
 
-感谢你愿意参与薪跳 PayDance。这个项目刻意保持很小：只做一件事，把“今天正在挣到的钱”安静、清楚地放在桌面上。提交 Issue 或 PR 前，请先了解下面的边界和流程。
+感谢你愿意参与薪跳 PayDance。这个项目刻意保持很小：只做一件事，把“今天正在挣到的钱”安静、清楚地放在桌面上。
 
 > **贡献许可一句话说明：普通贡献只需要 DCO 签署行，不需要提前签 CLA。**
 
@@ -68,7 +68,7 @@ gh auth login
 - 边界场景测试：时钟变化、配置迁移、夜班等
 - 中英文文案、文档、发布流程与社区模板
 
-薪跳 PayDance 不是时间追踪、个人财务、薪酬、考勤或任务管理工具，快捷键、提醒通知、历史图表、打卡考勤、云端同步都在边界之外，完整边界见 [PRODUCT.md](https://github.com/MrBaoboer/PayDance/blob/main/docs/PRODUCT.md)。
+薪跳 PayDance 不是时间追踪、个人财务、薪酬、考勤或任务管理工具，完整边界见 [PRODUCT.md](https://github.com/MrBaoboer/PayDance/blob/main/docs/PRODUCT.md)。
 
 小改动可以直接提 PR；较大功能、平台适配或方向调整先开 Issue 说明场景和边界，不确定的想法也可以先开 Issue 讨论。
 
@@ -87,7 +87,7 @@ gh auth login
 
 1. **一个 PR 只做一件事。** 不要把 Bug 修复、重构和文档整理混在一起。
 2. **写测试。** 新行为需要测试覆盖，Bug 修复需要回归测试。
-3. **沿用现有代码风格。** 代码库已有成熟模式，优先沿用。
+3. **沿用现有代码风格。**
 4. **更新 CHANGELOG.md 与 CHANGELOG_EN.md** 的 `## Unreleased` 区段；纯内部验证或文档微调可注明不适用。
 5. **UI 改动附截图**，至少覆盖浅色/深色和中文/英文。
 6. **平台适配说明验证边界**：目标系统、构建命令、人工冒烟项、更新端点和品牌区分方式。

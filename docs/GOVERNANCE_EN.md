@@ -8,7 +8,6 @@ The maintainer (see [Maintainers](MAINTAINERS_EN.md)) decides product scope, rel
 
 - Protect the core experience first: a local-first, low-distraction desktop real-time salary dashboard.
 - Prefer small, verifiable changes with a clear maintenance cost.
-- No accounts, telemetry, cloud sync, or salary-data uploads by default.
 - Windows release quality comes before platform breadth.
 - Feature scope follows the [Product Boundaries](PRODUCT_EN.md).
 
@@ -17,8 +16,6 @@ The maintainer (see [Maintainers](MAINTAINERS_EN.md)) decides product scope, rel
 UI, release-chain, updater, security, licensing, and brand changes need maintainer confirmation even when verification passes.
 
 The maintainer may close issues or pull requests that are out of scope, too risky, insufficiently verified, legally unclear, or too expensive to maintain.
-
-When an idea is worth discussing but not ready to build, the maintainer explains why and suggests a lighter alternative where one exists.
 
 ## Governance Changes
 

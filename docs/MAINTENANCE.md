@@ -2,8 +2,6 @@
 
 > [English version →](MAINTENANCE_EN.md)
 
-本文记录 PayDance 的日常维护规则：改配置、写日志、做发布前检查时，哪些事项必须同步处理。
-
 ## 配置迁移
 
 - `src/lib/settings-migration.ts` 里的 `settingsSchemaVersion` 记录薪资配置结构版本。

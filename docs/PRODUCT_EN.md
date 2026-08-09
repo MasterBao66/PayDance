@@ -2,11 +2,11 @@
 
 > [中文版 →](PRODUCT.md)
 
-This document defines PayDance's product positioning, capability boundaries, and trade-off principles so future releases do not drift away from the core experience of a desktop real-time wage board.
+This document defines PayDance's product positioning, capability boundaries, and trade-off principles.
 
 ## One-Sentence Positioning
 
-PayDance is a desktop real-time wage board that keeps today's earnings quietly on screen, ticking upward, ready to scan at a glance.
+PayDance is a desktop real-time salary dashboard that keeps today's earnings quietly on screen, ticking upward, ready to scan at a glance.
 
 ## Who It Is For
 
@@ -34,12 +34,11 @@ Every new feature answers one question first: does it help users see "the money 
 - The main window carries the full picture; the mini floating window carries a low-presence amount.
 - Salary rules stay close to real schedules: monthly, daily, and hourly modes, weekly workdays, lunch-break exclusion, and night shifts crossing midnight.
 - Local-first: salary and schedule settings stay on the device, with no login, cloud sync, telemetry, or ads.
-- Web Preview lowers the barrier to a first try; the Windows desktop app remains the complete product.
 - Salary details and settings are low-frequency entry points and never compete with the dashboard for attention.
 - Error messages stay concise, direct, and actionable.
 
 ## Platform Strategy
 
-The current official release and validation priority is Windows 11, and the desktop app carries the complete capability set: tray, always-on-top, transparent windows, mini floating mode, system materials, and autostart. The project uses Vue 3, TypeScript, and Tauri 2; Web Preview is the online entry point published on the Vercel primary site, with GitHub Pages serving as a repository mirror and release-validation entry.
+The current official release and validation priority is Windows 11, and the desktop app carries the complete capability set: tray, always-on-top, transparent windows, mini floating mode, system materials, and autostart. Web Preview is the online entry point published on the Vercel primary site, with GitHub Pages serving as a repository mirror and release-validation entry.
 
 This does not exclude macOS, Linux, or other platforms. Community contributors can start by submitting platform-adaptation proposals and validation results; before an official release, the build, validation, updater, and maintenance boundaries still need to be settled.

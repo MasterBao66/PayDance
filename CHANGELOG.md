@@ -2,7 +2,7 @@
 
 > [English version →](CHANGELOG_EN.md)
 
-本文记录薪跳 PayDance 的正式版本变化。README 面向新用户展示产品；完整版本演进和 GitHub Release 正文来源统一维护在这里。
+本文记录薪跳 PayDance 的正式版本变化，也是 GitHub Release 正文的来源。
 
 构建产物与校验文件见 [GitHub Releases](https://github.com/MrBaoboer/PayDance/releases)。
 
@@ -103,10 +103,10 @@
 ### v0.9.0
 
 - **多语言支持**：新增完整 i18n 基础设施（`vue-i18n` 轻量自主方案），支持简体中文与英文切换。设置中心新增语言选择器，所有 UI 文案、状态提示、校验错误均实现双语覆盖。
-- **许可证更新**：代码许可从 AGPL-3.0 更换为 GPL-3.0-only，明确商标保护声明（"薪跳""PayDance" 为作者商标），文档采用 CC-BY-4.0。新增英文 README，原中文 README 保留为 README_CN.md。
+- **许可证更新**：代码许可更换为 GPL-3.0-only，明确商标保护声明（"薪跳""PayDance" 为作者商标），文档采用 CC-BY-4.0。新增英文 README，原中文 README 保留为 README_CN.md。
 - **产品官网 SEO**：Web Preview 首页新增 Open Graph / Twitter Card / JSON-LD 结构化数据标签，补充 `robots.txt` 与 `sitemap.xml`，改善社交媒体分享预览与搜索引擎收录。
 - **自动更新机制**：接入 `tauri-plugin-updater`，应用启动时后台静默检查 GitHub Releases 最新版本。检测到新版本时，设置中心底部版本号旁出现橙色小箭头图标，点击即可下载安装并自动重启。
-- **设置中心改进**：修复"检查更新"按钮无样式问题，改为静默后台检查 + 版本号旁微小角标，符合产品安静克制的设计基调。
+- **设置中心改进**：修复"检查更新"按钮无样式问题，改为静默后台检查 + 版本号旁微小角标。
 - **迷你悬浮窗口**：aria-label 实现双语化，右键交互保持原有一致体验。
 - **代码质量**：重构 `WindowTitlebar` 状态判断（字符串比较 → `isWorkingStatus` 布尔 prop），`useAppUpdater` 增加 try/finally 防护，`UpdaterStatus` 新增 `unavailable` 状态统一 Web/Desktop 行为。
 - **工程自动化**：新增 Renovate 配置，npm + Cargo 依赖自动分组更新，补丁版本自动合并。
@@ -220,7 +220,7 @@
 ### v0.8.2
 
 - Web Preview 首屏大幅精简：删除无效“开始体验”锚点，保留 Windows 下载与 GitHub 两个核心入口。
-- 网页端产品橱窗新增左上角产品 Logo 与当前版本号展示，强化品牌识别与版本可信度。
+- 网页端产品橱窗新增左上角产品 Logo 与当前版本号展示。
 - Web Preview 三枚核心优势短标签重写为“实时入账 / 迷你悬浮 / 本地保存”，保留简短说明但避免重复解释。
 - 修复网页端进入迷你悬浮模式后仍占用主窗口尺寸的问题，迷你模式改为紧凑舞台展示。
 - 修复 Web Preview 深色模式主窗口背景透出网页背景的问题，网页预览窗口改为不透明应用背景。
@@ -465,7 +465,7 @@
 
 ### v0.5.7
 
-- 设置中心底部新增作者署名 `Mr.Baoboer`，强化产品归属与作者产权表达。
+- 设置中心底部新增作者署名 `Mr.Baoboer`。
 - 新增 GitHub 仓库入口按钮，点击后通过系统默认浏览器打开项目仓库。
 - 接入 Tauri opener 插件，外部链接不再占用应用 WebView。
 

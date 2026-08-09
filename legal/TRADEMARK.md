@@ -70,8 +70,4 @@
 
 如需在事实性引用范围之外使用 PayDance 名称、Logo、图标、视觉资产或官方发布渠道，请通过 [作者 GitHub 首页](https://github.com/MrBaoboer) 上公示的邮箱联系，获取书面授权。授权按个案审批，可附带范围、期限、地区和展示方式限制。
 
-## 设计理由
-
-AGPL-3.0-only 保障软件自由：任何人都可以使用、研究、修改和分享代码。商标政策保障来源清晰：用户看到“薪跳”或“PayDance”时，应能确信它指向原作者维护的官方产品。
-
 另见：`LICENSE`、`ADDITIONAL_TERMS.md`、`BRAND-ASSETS.md`。
