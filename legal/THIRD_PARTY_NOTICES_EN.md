@@ -1,15 +1,12 @@
 # Third-Party Notices
 
-PayDance depends on the following third-party software and assets. Each is
-governed by its own license terms.
+> [中文版 →](THIRD_PARTY_NOTICES.md)
 
-This file covers the **direct dependencies** declared in `package.json` and
-`src-tauri/Cargo.toml`. For the full transitive set, see `package-lock.json`,
-`src-tauri/Cargo.lock`, and the SPDX SBOM attached to every release.
+This file lists PayDance's direct dependencies and bundled assets. Each is governed by its own license terms.
 
-`npm run check:notices` compares the direct dependencies against this file in
-both directions: a new dependency that is not listed here, or a listed entry
-that is no longer a dependency, fails the check.
+Direct dependencies are defined in `package.json` and `src-tauri/Cargo.toml`. For the full transitive set, see `package-lock.json`, `src-tauri/Cargo.lock`, and the SPDX SBOM attached to every release.
+
+`npm run check:notices` compares direct dependencies with this file in both directions. Update both language versions whenever a dependency is added or removed.
 
 ## npm runtime dependencies
 
@@ -26,7 +23,7 @@ that is no longer a dependency, fails the check.
 
 ## npm development dependencies
 
-Build, test, and verification only. Not shipped in the distributed artifact.
+Used only for builds, tests, and verification; not shipped as standalone packages in the distributed artifact.
 
 | Package | License |
 |---------|---------|
@@ -72,24 +69,17 @@ Build, test, and verification only. Not shipped in the distributed artifact.
 
 ## Fonts
 
-The desktop UI uses the system font stack (`Segoe UI Variable`, `Segoe UI`,
-`Bahnschrift`, `system-ui`). No fonts are bundled.
+The desktop UI uses the system font stack (`Segoe UI Variable`, `Segoe UI`, `Bahnschrift`, `system-ui`) and does not bundle font files.
 
-The website pages embed two subset fonts stored in `src/assets/fonts/` and
-loaded through `@font-face` in `src/web-preview/web-preview.css`, so they ship
-with the web build. Both are subsets of Noto CJK, licensed under the
-[SIL Open Font License 1.1](https://openfontlicense.org/):
+The web build loads two Noto CJK subset fonts from `src/assets/fonts/` through `@font-face` in `src/web-preview/web-preview.css`. Both ship with the build under the [SIL Open Font License 1.1](https://openfontlicense.org/):
 
 - `paydance-web-sans-subset.woff2` — subset of Noto Sans SC 2.004
   Copyright 2014-2021 Adobe (http://www.adobe.com/), with Reserved Font Name 'Source'.
 - `paydance-web-serif-subset.woff2` — subset of Noto Serif SC 2.002
   Copyright 2017-2023 Adobe (http://www.adobe.com/).
 
-A subset is a Modified Version under the OFL, so these ship under the names
-`PayDance Web Sans` and `PayDance Web Serif` rather than the upstream names.
+A subset is a Modified Version under the OFL, so these ship under the names `PayDance Web Sans` and `PayDance Web Serif` rather than the upstream names; their upstream sources and copyright notices remain listed above.
 
 ---
 
-If you notice an omission or error, please open an Issue.
-
-> [中文版 →](THIRD_PARTY_NOTICES.md)
+To report an omission or error, open an [Issue](https://github.com/MrBaoboer/PayDance/issues).

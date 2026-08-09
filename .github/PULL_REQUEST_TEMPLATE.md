@@ -1,36 +1,20 @@
-## 变更内容 / What Changed
+## 变更说明 / Summary
 
-用 2–4 条说明改了什么、为什么这样改。
-What changed and why, in 2–4 bullets.
+<!-- 说明改了什么、为什么改，并链接对应 Issue。 -->
+<!-- Explain what changed, why, and link the related Issue. -->
 
-## 影响范围 / Scope
+## 验证结果 / Verification
 
-- [ ] 桌面端体验 / Desktop experience
-- [ ] Web Preview
-- [ ] 平台适配 / Platform adaptation
-- [ ] 构建、发布或安全治理 / Build, release, or security governance
-- [ ] 文档、社区或法律材料 / Docs, community, or legal material
+<!-- 列出实际运行的命令及结果；UI 改动附人工检查和修改前后截图。 -->
+<!-- List the commands run and their results. For UI changes, add manual checks and before-and-after screenshots. -->
 
-## 验证方式 / Verification
+## 风险与回退 / Risk and Rollback
 
-勾选与改动相关的检查，不适用的说明原因。
-Check what applies; note why an item does not.
-
-- [ ] `npm run verify:metadata`
-- [ ] `npm run verify:fast`
-- [ ] `npm audit --audit-level=high`
-- [ ] `Push-Location src-tauri; cargo fmt --all -- --check; cargo check; cargo clippy --all-targets -- -D warnings; cargo audit --deny warnings; cargo deny check --hide-inclusion-graph; Pop-Location`
-- [ ] `npm run qa:web-preview`
-- [ ] Windows 桌面端人工冒烟 / Windows desktop manual smoke test
-- [ ] 平台适配人工冒烟与维护边界说明 / Platform-adaptation smoke test and maintenance-boundary notes
-
-## 风险与回滚 / Risk and Rollback
-
-最需要关注的风险，以及出问题后如何回退或缓解。
-The main risk, and how to roll it back or mitigate it.
+<!-- 说明主要风险和回退方式；不适用时写“无 / None”。 -->
+<!-- Describe the main risk and rollback path; write "None" if not applicable. -->
 
 ## 提交确认 / Checklist
 
-- [ ] 未改动版本号，发版 PR 除外 / Version numbers unchanged unless this is a release PR
-- [ ] 未提交私钥、薪资数据、构建产物或本机缓存 / No private keys, salary data, build artifacts, or local caches
-- [ ] 文档链接可解析，中文文档与英文镜像保持一致 / Doc links resolve; Chinese docs and English mirrors stay aligned
+- [ ] 每个非合并提交都有与作者匹配的 `Signed-off-by:` 行 / Every non-merge commit has a matching `Signed-off-by:` line
+- [ ] 已补充必要的测试、双语文案和更新日志，或已说明不适用 / Required tests, bilingual copy, and changelog entries are included or marked not applicable
+- [ ] 未改版本号，也未提交薪资数据、私钥、构建产物或本机缓存 / Version numbers are unchanged; no salary data, private keys, build output, or local caches are included

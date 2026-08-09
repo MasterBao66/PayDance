@@ -1,10 +1,12 @@
 # 第三方声明
 
-PayDance 依赖以下第三方软件和素材，各项均受各自许可条款约束。
+> [English version →](THIRD_PARTY_NOTICES_EN.md)
 
-本文件覆盖 `package.json` 与 `src-tauri/Cargo.toml` 中声明的**直接依赖**。传递依赖的完整清单见 `package-lock.json` 与 `src-tauri/Cargo.lock`，以及每个 Release 附带的 SPDX SBOM。
+本文件列出 PayDance 的直接依赖和捆绑素材，各项均受其自身许可条款约束。
 
-`npm run check:notices` 会在直接依赖与本文件之间做双向比对：漏记新依赖、或保留已移除的依赖，都会让检查失败。
+直接依赖以 `package.json` 和 `src-tauri/Cargo.toml` 为准。完整传递依赖见 `package-lock.json`、`src-tauri/Cargo.lock`，以及每个 Release 附带的 SPDX SBOM。
+
+`npm run check:notices` 会双向核对直接依赖与本文件；新增或移除依赖时，必须同步更新中英文清单。
 
 ## npm 运行时依赖
 
@@ -21,7 +23,7 @@ PayDance 依赖以下第三方软件和素材，各项均受各自许可条款�
 
 ## npm 开发依赖
 
-不进入分发产物，仅用于构建、测试与校验。
+仅用于构建、测试和校验，不作为独立软件包进入分发产物。
 
 | 包名 | 许可证 |
 |------|--------|
@@ -67,19 +69,17 @@ PayDance 依赖以下第三方软件和素材，各项均受各自许可条款�
 
 ## 字体
 
-桌面端 UI 使用系统字体栈（`Segoe UI Variable`、`Segoe UI`、`Bahnschrift`、`system-ui`），不捆绑字体。
+桌面端 UI 使用系统字体栈（`Segoe UI Variable`、`Segoe UI`、`Bahnschrift`、`system-ui`），不捆绑字体文件。
 
-官网页面内嵌两个子集字体，位于 `src/assets/fonts/`，由 `src/web-preview/web-preview.css` 通过 `@font-face` 加载，随网页构建产物一同分发。两者都是 Noto CJK 的子集，依 [SIL Open Font License 1.1](https://openfontlicense.org/) 授权：
+Web 构建通过 `src/web-preview/web-preview.css` 中的 `@font-face` 加载 `src/assets/fonts/` 内的两个 Noto CJK 子集字体，并随构建产物分发。两者采用 [SIL Open Font License 1.1](https://openfontlicense.org/)：
 
 - `paydance-web-sans-subset.woff2` — 子集自 Noto Sans SC 2.004
   Copyright 2014-2021 Adobe (http://www.adobe.com/), with Reserved Font Name 'Source'.
 - `paydance-web-serif-subset.woff2` — 子集自 Noto Serif SC 2.002
   Copyright 2017-2023 Adobe (http://www.adobe.com/).
 
-子集属于 OFL 定义的修改版本，因此以 `PayDance Web Sans` 与 `PayDance Web Serif` 作为对外字体名，不沿用上游名称。
+子集属于 OFL 定义的修改版本，因此对外字体名使用 `PayDance Web Sans` 和 `PayDance Web Serif`，不沿用上游名称；上游来源和版权声明保留如上。
 
 ---
 
-如发现遗漏或错误，请提交 Issue。
-
-> [English version →](THIRD_PARTY_NOTICES_EN.md)
+如发现遗漏或错误，请提交 [Issue](https://github.com/MrBaoboer/PayDance/issues)。

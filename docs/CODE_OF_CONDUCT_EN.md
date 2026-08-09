@@ -2,29 +2,31 @@
 
 > [中文版 →](../CODE_OF_CONDUCT.md)
 
-PayDance welcomes specific, respectful, evidence-backed discussion about the product, code, documentation, and release process. One person maintains this project, so the more focused a thread is, the faster it moves.
-
 ## Expected Behavior
 
-- Communicate with respect and clarity, even when disagreeing.
-- Explain the use case, impact, and verification path when proposing changes.
-- Back technical feedback with reproduction steps, screenshots, logs, or code.
-- Keep discussion within the [product boundary](PRODUCT_EN.md).
-- Disclose relevant context when raising commercial licensing, OEM, white-label, or brand use.
+- Communicate respectfully and clearly, including when you disagree.
+- Critique ideas and work, not people.
+- Keep discussions relevant and constructive.
+- Respect personal boundaries, privacy, and confidentiality.
+- Disclose relevant background when raising commercial licensing, OEM, white-label, or brand-use topics.
 
 ## Unacceptable Behavior
 
-- Personal attacks, mockery, threats, harassment, or persistent off-topic disruption.
-- Publishing someone's private information, or pressing contributors for salary, employer, identity, or contact details unrelated to their contribution.
-- Impersonating PayDance official releases, maintainers, or distribution channels.
-- Sexualized, discriminatory, or insulting language or imagery.
+- Harassment, threats, personal attacks, or sustained disruption.
+- Discriminatory, insulting, or sexualized language or imagery.
+- Sharing another person's private information without permission, or asking contributors to disclose salary, employer, identity, or contact details unrelated to their contribution.
+- Impersonating another person, a maintainer, or an official PayDance channel.
 
-## Enforcement
+## Reporting and Enforcement
 
-Reach the maintainer through the channels in [Support](SUPPORT_EN.md) or the [Security Policy](SECURITY_EN.md).
+Report conduct concerns privately using the email published on the [maintainer's GitHub profile](https://github.com/MrBaoboer). Do not open a public Issue.
 
-The maintainer may remove comments, close discussions, reject contributions, or limit account participation.
+The maintainer may remove content, close discussions, reject contributions, or temporarily or permanently restrict participation. Report details will be shared only when needed to investigate or act.
+
+## Scope
+
+This Code of Conduct applies in PayDance community spaces and when someone officially represents the project.
 
 ## Attribution
 
-Adapted from Contributor Covenant 3.0.
+Based on the [Contributor Covenant, version 3.0](https://www.contributor-covenant.org/version/3/0/).

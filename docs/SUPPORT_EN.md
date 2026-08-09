@@ -2,32 +2,27 @@
 
 > [中文版 →](SUPPORT.md)
 
-Most usage, privacy, and licensing questions are already answered in the [FAQ](FAQ_EN.md). For what changed in a release, see the [changelog](../CHANGELOG_EN.md); for what is and is not in scope, see [product scope](PRODUCT_EN.md).
+Before opening an Issue, check:
 
-## Usage Questions
+- Usage, privacy, and licensing questions: [FAQ](FAQ_EN.md)
+- Release changes: [Changelog](../CHANGELOG_EN.md)
+- Feature scope: [Product Boundaries](PRODUCT_EN.md)
+- Known issues: [GitHub Issues](https://github.com/MrBaoboer/PayDance/issues)
 
-To confirm how a feature is meant to work, search [GitHub Issues](https://github.com/MrBaoboer/PayDance/issues) first. If nothing matches, open a regular Issue describing your use case and the outcome you expected.
+## Open an Issue
 
-## Bug Reports
+Choose the appropriate form on the [new Issue page](https://github.com/MrBaoboer/PayDance/issues/new/choose):
 
-Use the Bug Report form where possible, and include what you can:
+- Bugs: include the version, affected surface, reproduction steps, expected result, and actual result.
+- Feature requests: describe the use case and desired outcome. For platform adaptations, also define the target system, validation method, and maintenance scope.
+- Other questions: use a blank Issue and explain the context and expected outcome.
 
-- Application version, for example `v0.9.9`
-- System environment, for example Windows 11 23H2
-- Stable reproduction steps, or the approximate trigger
-- Expected behavior and actual behavior
-- Screenshots, recordings, or error snippets
-
-Do not paste salary data, configuration files, private keys, or other personal information into a public thread.
-
-## Feature Requests
-
-Read [product scope](PRODUCT_EN.md) first, then describe the concrete scenario your idea solves and why it serves the core of a desktop real-time salary dashboard. Platform-adaptation requests should also name the target system, how you would verify it, and how much maintenance you can take on.
+Issues are public. Do not attach salary data, `salary-settings.json`, private or signing keys, or other sensitive information. Redact logs and screenshots before posting them.
 
 ## Security Vulnerabilities
 
-Do not report security vulnerabilities through public Issues; follow the private process in [SECURITY_EN.md](SECURITY_EN.md).
+Do not disclose vulnerabilities publicly. Follow the private process in the [Security Policy](SECURITY_EN.md).
 
-## Contact
+## Private Contact
 
-PayDance is developed and maintained by Mr.Baoboer alone. Reach him at the email listed on the [author's GitHub profile](https://github.com/MrBaoboer), or @-mention him in a related Issue.
+For other project matters that should not be discussed publicly, use the email published on [Mr.Baoboer's GitHub profile](https://github.com/MrBaoboer).

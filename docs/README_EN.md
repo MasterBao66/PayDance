@@ -27,7 +27,7 @@
 
 ## What It Is
 
-PayDance (薪跳) is a desktop real-time salary dashboard. Set your salary and working hours, and today's earnings stay on your desktop, rising as your workday moves forward.
+PayDance (薪跳) is a desktop real-time salary dashboard. Set your salary and working hours, and it shows your income growing second by second on your desktop, making the value of your working time visible.
 
 The main window shows today's earnings, work progress, time remaining, and daily estimate. The mini floating window keeps only the amount, ready for a quick glance from the corner of your screen.
 
@@ -35,18 +35,14 @@ The main window shows today's earnings, work progress, time remaining, and daily
   <img src="posters/poster-02-three-step-setup-en-v1.png" alt="PayDance first-time setup in three steps" width="100%">
 </p>
 
-<p align="center">
-  Salary mode, work hours, and preferences: set them once, then PayDance remembers.
-</p>
+## Features
 
-## Why Use It
-
-- **Earnings made visible** — Today's income is shown to 2 decimal places and keeps ticking.
-- **Realistic work schedules** — Monthly, daily, and hourly pay convert automatically, with weekly workdays, lunch break exclusion, and overnight shifts supported.
-- **Mini floating mode** — Amount only, draggable, always-on-top, and adjustable from 10%–100% opacity. Double-click to restore the main window.
-- **Local-first privacy** — No accounts. Your salary settings stay on your machine.
-- **Bilingual UI** — Full Simplified Chinese and English coverage across the interface, tray menu, and validation messages.
-- **Windows 11 experience** — Frameless rounded windows, light/dark themes, system tray, auto-start, and silent background updates.
+- **Live earnings**: Today's amount updates continuously and is shown to two decimal places.
+- **Common pay schedules**: Supports monthly, daily, and hourly pay, configurable workdays, lunch-break exclusion, and overnight shifts.
+- **Mini window**: Shows only the amount, stays draggable and always on top, and supports 10%–100% opacity. Double-click it to restore the main window.
+- **Local-first**: No account required; your salary settings stay on your own machine.
+- **Bilingual UI**: The interface, tray menu, and validation messages support Simplified Chinese and English.
+- **Windows integration**: Includes light and dark themes, a system tray, auto-start, and background updates.
 
 ## Get It
 
@@ -55,7 +51,7 @@ The main window shows today's earnings, work progress, time remaining, and daily
 | &nbsp; | Link | Notes |
 |:---:|:---:|:---:|
 | 🌐 | **[Live Preview](https://paydance.vercel.app/en/)** | Browser-based, all core features available, nothing to install |
-| ⬇️ | **[Windows Desktop](https://github.com/MrBaoboer/PayDance/releases/latest)** | Portable EXE with tray, always-on-top, mini float, and auto-start |
+| ⬇️ | **[Windows Desktop](https://github.com/MrBaoboer/PayDance/releases/latest/download/pay-dance-v0.9.9-windows-x64.exe)** | Portable EXE with tray, always-on-top, mini float, and auto-start |
 
 </div>
 

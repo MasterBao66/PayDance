@@ -2,45 +2,83 @@
 
 > [English version →](web-preview-qa_EN.md)
 
-Web Preview QA 用来确认官网橱窗在真实浏览器里稳定可用：页面能正常渲染，主题和语言能切换，关键文案不丢，主要布局不溢出。
+Web Preview QA 用来确认官网橱窗的内容、布局、主题、语言、无障碍和视觉基准。`npm run qa:web-preview` 会启动本地 Vite 服务，并使用 Playwright Chromium；默认地址为 `http://127.0.0.1:4174/PayDance/`，结束时会关闭服务。
 
-不要用 headless Chrome、CDP 或命令行截图替代这个流程：它们出现过全白截图却正常退出的情况，不能作为发布信号。
+不要用 headless Chrome、CDP 或命令行截图等临时结果代替本流程；仓库脚本虽使用 headless Chromium，但同时执行 DOM、交互、无障碍、控制台和像素差异断言。
 
-## 验证流程
+## 覆盖范围
 
-1. 启动本地 Web Preview dev server，并记录本地 URL。
-2. 使用项目 `devDependency` 中的 Playwright 打开页面；如需调试特殊环境，可用 `PLAYWRIGHT_NODE_MODULES` 指向外部 `node_modules`。
-3. 按固定视口截图，浅色和深色主题都要覆盖：桌面端 `1440x900`，中等窗口 `960x760`，移动端 `390x844`。
-4. 检查 DOM：页面标题、`Web Preview · appVersion`、软件预览区和移动端布局必须存在且稳定。
-5. 跑真实语言切换：本地和 GitHub Pages 镜像从 `/PayDance/` 进入中文页，点击 `Switch to English`，确认网址进入 `/PayDance/en/`、`data-locale="en"`；Vercel 主站线上冒烟从 `/` 和 `/en/` 入口确认同一套语言状态。两个入口都要核对本页的标题、Canonical、`zh-CN` / `en` / `x-default` 双向 `hreflang`，以及 JSON-LD 语言和构建日期。
-6. 用 `@axe-core/playwright` 检查自动化能发现的严重无障碍问题。这不是完整 WCAG 合规证明。
-7. 收集控制台错误和页面错误，确认没有严重报错。
-8. 将截图和 `summary.json` 保存到系统临时目录下本次运行专属的 `paydance-web-preview-qa-{version}-{commit}-{timestamp}`：本地取 `%LOCALAPPDATA%\Temp`，CI 取 `RUNNER_TEMP`。
-9. 对 4 个标准状态执行像素差异检查：中英文各覆盖桌面端和移动端，中文使用浅色，英文使用深色。
-10. 结束后关闭本地服务，避免占用端口。
+脚本验证以下组合：
 
-## 命令
+- 中文和英文。
+- 浅色和深色主题。
+- `1440x900`、`960x760` 和 `390x844` 三种视口。
+- 移动端从中文 `/PayDance/` 切换到英文 `/PayDance/en/` 的真实导航。
+
+每个组合都会检查：
+
+- 页面标题、Canonical、`zh-CN` / `en` / `x-default` `hreflang` 和 JSON-LD。
+- 版本、语言状态、核心文案、下载入口、软件预览区和功能说明。
+- 关键元素是否越界、重叠、换行异常或垂直错位。
+- 首次主题绘制是否稳定，以及连续切换主题时预览窗口边缘是否保持一致。
+- `@axe-core/playwright` 报告的 critical 或 serious 无障碍问题。
+- 浏览器控制台错误和页面错误；任一错误都会使验证失败。
+
+本地和 GitHub Pages 镜像从 `/PayDance/` 进入中文页，从 `/PayDance/en/` 进入英文页；Vercel 主站对应 `/` 和 `/en/`。该命令只访问本地服务，不验证已经部署的站点。
+
+## 运行
+
+首次运行先安装依赖和 Chromium：
+
+```powershell
+npm ci
+npx playwright install chromium
+```
+
+脚本优先加载项目 `node_modules` 中的 Playwright。仅在排查外部运行环境时，才用 `PLAYWRIGHT_NODE_MODULES` 指定另一套 `node_modules`。
+
+执行验证：
 
 ```powershell
 npm run qa:web-preview
 ```
 
-仅在确认视觉变化符合预期时，显式更新基准图：
+如默认端口被占用，可临时指定其他端口：
+
+```powershell
+$env:PAYDANCE_WEB_QA_PORT = 4175
+npm run qa:web-preview
+```
+
+## 视觉基准
+
+像素差异覆盖四个固定状态：
+
+- 中文浅色：桌面端与移动端。
+- 英文深色：桌面端与移动端。
+
+脚本忽略轻微抗锯齿差异；变化像素超过 `0.5%` 即失败。确认视觉变化符合预期后，才能更新基准图：
 
 ```powershell
 npm run qa:web-preview:update
 ```
 
-普通 QA 永远不会自动接受新截图。发生差异时，临时目录会保留预期图、实际图和差异图。`summary.json` 会记录运行 ID、commit、页面实际读取到的中英文文案、截图路径和视觉比较结果。
+普通 QA 不会自动接受新截图。
 
-## 通过标准
+## 结果文件
 
-- 三种视口都有非空截图，首屏没有文字重叠、按钮溢出或主体塌缩。
-- 中英文文案都来自当前页面 DOM，而不是旧截图或手工判断。
-- 中文进入后点击 EN，镜像路径必须进入 `/PayDance/en/`，Vercel 主站路径必须进入 `/en/`，根节点 `data-locale` 必须同步为 `en`。
-- 两个入口的标题、Canonical、`hreflang` 和 JSON-LD 必须与各自语言一致。
-- 没有 critical/serious 级别的 axe 自动化无障碍违规。
-- 浅色/深色切换后，预览窗口边缘没有明显闪白、错色或残影。
-- `summary.json` 中没有严重控制台错误或页面错误。
-- 标准状态会过滤轻微抗锯齿差异，总像素差异不得超过 `0.5%`；超过时保留预期图、实际图和差异图供人工判断。
-- 验证结束后本地 dev server 已退出。
+截图保存在系统临时目录下的独立目录；Windows 通常使用 `%LOCALAPPDATA%\Temp`，CI 使用 `RUNNER_TEMP`：
+
+```text
+paydance-web-preview-qa-{version}-{commit}-{timestamp}
+```
+
+验证成功时，同目录的 `summary.json` 记录版本、Commit、本地 URL、页面实际读取到的中英文文案、截图路径和视觉比较结果。视觉比较失败时会保留预期图、实际图和差异图。
+
+## 通过条件
+
+- 12 个语言、主题和视口组合及一次语言切换全部完成。
+- DOM、SEO、布局、主题切换和无障碍检查全部通过。
+- 四个固定状态的像素差异不超过 `0.5%`。
+- 没有控制台错误或页面错误。
+- 本地服务在脚本结束后退出。

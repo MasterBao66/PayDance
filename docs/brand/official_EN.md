@@ -2,7 +2,7 @@
 
 > [中文版 →](official.md)
 
-This document records official PayDance brand assets. Unless explicitly licensed otherwise, these assets are **not** covered by AGPL-3.0-only or CC BY-SA 4.0. All rights are reserved by Mr.Baoboer.
+The official brand assets below are not covered by AGPL-3.0-only or CC BY-SA 4.0 unless explicitly licensed otherwise. Mr.Baoboer reserves all other rights.
 
 ## Asset locations in the repository
 
@@ -12,6 +12,6 @@ This document records official PayDance brand assets. Unless explicitly licensed
 | Favicon | `public/favicon.png` | Website favicon and shortcuts |
 | Marketing posters | `docs/posters/` | README, website, and the Open Graph / Twitter Card image in `index.html` |
 
-## For forks
+## Forks and redistributed builds
 
-If you publish a fork, derivative, or redistributable build, the assets above need to be replaced with your own. For the replacement checklist and licensing boundary, see [`BRAND-ASSETS_EN.md`](../../legal/BRAND-ASSETS_EN.md) and [`TRADEMARK_EN.md`](../../legal/TRADEMARK_EN.md).
+If you publish a fork, derivative, or redistributed build, replace the assets above. See [`BRAND-ASSETS_EN.md`](../../legal/BRAND-ASSETS_EN.md) and [`TRADEMARK_EN.md`](../../legal/TRADEMARK_EN.md) for the requirements.

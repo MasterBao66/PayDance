@@ -4,46 +4,38 @@
 
 This file explains the licensing boundaries for official PayDance brand assets. It does not change the software-code rights granted by `LICENSE`.
 
-Unless explicitly authorized in writing, the following assets are not licensed under AGPL-3.0-only or CC BY-SA 4.0:
+Unless authorized in writing, the following official assets are not licensed under AGPL-3.0-only or CC BY-SA 4.0:
 
-- Official PayDance logo
-- Application icon and tray icon
-- Official marketing posters, promotional images, and social preview images
-- Official website visual identity materials
-- Complete brand visual composition visible in official screenshots
-- Artwork and visual packaging materials
+- PayDance logo, application icon, and tray icon
+- Website visual identity, marketing posters, promotional images, and social preview images
+- Complete branded visual compositions visible in official screenshots, artwork, and visual packaging materials
 
 All rights in these assets are reserved by Mr.Baoboer.
 
-The two subset fonts embedded in the website are not part of this list: they are subsets of Noto CJK licensed under the SIL Open Font License 1.1. See [THIRD_PARTY_NOTICES_EN.md](THIRD_PARTY_NOTICES_EN.md) for attribution.
+The two Noto CJK subset fonts embedded in the website are excluded from this list and licensed under the SIL Open Font License 1.1. See [THIRD_PARTY_NOTICES_EN.md](THIRD_PARTY_NOTICES_EN.md) for attribution.
 
 ## Permitted use
 
-You may view, reference, and redistribute official brand assets without prior written permission only where necessary to:
+You may display, reference, or redistribute official brand assets without prior written permission only as needed to:
 
-- Share an unmodified official PayDance release
-- Make factual introductions, reviews, tutorials, news reports, or security reports about PayDance
-- Display the project name or screenshots where necessary to preserve legal notices and source references
+- Share an unmodified official PayDance release;
+- Provide factual descriptions, reviews, tutorials, news coverage, or security reports about PayDance; or
+- Comply with legal notice and source-attribution requirements.
 
-These uses must not imply that your release is official, or that Mr.Baoboer endorses your modified version, product, or service.
+These uses must not imply that a third-party release is official or that Mr.Baoboer endorses a modified version, product, or service.
 
 ## Fork and modified distribution requirements
 
-Modified distributions must use their own distinct branding and must not use official assets as product identity. In practice, replace:
-
-- Product name, logo, application icon, and tray icon
-- Marketing artwork, website visuals, social preview images, and promotional screenshots
-- Application identifier, package metadata, update endpoint, and release asset naming
-- Any visual composition that would make users mistake the product for an official release
+Modified distributions must use distinct branding and must not use official assets as product identity or promotional material. At a minimum, replace the logo, application icon, tray icon, promotional images, website visuals, any reused official screenshots, and any visual composition that would make users mistake the product for an official release. See [TRADEMARK_EN.md](TRADEMARK_EN.md) for product name, application identifier, and release-channel requirements.
 
 ## Official screenshots
 
-You may show official screenshots in factual references, but you may not use official screenshots as app store screenshots, website hero visuals, advertising materials, or promotional images for a modified version unless they are clearly identified as official PayDance screenshots and presented in a way that does not cause confusion.
+Official screenshots may be used for factual reference. Without written permission, they may not be used as app-store screenshots, website hero images, advertisements, or promotional images for a modified version, unless they are clearly identified as official PayDance screenshots and presented without causing confusion.
 
 ## Separate authorization
 
-For commercial promotion, courses, media kits, partnerships, OEM, white-label, or other uses beyond factual reference, contact via the email listed on the [author's GitHub profile](https://github.com/MrBaoboer) for written authorization.
+For commercial promotion, courses, media kits, partnerships, OEM, white-label, or other uses beyond factual reference, request written authorization through the email listed on the [author's GitHub profile](https://github.com/MrBaoboer).
 
 ---
 
-See also: `TRADEMARK_EN.md`.
+See also: [TRADEMARK_EN.md](TRADEMARK_EN.md).

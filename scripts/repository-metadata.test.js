@@ -87,22 +87,26 @@ describe("repository metadata", () => {
     }
   });
 
+  // 中英文 README 都用版本化直链，缺一个就会在发版后静默 404。
   it("keeps README desktop download links on the versioned Windows release executable", () => {
-    const readme = read("README.md");
-    const desktopDownloadLinks = readme.match(
-      new RegExp(
-        `https://github\\.com/MrBaoboer/PayDance/releases/latest/download/${versionedDesktopAssetName}`,
-        "g",
-      ),
-    );
+    for (const path of ["README.md", "docs/README_EN.md"]) {
+      const readme = read(path);
+      const desktopDownloadLinks = readme.match(
+        new RegExp(
+          `https://github\\.com/MrBaoboer/PayDance/releases/latest/download/${versionedDesktopAssetName}`,
+          "g",
+        ),
+      );
 
-    expect(desktopDownloadLinks?.length).toBeGreaterThanOrEqual(1);
-    expect(readme).toContain(desktopDownloadUrl);
-    expect(readme).toContain(versionedDesktopAssetName);
+      expect(desktopDownloadLinks?.length).toBeGreaterThanOrEqual(1);
+      expect(readme).toContain(desktopDownloadUrl);
+      expect(readme).toContain(versionedDesktopAssetName);
+      expect(readme).not.toContain("releases/download/v0.7.16/pay-dance.exe");
+      expect(readme).not.toContain("mrbaoboer.github.io/PayDance/pay-dance.exe");
+    }
+
     // versionedDesktopChecksumName is removed from README to prevent hardcoded version churn
     expect(read("src/lib/app-meta.ts")).toContain("windowsDownloadAssetName");
-    expect(readme).not.toContain("releases/download/v0.7.16/pay-dance.exe");
-    expect(readme).not.toContain("mrbaoboer.github.io/PayDance/pay-dance.exe");
   });
 
   it("keeps the English README on its dedicated first-time setup poster", () => {
@@ -227,8 +231,8 @@ describe("repository metadata", () => {
     expect(read(".github/CONTRIBUTING.md")).toContain("验收标准");
     expect(read(".github/CONTRIBUTING.md")).toContain("验证命令");
     expect(read("docs/CONTRIBUTING_EN.md")).toContain("user-visible result");
-    expect(read("docs/CONTRIBUTING_EN.md")).toContain("Acceptance criteria");
-    expect(read("docs/CONTRIBUTING_EN.md")).toContain("Verification command");
+    expect(read("docs/CONTRIBUTING_EN.md")).toMatch(/acceptance criteria/i);
+    expect(read("docs/CONTRIBUTING_EN.md")).toMatch(/verification command/i);
     expect(read(".github/ISSUE_TEMPLATE.md")).toContain("用户影响");
     expect(read(".github/ISSUE_TEMPLATE.md")).toContain("验收标准");
     expect(read(".github/ISSUE_TEMPLATE.md")).toContain("验证命令");
@@ -256,25 +260,24 @@ describe("repository metadata", () => {
     const contributing = read(".github/CONTRIBUTING.md");
     const githubBlobBase = "https://github.com/MrBaoboer/PayDance/blob/main";
 
-    expect(contributing).toContain(
-      `[CODE_OF_CONDUCT.md](${githubBlobBase}/CODE_OF_CONDUCT.md)`,
-    );
-    expect(contributing).toContain(
-      `[docs/MAINTAINERS.md](${githubBlobBase}/docs/MAINTAINERS.md)`,
-    );
-    expect(contributing).toContain(
-      `[docs/GOVERNANCE.md](${githubBlobBase}/docs/GOVERNANCE.md)`,
-    );
-    expect(contributing).toContain(
-      `[docs/MAINTENANCE.md](${githubBlobBase}/docs/MAINTENANCE.md)`,
-    );
+    for (const path of [
+      "CODE_OF_CONDUCT.md",
+      "docs/MAINTAINERS.md",
+      "docs/GOVERNANCE.md",
+      "docs/MAINTENANCE.md",
+    ]) {
+      expect(contributing).toContain(`${githubBlobBase}/${path}`);
+    }
     expect(contributing).not.toContain("github.com/MrBaoboer/PayDance/blob/docs/");
   });
 
-  it("keeps issue template version hints aligned with the current release line", () => {
-    const currentVersion = `v${packageJson.version}`;
-    expect(read(".github/ISSUE_TEMPLATE.md")).toContain(currentVersion);
-    expect(read(".github/ISSUE_TEMPLATE/bug_report.yml")).toContain(currentVersion);
+  it("keeps issue templates independent of the current release version", () => {
+    const blankIssue = read(".github/ISSUE_TEMPLATE.md");
+    const bugReport = read(".github/ISSUE_TEMPLATE/bug_report.yml");
+
+    expect(blankIssue).not.toMatch(/v\d+\.\d+\.\d+/);
+    expect(bugReport).toContain("vX.Y.Z");
+    expect(bugReport).not.toContain(`v${packageJson.version}`);
   });
 
   it("keeps repository markdown links resolvable after documentation moves", () => {
@@ -304,20 +307,12 @@ describe("repository metadata", () => {
     expect(config).not.toContain("PayDance#");
   });
 
-  it("keeps brand asset documentation Chinese-first with English mirrors", () => {
+  it("keeps official brand asset documentation Chinese-first with an English mirror", () => {
     expect(read("docs/brand/official.md")).toContain("# 官方品牌资产");
     expect(read("docs/brand/official.md")).toContain(
       "> [English version →](official_EN.md)",
     );
     expect(read("docs/brand/official_EN.md")).toContain("# Official Brand Assets");
-
-    expect(read("docs/brand/community-placeholder.md")).toContain("# 社区占位资产");
-    expect(read("docs/brand/community-placeholder.md")).toContain(
-      "> [English version →](community-placeholder_EN.md)",
-    );
-    expect(read("docs/brand/community-placeholder_EN.md")).toContain(
-      "# Community Placeholder Assets",
-    );
   });
 
   it("keeps maintainer contact guidance on the public GitHub profile email", () => {

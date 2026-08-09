@@ -2,21 +2,19 @@
 
 > [中文版 →](GOVERNANCE.md)
 
-The maintainer (see [Maintainers](MAINTAINERS_EN.md)) decides product scope, release timing, licensing, trademarks, and what gets merged. For the contribution process, see the [Contributing Guide](CONTRIBUTING_EN.md).
+PayDance currently uses a single-maintainer model. See [Maintainers](MAINTAINERS_EN.md) for the maintainer's identity and the [Contributing Guide](CONTRIBUTING_EN.md) for the submission process.
 
-## Decision Principles
+## Decision Making
 
-- Protect the core experience first: a local-first, low-distraction desktop real-time salary dashboard.
-- Prefer small, verifiable changes with a clear maintenance cost.
-- Windows release quality comes before platform breadth.
-- Feature scope follows the [Product Boundaries](PRODUCT_EN.md).
+The maintainer has final authority over product scope, merges, releases, security, licensing, and trademarks. Decisions are based primarily on:
 
-## Maintainer Authority
+- Fit with the [Product Boundaries](PRODUCT_EN.md)
+- User benefit and Windows release quality
+- Verification results, risk, and maintenance cost
+- Clear provenance and licensing for code and assets
 
-UI, release-chain, updater, security, licensing, and brand changes need maintainer confirmation even when verification passes.
-
-The maintainer may close issues or pull requests that are out of scope, too risky, insufficiently verified, legally unclear, or too expensive to maintain.
+Issues and pull requests may be closed or deferred when their scope, verification, risk, or maintenance cost is unclear.
 
 ## Governance Changes
 
-Governance rules can themselves be changed through a pull request. If PayDance gains long-term maintainers, this file should be updated with responsibilities, permissions, and handoff rules before repository or release permissions are granted.
+Governance changes can be proposed through a pull request. Before granting repository or release access, document the new maintainer's responsibilities, permissions, and handoff process here and in [Maintainers](MAINTAINERS_EN.md).

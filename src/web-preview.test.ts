@@ -691,7 +691,7 @@ describe("PayDance Web Preview", () => {
     expect(readmeSource).toContain("Mr.Baoboer");
     for (const heading of [
       "## 它是什么",
-      "## 为什么用它",
+      "## 主要功能",
       "## 获取",
       "## 技术栈",
       "## 开发",

@@ -1,55 +1,53 @@
 name: Bug 反馈 / Bug Report
-description: 反馈薪跳 PayDance 的异常、崩溃、显示错位或体验问题 / Report errors, crashes, layout issues, or UX problems
+description: 反馈异常、崩溃、显示或交互问题 / Report errors, crashes, display, or interaction issues
 title: "[Bug] "
 labels: ["bug"]
 body:
   - type: markdown
     attributes:
       value: |
-        感谢反馈。请尽量写清楚复现路径，这能让问题更快被确认和修复。
-        Thanks for reporting a bug. Please describe the reproduction path as clearly as possible so the issue can be confirmed and fixed faster.
-
-        请不要公开粘贴薪资数据、配置文件、私钥或任何个人敏感信息。
-        Do not publicly paste salary data, config files, private keys, or personal sensitive information.
+        Issue 是公开的。请从截图和日志中删除薪资数据、`salary-settings.json`、私钥、签名密钥和私人路径。
+        Issues are public. Remove salary data, `salary-settings.json`, private or signing keys, and private paths from screenshots and logs.
   - type: textarea
     id: summary
     attributes:
-      label: 问题描述 / Summary
-      description: 请用几句话说明发生了什么，以及你原本期待它怎样工作。 / Briefly explain what happened and what you expected.
-      placeholder: 例如：切换到迷你悬浮模式后，透明度面板位置不对齐。 / Example: The opacity panel is misaligned after switching to mini floating mode.
+      label: 问题摘要 / Summary
+      description: 一句话说明哪里出了问题。 / Summarize the problem in one sentence.
+      placeholder: "例如：切换到迷你悬浮模式后，透明度面板位置不对齐。 / Example: The opacity panel is misaligned after switching to mini mode."
     validations:
       required: true
   - type: textarea
     id: steps
     attributes:
       label: 复现步骤 / Reproduction Steps
-      description: 请列出稳定复现问题的步骤；如果不能稳定复现，也请说明大概触发场景。 / List stable reproduction steps, or describe the approximate trigger if it is intermittent.
+      description: 列出稳定复现步骤；偶发问题请说明触发场景。 / List reproducible steps, or describe the trigger if the issue is intermittent.
       placeholder: |
         1. 打开应用 / Open the app
         2. 进入设置中心 / Open Settings
-        3. 修改 ... / Change ...
-        4. 观察到 ... / Observe ...
+        3. 修改 … / Change …
+        4. 观察到 … / Observe …
     validations:
       required: true
   - type: textarea
     id: expected
     attributes:
       label: 期望结果 / Expected Result
-      description: 你认为正确的表现应该是什么？ / What behavior did you expect?
+      description: 正常情况下应该发生什么？ / What should happen?
     validations:
       required: true
   - type: textarea
     id: actual
     attributes:
-      label: 实际结果 / Actual Result
-      description: 请描述实际表现；如有截图、录屏或报错信息，可以放在这里。 / Describe what actually happened. Add screenshots, recordings, or error messages if available.
+      label: 实际结果与证据 / Actual Result and Evidence
+      description: 说明实际表现，并附脱敏后的截图、录屏、报错或日志。 / Describe what happened and add redacted screenshots, recordings, errors, or logs.
     validations:
       required: true
   - type: input
     id: version
     attributes:
       label: 应用版本 / App Version
-      placeholder: v0.9.9
+      description: 设置中心底部显示的版本。 / The version shown at the bottom of Settings.
+      placeholder: vX.Y.Z
     validations:
       required: true
   - type: dropdown
@@ -57,7 +55,7 @@ body:
     attributes:
       label: 发生位置 / Surface
       options:
-        - Windows 桌面端 / Windows desktop app
+        - Windows 桌面版 / Windows desktop app
         - Web Preview
         - 构建或开发环境 / Build or development environment
         - 文档或发布资产 / Documentation or release assets
@@ -67,9 +65,5 @@ body:
     id: system
     attributes:
       label: 系统环境 / System Environment
-      placeholder: Windows 11 23H2 / Edge version / Node.js version
-  - type: textarea
-    id: extra
-    attributes:
-      label: 补充信息 / Additional Context
-      description: 可以写下你已经尝试过的排查方式、相关日志片段，或这个问题对你使用的影响。 / Include troubleshooting attempts, relevant log snippets, or the impact on your workflow.
+      description: 填写相关的 Windows、浏览器、Node.js 或 Rust 版本。 / Include relevant Windows, browser, Node.js, or Rust versions.
+      placeholder: Windows 11 build / browser version / Node.js version
