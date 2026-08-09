@@ -10,11 +10,8 @@
 | ---- | ---- | ---- |
 | 应用图标 | `src-tauri/icons/icon.png` | Windows 应用图标、托盘图标 |
 | 网站图标 | `public/favicon.png` | 官网 favicon、快捷方式图标 |
-| 宣传海报 | `docs/posters/` | README、官网与推广材料 |
-| 社交预览图 | `public/og-image.png` | Open Graph / Twitter Card |
+| 宣传海报 | `docs/posters/` | README、官网，以及 `index.html` 的 Open Graph / Twitter Card 图 |
 
 ## 给 Fork 维护者
 
-如果你发布 Fork、衍生版或再分发版本，请替换为自己可清楚区分的名称、图标和视觉资产。不要把官方 PayDance Logo、应用图标或宣传图作为你的项目身份使用，也不要让用户误以为该版本由官方发布或背书。
-
-详细边界请阅读 [`BRAND-ASSETS.md`](../../legal/BRAND-ASSETS.md) 与 [`TRADEMARK.md`](../../legal/TRADEMARK.md)。
+发布 Fork、衍生版或再分发版本时，上表中的资产需要替换成你自己的。替换清单与授权边界见 [`BRAND-ASSETS.md`](../../legal/BRAND-ASSETS.md) 与 [`TRADEMARK.md`](../../legal/TRADEMARK.md)。

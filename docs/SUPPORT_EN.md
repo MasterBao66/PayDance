@@ -2,23 +2,15 @@
 
 > [中文版 →](SUPPORT.md)
 
-When something feels off, use the paths below to decide whether you need a document, an Issue, or a private security report.
-
-## Start here
-
-- Product overview, downloads, and privacy boundaries: [README_EN.md](README_EN.md)
-- Common usage, privacy, licensing, and contribution questions: [FAQ_EN.md](FAQ_EN.md)
-- Version history: [CHANGELOG_EN.md](../CHANGELOG_EN.md)
-- Product scope and non-goals: [PRODUCT_EN.md](PRODUCT_EN.md)
-- Development and PR workflow: [Contributing Guide](CONTRIBUTING_EN.md)
+Most usage, privacy, and licensing questions are already answered in the [FAQ](FAQ_EN.md). For what changed in a release, see the [changelog](../CHANGELOG_EN.md); for what is and is not in scope, see [product scope](PRODUCT_EN.md).
 
 ## Usage Questions
 
-If you only want to confirm how a feature should work, search [GitHub Issues](https://github.com/MrBaoboer/PayDance/issues) first. If there is no related discussion, open a regular Issue with your use case and expected outcome.
+To confirm how a feature is meant to work, search [GitHub Issues](https://github.com/MrBaoboer/PayDance/issues) first. If nothing matches, open a regular Issue describing your use case and the outcome you expected.
 
 ## Bug Reports
 
-Please use the Bug Report form when possible, and include:
+Use the Bug Report form where possible, and include what you can:
 
 - Application version, for example `v0.9.9`
 - System environment, for example Windows 11 23H2
@@ -26,18 +18,16 @@ Please use the Bug Report form when possible, and include:
 - Expected behavior and actual behavior
 - Screenshots, recordings, or error snippets
 
-Do not publicly paste salary data, configuration files, private keys, or any personal sensitive information.
+Do not paste salary data, configuration files, private keys, or other personal information into a public thread.
 
 ## Feature Requests
 
-PayDance is centered on one idea: a lightweight, local-first, low-distraction real-time desktop wage board. When suggesting a feature, explain the concrete scenario it solves and why it supports that core experience. For platform-adaptation suggestions, include the target system, validation approach, and maintenance scope you can support.
-
-Keyboard shortcuts, reminders, historical charts, attendance tracking, accounts, and cloud sync are currently outside the product boundary. Related ideas can still be discussed, but they need to explain why they would not make PayDance heavier.
+Read [product scope](PRODUCT_EN.md) first, then describe the concrete scenario your idea solves and why it serves the core of a desktop real-time salary dashboard. Platform-adaptation requests should also name the target system, how you would verify it, and how much maintenance you can take on.
 
 ## Security Vulnerabilities
 
-Do not report security vulnerabilities through public Issues. Follow the private reporting process in [SECURITY_EN.md](SECURITY_EN.md).
+Do not report security vulnerabilities through public Issues; follow the private process in [SECURITY_EN.md](SECURITY_EN.md).
 
 ## Contact
 
-PayDance is independently developed and maintained by Mr.Baoboer. Contact via the email listed on the [author's GitHub profile](https://github.com/MrBaoboer), or @-mention the author in a related Issue.
+PayDance is developed and maintained by Mr.Baoboer alone. Reach him at the email listed on the [author's GitHub profile](https://github.com/MrBaoboer), or @-mention him in a related Issue.

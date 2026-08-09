@@ -1,5 +1,7 @@
 # 贡献者许可协议
 
+> [English version →](CLA_EN.md)
+
 本贡献者许可协议（“CLA”）适用于贡献者明确签署本协议，并提交给 Mr.Baoboer 维护的 PayDance 项目（“本项目”）的贡献。
 
 签署本 CLA 并提交贡献（包括但不限于源代码、文档、翻译、测试、图形或其他材料）即表示你确认并同意以下内容。
@@ -35,5 +37,3 @@
 ---
 
 > **说明：** 普通 Pull Request 默认按 AGPL-3.0-only 及本项目附加条款进入项目。`Signed-off-by:` 行用于 DCO 来源确认，不等同于签署本 CLA。只有当维护者明确要求并由贡献者单独确认时，本 CLA 才适用于对应贡献。
-
-> [English version →](CLA_EN.md)

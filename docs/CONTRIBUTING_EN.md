@@ -4,15 +4,15 @@
 
 Thanks for your interest in PayDance. This project is intentionally small: it puts today's live earnings on the desktop in a calm, clear way. Please read the boundaries and workflow below before opening an Issue or PR.
 
-> **License in one sentence: Ordinary contributions only need a DCO sign-off; no CLA is required upfront.** A CLA is requested separately before merge only if the maintainer plans to use that contribution in commercial, OEM, or white-label licensing.
+> **License in one sentence: Ordinary contributions only need a DCO sign-off; no CLA is required upfront.**
 
 ## Environment
 
-- **OS**: the current official release and validation baseline is Windows 11; Web Preview can preview the core experience in a browser; platform-adaptation contributions need a clear validation boundary
-- **Runtime**: Node.js 22 and the latest stable Rust
+- **OS**: the official release and validation baseline is Windows 11; Web Preview covers the core experience in a browser; platform-adaptation contributions need a stated validation boundary
+- **Runtime**: Node.js 24 (matching CI) and the latest stable Rust
 - **Package manager**: npm
 
-## Getting Started
+Once those are in place, these three commands get you running:
 
 ```powershell
 npm install
@@ -22,7 +22,7 @@ npm run dev:web   # Browser Web Preview
 
 ## Before Submitting
 
-Choose the checks that match your change. CI automatically selects lightweight or full verification by path, but running locally first saves review round trips.
+Choose the checks that match your change. CI selects lightweight or full verification by path, but running locally first saves review round trips.
 
 ```powershell
 npm run verify:metadata # Docs, legal, brand, and community-template changes
@@ -36,96 +36,66 @@ For Rust, release, or security-governance changes, also run in `src-tauri/`:
 cargo fmt --all -- --check
 cargo check
 cargo clippy --all-targets -- -D warnings
-cargo audit --deny warnings
-cargo deny check --hide-inclusion-graph
+cargo audit
+cargo deny check
 ```
 
 ## Maintainer Push Workflow
 
-Before pushing to `main`:
+Push to `main` with `npm run push:main`; it decides the check scope from the paths being pushed. To verify without pushing, run `npm run verify:push`.
+
+Before a formal release, run `npm run verify:release` for the full path: desktop and Web builds, npm/Rust security audits, Rust formatting, compile checks, Clippy, and tests. Release audits depend on these local tools:
 
 ```powershell
-npm run push:main
-```
-
-This command classifies files by path:
-
-- **Lightweight paths** (`docs/**`, `legal/**`, `README*`, `CHANGELOG*`, etc.): runs version consistency, brand/secret hygiene, formatting, metadata tests, and `git diff --check`.
-- **Code paths** (`src/**`, `src-tauri/**`, `package*.json`, `scripts/**`, `.github/workflows/**`, etc.): adds lint and unit tests. GitHub CI handles desktop and Web Preview builds, browser QA, Rust checks, and security audits after the push.
-
-To run checks without pushing: `npm run verify:push`
-
-Before a formal release, run the complete verification path:
-
-```powershell
-npm run verify:release
-```
-
-This runs desktop and Web builds, npm/Rust security audits, Rust formatting, compile checks, Clippy, and tests.
-
-> Note: do not run `npm run build:desktop` and `npm run build:web` in parallel — both write to the same `dist/` directory.
-
-Release security audits require these local tools; daily pushes no longer repeat them:
-
-```powershell
-cargo install cargo-audit --locked
-cargo install cargo-deny --version 0.19.8 --locked
+cargo install cargo-audit --version 0.22.2 --locked
+cargo install cargo-deny --version 0.20.2 --locked
 gh auth login
 ```
 
-## What We Welcome
+Match the versions CI pins, or the local audit result does not count — see [docs/MAINTENANCE.md](https://github.com/MrBaoboer/PayDance/blob/main/docs/MAINTENANCE.md).
 
-All contributions should align with the product boundaries in [PRODUCT_EN.md](PRODUCT_EN.md).
+> `npm run build:desktop` and `npm run build:web` write to the same `dist/` directory — do not run them in parallel.
+
+## Where to Contribute
+
+Changes we welcome:
 
 - Bug fixes with reproduction steps
-- Desktop reliability improvements: window management, tray, autostart, single instance
+- Desktop reliability: window management, tray, autostart, single instance
 - Windows 11 UI polish: theming, accessibility, DPI, multi-monitor behavior
-- Platform-adaptation proposals with target OS, build flow, and validation scope
-- Performance and edge-case improvements for the wage ticker
+- Platform-adaptation proposals
+- Performance and edge-case work on the wage ticker
 - Tests for clock changes, config migration, night shifts, and similar boundaries
-- Chinese/English copy, documentation, release workflow, and community-template improvements
+- Chinese/English copy, documentation, release workflow, and community templates
 
-For first contributions, prefer issues labeled `good first issue` or `help wanted`. They should be small, low-risk, and clear about verification.
+PayDance is not a time tracker, personal finance manager, payroll system, attendance system, or task manager, and keyboard shortcuts, reminders, history charts, clock-in tracking, and cloud sync all sit outside its boundary. See [PRODUCT_EN.md](PRODUCT_EN.md) for the full scope.
 
-## First Contribution Walkthrough
+Small changes can go straight to a PR. Larger features, platform adaptations, or direction changes should start with an Issue describing the use case and its boundary — as should anything that feels borderline.
 
-First contributions are no longer limited to documentation. Prefer a small user-visible result with a bounded implementation:
+## Your First Contribution
 
-1. Read the linked issue and confirm it is still open.
-2. The issue must state the **user-visible result**, current screenshot or reproduction evidence, bounded scope, **Acceptance criteria**, and one explicit **Verification command**.
-3. Starter work normally changes only 1–2 primary files. Work requiring release keys, updater signing, or cross-module migration is not a `good first issue`.
-4. UI improvements include before/after screenshots; behavior fixes include a test that fails before the fix and passes afterward.
-5. Open the PR with a short summary, the verification command you ran, and a `Signed-off-by:` line.
+Start from an Issue labeled `good first issue` or `help wanted`. Such work normally touches only 1–2 primary files and needs no release keys, updater signing, or cross-module migration. Use this checklist before and after you start:
 
-Maintainers do not manufacture tasks to increase label counts. A new user-visible issue is published only after its product fit is confirmed. An assignment may be released after seven days without a plan, commit, or progress update.
+- The Issue is still open and states the **user-visible result**, reproduction evidence or screenshots, bounded scope, **Acceptance criteria**, and one **Verification command**.
+- UI changes include before/after screenshots; behavior fixes include a test that fails before the fix and passes after it.
+- The PR resolves that one Issue only, without unrelated refactoring, release notes, or documentation cleanup.
+- The PR description carries a short summary, the verification command you ran, and a `Signed-off-by:` line.
 
-Avoid mixing feature work, unrelated refactoring, release notes, and documentation cleanup in the same first PR unless the issue explicitly asks for that scope.
-
-## What We Do Not Accept
-
-PayDance is not a time tracker, personal finance manager, payroll system, attendance system, or task manager. The following directions are outside the current product boundary; related PRs should start with an Issue:
-
-- Keyboard shortcuts or hotkey systems
-- Reminders, notifications, or alerts
-- Segmented historical timelines, charts, or trend analysis
-- Cloud sync, accounts, or online services
-- Any feature that sends data off-device by default
-
-These boundaries keep the product light, stable, and trustworthy. If you are unsure whether an idea fits, open an Issue first.
+A claimed Issue may be released after seven days without a plan, commit, or progress update.
 
 ## PR Guidelines
 
 1. **One change per PR.** Do not mix a bug fix, refactor, and documentation sweep.
-2. **Write tests.** New behavior needs test coverage; bug fixes should include a regression test.
+2. **Write tests.** New behavior needs coverage; bug fixes need a regression test.
 3. **Follow existing code style.** Prefer established patterns in the codebase.
-4. **Update [CHANGELOG.md](../CHANGELOG.md) and [CHANGELOG_EN.md](../CHANGELOG_EN.md)** under the `## Unreleased` section; for internal verification or tiny doc polish, explain why it is not applicable.
-5. **Screenshots are required for UI changes**, covering at least light/dark mode and Chinese/English.
-6. **Platform adaptations must describe their validation boundary**, including target OS, build command, manual smoke items, update endpoint, and brand-distinction approach.
-7. **Use conventional commits:** `feat:`, `fix:`, `docs:`, `test:`, `chore:`, `refactor:`.
+4. **Update [CHANGELOG.md](../CHANGELOG.md) and [CHANGELOG_EN.md](../CHANGELOG_EN.md)** under `## Unreleased`; for internal verification or tiny doc polish, note why it does not apply.
+5. **Include screenshots for UI changes**, covering at least light/dark mode and Chinese/English.
+6. **State the validation boundary for platform adaptations**: target OS, build command, manual smoke items, update endpoint, and brand-distinction approach.
+7. **Use conventional commits**: `feat:`, `fix:`, `docs:`, `test:`, `chore:`, `refactor:`.
 
 ## i18n
 
-All user-facing strings must be in `src/i18n/locales/zh-CN.ts` and `src/i18n/locales/en.ts`, with a type definition in `src/i18n/types.ts`. Do not hardcode Chinese or English strings in Vue components or TypeScript.
+User-facing strings must appear in both `src/i18n/locales/zh-CN.ts` and `src/i18n/locales/en.ts`, with a type definition in `src/i18n/types.ts`. Do not hardcode Chinese or English strings in Vue components or TypeScript.
 
 ## Versioning
 
@@ -133,17 +103,15 @@ PayDance follows [Semantic Versioning](https://semver.org/). Release versions ar
 
 ## License Details
 
-The project code is released under [AGPL-3.0-only](../LICENSE) with [additional terms under AGPL Section 7](../legal/ADDITIONAL_TERMS_EN.md).
-
-By submitting a code contribution, you confirm that:
+The project code is released under [AGPL-3.0-only](../LICENSE) with [additional terms under AGPL Section 7](../legal/ADDITIONAL_TERMS_EN.md). By submitting a code contribution, you confirm that:
 
 - You are legally entitled to make the contribution and it is your original work, or you have the necessary permissions;
 - You agree that your contribution is incorporated into the project under AGPL-3.0-only and the project's additional terms;
 - You include a `Signed-off-by:` line (DCO) with your submission, confirming its lawful origin.
 
-> Ordinary contributions enter the project under the open-source terms above. If the maintainer needs to include a contribution in commercial, OEM, or white-label licensing, the contributor will be asked to explicitly sign the [Contributor License Agreement (CLA)](../legal/CLA_EN.md) before merge. Opening an Issue, suggestion, or security report does not require the CLA.
+If the maintainer needs to include a contribution in commercial, OEM, or white-label licensing, you will be asked to sign the [Contributor License Agreement (CLA)](../legal/CLA_EN.md) before merge; Issues, suggestions, and security reports need no signature.
 
-See [LICENSE](../LICENSE), [ADDITIONAL_TERMS_EN.md](../legal/ADDITIONAL_TERMS_EN.md), [TRADEMARK_EN.md](../legal/TRADEMARK_EN.md), and [BRAND-ASSETS_EN.md](../legal/BRAND-ASSETS_EN.md) for details.
+For trademark and brand assets, see [TRADEMARK_EN.md](../legal/TRADEMARK_EN.md) and [BRAND-ASSETS_EN.md](../legal/BRAND-ASSETS_EN.md).
 
 ## Maintenance and Governance
 

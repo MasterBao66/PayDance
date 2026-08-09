@@ -1,5 +1,7 @@
 # Contributor License Agreement
 
+> [中文版 →](CLA.md)
+
 This Contributor License Agreement ("CLA") applies to contributions explicitly
 submitted under this agreement to the PayDance project (the "Project"),
 maintained by Mr.Baoboer.

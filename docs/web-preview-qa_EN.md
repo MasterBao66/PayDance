@@ -4,24 +4,20 @@
 
 The Web Preview QA flow checks that the storefront works in a real browser: the page renders, theme and language switching work, key copy is present, and primary layout bounds stay inside the viewport. Its goal is release evidence, not just a good-looking screenshot.
 
-## Do Not Use
-
-Do not replace this flow with headless Chrome, CDP, or command-line screenshots. They have returned all-white captures while exiting successfully, so they are not a reliable release signal.
+Headless Chrome, CDP, and command-line screenshots do not replace this flow: they have returned all-white captures while exiting successfully, so they are not a reliable release signal.
 
 ## Validation Flow
 
 1. Start the local Web Preview dev server and record the local URL.
 2. Open the page with the Playwright devDependency owned by this project; for special debugging environments, `PLAYWRIGHT_NODE_MODULES` can point to an external `node_modules`.
-3. Capture fixed viewports: desktop `1440x900`, medium `960x760`, and mobile `390x844`.
-4. Cover both light and dark themes. Even first-screen-only changes should not be checked in light mode alone.
-5. Check the DOM: the page title, `Web Preview · appVersion`, software preview area, and mobile layout must remain present and stable.
-6. Run the real language-switching path: for local and GitHub Pages mirror QA, open `/PayDance/`, click `Switch to English`, and confirm navigation to `/PayDance/en/` with `data-locale="en"`; for the Vercel primary site smoke test, confirm the same language state through `/` and `/en/`.
-7. Check each page title, canonical URL, reciprocal `zh-CN` / `en` / `x-default` hreflang links, and JSON-LD language and build date.
-8. Use `@axe-core/playwright` for serious automated accessibility findings. This is not a full WCAG compliance claim.
-9. Collect console errors and page errors, and confirm there are no severe errors.
-10. Save screenshots and `summary.json` to a unique temporary QA directory for this run: `C:\Users\mrbao\AppData\Local\Temp\paydance-web-preview-qa-{version}-{commit}-{timestamp}`.
-11. Compare four canonical visual states: desktop and mobile for Chinese light mode and English dark mode.
-12. Stop the local service after validation so the port is not left occupied.
+3. Capture fixed viewports in both light and dark themes: desktop `1440x900`, medium `960x760`, and mobile `390x844`.
+4. Check the DOM: the page title, `Web Preview · appVersion`, software preview area, and mobile layout must remain present and stable.
+5. Run the real language-switching path: for local and GitHub Pages mirror QA, open `/PayDance/`, click `Switch to English`, and confirm navigation to `/PayDance/en/` with `data-locale="en"`; for the Vercel primary site smoke test, confirm the same language state through `/` and `/en/`. At both entries, check the page title, canonical URL, reciprocal `zh-CN` / `en` / `x-default` hreflang links, and JSON-LD language and build date.
+6. Use `@axe-core/playwright` for serious automated accessibility findings. This is not a full WCAG compliance claim.
+7. Collect console errors and page errors, and confirm there are no severe errors.
+8. Save screenshots and `summary.json` to a per-run directory under the system temp directory: `paydance-web-preview-qa-{version}-{commit}-{timestamp}`, rooted at `%LOCALAPPDATA%\Temp` locally and at `RUNNER_TEMP` in CI.
+9. Compare four canonical visual states: desktop and mobile for Chinese light mode and English dark mode.
+10. Stop the local service after validation so the port is not left occupied.
 
 ## Command
 

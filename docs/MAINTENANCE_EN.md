@@ -2,7 +2,7 @@
 
 > [中文版 →](MAINTENANCE.md)
 
-This document keeps recurring PayDance maintenance rules easy to find: what to check when changing persisted settings, writing diagnostics, or preparing a release.
+This document records the recurring PayDance maintenance rules: what to keep in sync when changing settings, writing diagnostics, or preparing a release.
 
 ## Settings Migration
 
@@ -17,8 +17,7 @@ This document keeps recurring PayDance maintenance rules easy to find: what to c
 ## Diagnostics and Logs
 
 - User-facing errors should explain the next action: retry, check settings, or reopen the app.
-- Maintainer diagnostics may stay in console or local logs, but must not include salary values, private paths, keys, emails, or similar sensitive data.
-- New logs should record the failed stage and a safe error category, not the full private payload.
+- Maintainer diagnostics may stay in console or local logs, but should record only the failed stage and a safe error category — never salary values, private paths, keys, emails, or similar sensitive data.
 
 ## Desktop Release Smoke
 
@@ -48,9 +47,16 @@ The Release workflow also runs `scripts/smoke-windows-exe.ps1` to confirm that t
 - Product features, bug fixes, dependency upgrades, release workflows, and security-related changes should normally use a PR and wait for CI and CodeQL.
 - Documentation-only changes still report `CI gate` and `CodeQL gate`, while CodeQL skips the expensive JavaScript and Rust analysis jobs.
 
-## Renovate
+## Dependency Updates
 
-- Configuration lives in `.github/renovate.json`; validate it with `npx --yes --package renovate renovate-config-validator .github/renovate.json`.
-- Renovate runs immediately with unlimited concurrent PRs and mandatory human merge assessment. Automerge is disabled.
-- Public evidence of a working hosted app is a Renovate PR or a `Dependency Dashboard` Issue. A config file alone does not prove installation.
-- After the configuration reaches `main`, confirm the Dashboard and first PR batch immediately. If nothing appears, reconfirm repository access in the GitHub App settings.
+- Dependency updates are handled by Dependabot. Its configuration lives in `.github/dependabot.yml` and covers the npm, cargo, and github-actions ecosystems, checking every Monday at 09:00 Asia/Shanghai. Automerge is disabled.
+- Upgrades that are deliberately held back live in two places that must stay in sync: the `ignore` block in `dependabot.yml`, and the "keeps the upgrades that are blocked upstream pinned with a reason" test in `scripts/repository-metadata.test.js`. Two entries today: `typescript` is held at 6.x (TypeScript 7 is the native port — vue-tsc cannot resolve `tsc.js` from it and typescript-eslint refuses to load), and `@types/node` is held at 24.x to track the runtime major.
+- October 2026 follow-up: once Node 26 reaches LTS, move every CI `node-version` to 26, lift the `@types/node` major block, and drop the matching test assertion.
+- `package.json` currently declares no `overrides`. Add one only as a stopgap and remove it once upstream catches up, otherwise it permanently forces a major into dependencies that declare a lower range.
+- `glob@10.5.0` carries a deprecation flag and is known and accepted: it is only `require`d from the `js-beautify` CLI entry, which this repository never loads. Wait for js-beautify to upgrade instead.
+- Declared ranges are documentation; the committed `package-lock.json` is what actually decides installs. When adjusting a `^` floor, follow the locked and verified version — especially for `@tauri-apps/*`, which is a matched pair with the Rust crates, where a stale floor implies an old IPC surface is still supported.
+
+## Local Toolchain Alignment
+
+- CI uses Rust `stable`. A lagging local toolchain makes `cargo clippy -D warnings` disagree with CI. Run `rustup check` to see the gap and `rustup update stable` to close it.
+- `npm run verify:release` invokes the **local** cargo-audit and cargo-deny, while CI installs pinned versions. When the two differ, the local result does not count — realign with `cargo install cargo-audit cargo-deny --locked`.

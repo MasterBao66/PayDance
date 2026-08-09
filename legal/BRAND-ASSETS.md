@@ -11,9 +11,11 @@
 - 官方宣传海报、营销图、社交预览图片
 - 官网视觉识别素材
 - 官方截图中可识别的完整品牌视觉组合
-- 品牌专属字体子集、美术作品和视觉包装素材
+- 美术作品和视觉包装素材
 
 以上素材的权利由 Mr.Baoboer 保留。
+
+官网内嵌的两个子集字体不在此列：它们是 Noto CJK 的子集，按 SIL Open Font License 1.1 授权，署名见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。
 
 ## 允许的使用
 

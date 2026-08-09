@@ -4,56 +4,44 @@
 
 ## Supported Versions
 
-Only the latest release receives security fixes. Older versions do not receive separate security patches.
-
-| Version   | Supported            |
-| --------- | -------------------- |
-| latest    | :white_check_mark:  |
-| < latest  | :x:                 |
+Only the latest release receives security fixes. Older versions do not get separate security patches.
 
 ## Supported Platforms
 
-The currently released and security-supported surfaces are the **Windows 11 desktop app** and the **Web Preview**. The Tauri dependency graph may include upstream cross-platform dependencies for macOS/Linux in `Cargo.lock`; these dependencies are not ignored, but until a platform is officially shipped, related findings are assessed as unreleased-platform paths, documented, and tracked upstream.
+Releases and security fixes cover the **Windows 11 desktop app** and the **Web Preview**.
+
+`Cargo.lock` contains macOS/Linux dependencies pulled in by Tauri upstream. They are scanned like everything else; when an advisory only affects a platform that has not shipped yet, the assessment is recorded and tracked upstream.
 
 ## Reporting a Vulnerability
 
-**Do NOT report security vulnerabilities through public GitHub Issues.**
+Please do not report security vulnerabilities through public Issues. Use one of these private channels instead:
 
-Please report via either of the following private channels:
+- **GitHub Security Advisory** (preferred): submit at [Security Advisories](https://github.com/MrBaoboer/PayDance/security/advisories/new)
+- **Email**: use the address listed on the [author's GitHub profile](https://github.com/MrBaoboer), with `[SECURITY]` in the subject line
 
-- **GitHub Security Advisory** (recommended): submit at [Security Advisories](https://github.com/MrBaoboer/PayDance/security/advisories/new)
-- **Email**: see the email listed on the [author's GitHub profile](https://github.com/MrBaoboer), and include `[SECURITY]` in the subject line
-
-### What to Include
-
-- Description of the vulnerability
-- Steps to reproduce
-- Affected version(s)
-- Any potential mitigations you've identified
+Include a description of the vulnerability, steps to reproduce, the affected versions, and any mitigations you have found.
 
 ### What to Expect
 
-- **Acknowledgment**: Within 72 hours
-- **Assessment**: Within 5 business days
-- **Fix timeline**: Depends on severity; critical issues are prioritized
-- **Disclosure**: After a fix is released and users have had reasonable time to update
+- **Acknowledgment**: within 72 hours
+- **Assessment**: within 5 business days
+- **Fix**: depends on severity; critical issues come first
+- **Disclosure**: after a fix ships and users have had time to update
 
-## Sensitive Information
+## Local Data and Sensitive Information
 
-- **Never** paste salary data, configuration files, or log files into public Issues
-- **Never** include private keys, signing keys, or secrets in any public channel
-- PayDance stores salary configuration locally in `salary-settings.json` — this file contains personal information and should not be shared
+PayDance is a local-first application. Salary figures, work schedules, and preferences stay in `salary-settings.json` under the local app data directory and are never sent to a remote server. That file contains personal information, so keep it private.
+
+Do not paste salary data, configuration files, logs, private keys, or signing keys into any public channel.
+
+If you find a vulnerability that could expose local configuration to unauthorized access, report it through the private channels above.
 
 ## Signing Key Compromise
 
 If the Tauri updater signing key is compromised:
 
-1. Immediately revoke the compromised key
+1. Revoke the compromised key immediately
 2. Generate a new key pair
 3. Update `tauri.conf.json` with the new public key
-4. Issue a new release signed with the new key
-5. Previous releases will no longer be updatable — users must download manually
-
-## Local Data
-
-PayDance is a local-first application. Salary data, work schedules, and preferences are stored only on your device. No data is sent to remote servers. If you discover a vulnerability that could expose local configuration to unauthorized access, please report it immediately.
+4. Ship a new release signed with the new key
+5. Earlier releases can no longer auto-update; users must download manually

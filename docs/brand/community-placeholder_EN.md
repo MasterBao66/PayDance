@@ -15,7 +15,7 @@ If placeholder assets are added later, they should be dedicated to the public do
 ## What does not belong here
 
 - Modified versions of official PayDance logos, icons, or marketing artwork
-- Any official brand assets listed in [`official.md`](official.md)
+- Any official brand assets listed in [`official_EN.md`](official_EN.md)
 - Visual assets that could confuse users about the origin of a distribution
 
 ## Adding assets

@@ -11,9 +11,11 @@ Unless explicitly authorized in writing, the following assets are not licensed u
 - Official marketing posters, promotional images, and social preview images
 - Official website visual identity materials
 - Complete brand visual composition visible in official screenshots
-- Brand-specific font subsets, artwork, and visual packaging materials
+- Artwork and visual packaging materials
 
 All rights in these assets are reserved by Mr.Baoboer.
+
+The two subset fonts embedded in the website are not part of this list: they are subsets of Noto CJK licensed under the SIL Open Font License 1.1. See [THIRD_PARTY_NOTICES_EN.md](THIRD_PARTY_NOTICES_EN.md) for attribution.
 
 ## Permitted use
 

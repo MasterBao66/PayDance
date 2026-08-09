@@ -14,7 +14,7 @@ Use this checklist before each Windows desktop release. It covers real desktop c
 ## Settings Persistence
 
 - [ ] Changing salary mode, amount, workdays, start time, and end time updates the dashboard immediately.
-- [ ] Typing a currency symbol, or clearing the field, updates the inline preview, the dashboard, estimated earnings, salary details, and the mini window, and persists after restart.
+- [ ] Typing a currency symbol, or clearing the field to hide it, updates the inline preview, the dashboard, estimated earnings, salary details, and the mini window, and persists after restart.
 - [ ] Changing theme, amount animation style, and always-on-top state persists after restart.
 - [ ] Temporary invalid salary input shows a clear prompt, while theme and window preferences can still be saved.
 
@@ -25,8 +25,6 @@ Use this checklist before each Windows desktop release. It covers real desktop c
 - [ ] The tray menu can open the main window, open settings, toggle mini mode, toggle always-on-top, and quit.
 - [ ] After switching the language to English and restarting, the tray menu and tooltip are in English too.
 - [ ] Closing the main window with Alt+F4 or the taskbar "Close window" entry removes the tray icon and exits the process, leaving nothing in Task Manager.
-- [ ] After switching the language to English and restarting, the tray menu and tooltip are in English too.
-- [ ] Closing the main window with Alt+F4 or the taskbar "Close window" entry removes the tray icon and exits the process, leaving nothing in Task Manager.
 - [ ] Launching the same executable while the app is already running does not open a second main window; the existing window is raised and focused.
 
 ## Mini Floating Window
@@ -35,11 +33,8 @@ Use this checklist before each Windows desktop release. It covers real desktop c
 - [ ] The mini floating window can be dragged; double-clicking it or pressing Enter / Space restores the main window.
 - [ ] The mini floating window has no taskbar button; leaving mini mode restores it.
 - [ ] Hiding the mini window to the tray and showing it again still leaves no taskbar button.
-- [ ] The mini floating window has no taskbar button; leaving mini mode restores it.
-- [ ] Hiding the mini window to the tray and showing it again still leaves no taskbar button.
 - [ ] Right-clicking the mini floating window opens the opacity panel.
 - [ ] Opacity changes apply immediately and persist after restart.
-- [ ] With the UI language set to English, the opacity panel heading and slider label are English too.
 - [ ] With the UI language set to English, the opacity panel heading and slider label are English too.
 
 ## Desktop Environment

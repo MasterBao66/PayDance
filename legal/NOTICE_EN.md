@@ -1,5 +1,7 @@
 # Notice
 
+> [中文版 →](NOTICE.md)
+
 PayDance is an open-source project created and maintained by Mr.Baoboer.
 
 - **Software code** is licensed under AGPL-3.0-only, subject to the permitted

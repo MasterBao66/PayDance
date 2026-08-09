@@ -2,7 +2,7 @@
 
 > [English version →](MAINTENANCE_EN.md)
 
-本文记录 PayDance 的日常维护规则，方便维护者和贡献者快速判断：改配置、写日志、做发布前检查时，哪些事项必须同步处理。
+本文记录 PayDance 的日常维护规则：改配置、写日志、做发布前检查时，哪些事项必须同步处理。
 
 ## 配置迁移
 
@@ -17,8 +17,7 @@
 ## 诊断与日志
 
 - 用户能看到的错误，应说明下一步该怎么做，例如重试、检查配置或重新打开应用。
-- 维护者诊断信息可以留在 console 或本地日志里，但不要记录薪资、私有路径、密钥、邮箱等敏感数据。
-- 新增日志时，优先记录失败阶段和安全的错误类别，不记录完整私密内容。
+- 维护者诊断信息可以留在 console 或本地日志里，只记录失败阶段和安全的错误类别，不写入薪资、私有路径、密钥、邮箱等敏感数据。
 
 ## 桌面发布前冒烟
 
@@ -48,9 +47,16 @@ Release workflow 还会运行 `scripts/smoke-windows-exe.ps1`，自动确认便�
 - 程序功能、Bug 修复、依赖升级、发布流程和安全相关修改优先走 PR，并等待 CI 与 CodeQL 通过。
 - 纯文档变更仍保留 `CI gate` 与 `CodeQL gate`，但 CodeQL 会跳过耗时的 JavaScript 和 Rust 分析。
 
-## Renovate
+## 依赖更新
 
-- 配置位于 `.github/renovate.json`，可运行 `npx --yes --package renovate renovate-config-validator .github/renovate.json` 验证。
-- 当前采用立即检查、无限并发 PR、全部人工评估的模式；禁止 Renovate 自动合并。
-- Hosted App 正常运行的公开证据是 Renovate PR 或 `Dependency Dashboard` Issue；仅存在配置文件不等于机器人已经安装。
-- 配置合入 `main` 后应立即确认 Dashboard 和首轮 PR；没有活动时，在 GitHub App 设置中重新确认仓库授权。
+- 依赖更新由 Dependabot 负责，配置位于 `.github/dependabot.yml`，覆盖 npm、cargo、github-actions 三个 ecosystem，每周一 09:00（Asia/Shanghai）检查，不开自动合并。
+- 被上游卡住、故意不升的依赖写在两处并保持同步：`dependabot.yml` 的 `ignore`，以及 `scripts/repository-metadata.test.js` 里 “keeps the upgrades that are blocked upstream pinned with a reason”。当前有两条：`typescript` 锁在 6.x（TS 7 是原生移植版，vue-tsc 解析不到 `tsc.js`，typescript-eslint 拒绝加载），`@types/node` 锁在 24.x（跟随运行时主版本）。
+- 2026-10 待办：Node 26 转为 LTS 后，把 CI 各处 `node-version` 推到 26，同步放开 `@types/node` 的 major 封锁并删掉对应测试断言。
+- `package.json` 当前不声明 `overrides`。确需新增时只作为临时措施，上游补齐后立即撤掉，否则会长期把某个 major 硬塞进声明了低版本区间的依赖里。
+- `glob@10.5.0` 带 deprecated 标记，属于已知可接受：它只在 `js-beautify` 的 CLI 入口被 `require`，本仓库的测试路径不会加载，等 js-beautify 自己升级即可。
+- 声明区间只是文档，真正决定安装结果的是提交进仓库的 `package-lock.json`。调整 `^` 下限时以锁定并验证过的版本为准，`@tauri-apps/*` 尤其要跟上——它们与 Rust 侧 crate 配套，下限过旧会让人误以为老 IPC 接口仍在支持范围内。
+
+## 本地工具链对齐
+
+- CI 的 Rust 用 `stable`，本地落后会导致 `cargo clippy -D warnings` 的结论与 CI 不一致。定期 `rustup update stable`（含 `rustup check` 先看差距）。
+- `npm run verify:release` 调用的是**本地**的 cargo-audit / cargo-deny，而 CI 装的是固定版本。两边版本不一致时本地结论不作数，用 `cargo install cargo-audit cargo-deny --locked` 追平。

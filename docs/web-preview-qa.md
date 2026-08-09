@@ -4,24 +4,20 @@
 
 Web Preview QA 用来确认官网橱窗在真实浏览器里稳定可用：页面能正常渲染，主题和语言能切换，关键文案不丢，主要布局不溢出。它的目标不是截一张好看的图，而是为发布判断留下可靠证据。
 
-## 不要使用
-
-不要用 headless Chrome、CDP 或命令行截图替代这个流程。它们曾经出现过全白截图却正常退出的情况，不能作为发布信号。
+不要用 headless Chrome、CDP 或命令行截图替代这个流程：它们出现过全白截图却正常退出的情况，不能作为发布信号。
 
 ## 验证流程
 
 1. 启动本地 Web Preview dev server，并记录本地 URL。
 2. 使用项目 `devDependency` 中的 Playwright 打开页面；如需调试特殊环境，可用 `PLAYWRIGHT_NODE_MODULES` 指向外部 `node_modules`。
-3. 按固定视口截图：桌面端 `1440x900`，中等窗口 `960x760`，移动端 `390x844`。
-4. 同时覆盖浅色和深色主题。即使只改了首屏，也不要只看浅色。
-5. 检查 DOM：页面标题、`Web Preview · appVersion`、软件预览区和移动端布局必须存在且稳定。
-6. 跑真实语言切换：本地和 GitHub Pages 镜像从 `/PayDance/` 进入中文页，点击 `Switch to English`，确认网址进入 `/PayDance/en/`、`data-locale="en"`；Vercel 主站线上冒烟应从 `/` 和 `/en/` 入口确认同一套语言状态。
-7. 分别检查中英文页面的标题、Canonical、`zh-CN` / `en` / `x-default` 双向 `hreflang` 和 JSON-LD 语言、构建日期。
-8. 用 `@axe-core/playwright` 检查自动化能发现的严重无障碍问题。这不是完整 WCAG 合规证明。
-9. 收集控制台错误和页面错误，确认没有严重报错。
-10. 将截图和 `summary.json` 保存到本次运行专属临时目录：`C:\Users\mrbao\AppData\Local\Temp\paydance-web-preview-qa-{version}-{commit}-{timestamp}`。
-11. 对 4 个标准状态执行像素差异检查：中英文各覆盖桌面端和移动端，中文使用浅色，英文使用深色。
-12. 结束后关闭本地服务，避免占用端口。
+3. 按固定视口截图，浅色和深色主题都要覆盖：桌面端 `1440x900`，中等窗口 `960x760`，移动端 `390x844`。
+4. 检查 DOM：页面标题、`Web Preview · appVersion`、软件预览区和移动端布局必须存在且稳定。
+5. 跑真实语言切换：本地和 GitHub Pages 镜像从 `/PayDance/` 进入中文页，点击 `Switch to English`，确认网址进入 `/PayDance/en/`、`data-locale="en"`；Vercel 主站线上冒烟从 `/` 和 `/en/` 入口确认同一套语言状态。两个入口都要核对本页的标题、Canonical、`zh-CN` / `en` / `x-default` 双向 `hreflang`，以及 JSON-LD 语言和构建日期。
+6. 用 `@axe-core/playwright` 检查自动化能发现的严重无障碍问题。这不是完整 WCAG 合规证明。
+7. 收集控制台错误和页面错误，确认没有严重报错。
+8. 将截图和 `summary.json` 保存到系统临时目录下本次运行专属的 `paydance-web-preview-qa-{version}-{commit}-{timestamp}`：本地取 `%LOCALAPPDATA%\Temp`，CI 取 `RUNNER_TEMP`。
+9. 对 4 个标准状态执行像素差异检查：中英文各覆盖桌面端和移动端，中文使用浅色，英文使用深色。
+10. 结束后关闭本地服务，避免占用端口。
 
 ## 命令
 

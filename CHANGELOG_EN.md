@@ -8,27 +8,31 @@ Build artifacts and verification files are available in [GitHub Releases](https:
 
 ## Unreleased
 
+Nothing unreleased.
+
+## Released
+
 ### v0.9.9
 
-- **Mini mode no longer occupies the taskbar**: entering mini floating mode drops the main window's taskbar button and leaving it restores the button. Hiding to the tray and showing again re-drops it, so Windows re-creating the button cannot leak it back. The tray icon remains the way to bring the window back.
-- **Custom currency symbol**: Settings gains a Currency symbol group — type whatever symbol you want ($, €, £, ₩, HK$, anything), or leave it empty for no symbol at all, with a live `88.68` preview beside the field showing exactly how it will render. The default is still ¥. It applies to the dashboard, estimated daily earnings, salary details, the mini window, and the salary input unit, and the amount a screen reader announces carries the same symbol. Input is stripped of control and zero-width characters and capped at four characters; existing installs keep ¥. No exchange-rate conversion ([#30](https://github.com/MrBaoboer/PayDance/issues/30)).
-- **Fixed off-screen window recovery never running in shipped builds**: the `available_monitors` and `primary_monitor` commands the recovery depends on were never listed in the capabilities, so the Tauri ACL rejected them. The rejection was swallowed by a `catch`, leaving the monitor list permanently empty, which made the "is the window still on screen" check always answer yes — a window stranded by an unplugged monitor was never pulled back. The permissions are now granted, and a new test fails the build whenever the frontend calls a window command with no matching grant.
-- **Fixed a destroyed main window leaving a zombie process**: all five tray actions and the single-instance callback resolve the main window and give up when it is gone, while the hidden opacity companion window keeps the runtime from ever exiting on its own. Closing the window with Alt+F4 or the taskbar context menu early in startup left an invisible process with an unresponsive tray, killable only from Task Manager. The titlebar "close to tray" button now really hides (and the webview no longer holds the window-close permission), the close interceptor registers before anything that can await, and Rust exits cleanly if the main window is destroyed anyway.
-- **Tray menu follows the language**: the tray menu and tooltip always started in Chinese and only changed after manually switching language in Settings. The language restored at startup — or auto-detected from the system on a first run — now reaches the tray too, and the match is parsed exactly instead of by substring.
+- **Mini mode no longer occupies the taskbar**: entering mini floating mode drops the main window's taskbar button and leaving it restores the button; hiding to the tray and showing again re-drops it. The tray icon remains the way to bring the window back.
+- **Custom currency symbol**: Settings gains a Currency symbol field — type whatever symbol you want ($, €, £, ₩, HK$), or leave it empty for no symbol at all, with a live `88.68` preview beside the field. The default is still ¥, and existing installs keep it. It applies to the dashboard, estimated daily earnings, salary details, the mini window, and the salary input unit, and a screen reader announces the same symbol. No exchange-rate conversion ([#30](https://github.com/MrBaoboer/PayDance/issues/30)).
+- **Fixed off-screen window recovery never running in shipped builds**: a window stranded by an unplugged monitor was never pulled back. The `available_monitors` and `primary_monitor` commands the recovery depends on had no permission grant, so the monitor list stayed empty and the on-screen check always answered yes. The permissions are now granted, and a new test fails the build whenever the frontend calls a window command with no matching grant.
+- **Fixed a destroyed main window leaving a zombie process**: closing the window with Alt+F4 or the taskbar context menu early in startup left an invisible process with an unresponsive tray, killable only from Task Manager. The titlebar "close to tray" button now really hides, the close interceptor registers as the first step of startup, and Rust exits cleanly if the main window is destroyed anyway.
+- **Tray menu follows the language**: the tray menu and tooltip always started in Chinese and only changed after manually switching language in Settings; the language restored at startup, or auto-detected from the system on a first run, now reaches the tray too.
 - **Mini opacity panel follows the language**: that panel is a separate window that never reads the settings file, so it was permanently Chinese. The main window now sends the current language when it opens the panel.
-- **Accessibility fixes**: today's earnings were entirely invisible to screen readers — every digit is `aria-hidden` and the wrapping button's own label replaced the content. The accessible name of both the dashboard button and the mini window now carries the live amount. Settings switches had no keyboard focus indicator at all because of a blanket `outline: none`; that rule is narrowed and checkboxes get an explicit focus ring.
-- **Honours the system reduce-motion setting**: the progress-bar shine on the always-on-top window is an infinite animation that ignored the setting; it is now degraded globally.
-- **Settings persistence gap**: the amount animation style, the UI language, and the new currency symbol had no write trigger of their own and were only saved incidentally by the next window move or config change, so an abnormal exit rolled them back. Each now schedules a save.
-- **English punctuation**: the About section hardcoded a Chinese fullwidth colon after Version and Author, rendering "Version：0.9.8" in English. The separator is now part of the locale.
+- **Accessibility fixes**: the accessible name of the dashboard button and of the mini window now carries the live amount — today's earnings were previously invisible to screen readers. Settings switches get their keyboard focus ring back after a blanket `outline: none` removed it.
+- **Honours the system reduce-motion setting**: the looping progress-bar shine on the always-on-top window ignored the setting; it is now degraded globally.
+- **Settings persistence gap**: the amount animation style, the UI language, and the currency symbol had no write trigger of their own, so an abnormal exit rolled them back. Each now schedules a save.
+- **English punctuation**: the separator after Version and Author in the About section was a hardcoded Chinese fullwidth colon; it now follows the locale.
 
 ### v0.9.8
 
-- **Fixed the window disappearing after a full-screen game**: Windows parks a minimized window at the sentinel position `-32000, -32000` and reports it verbatim through the window move event. That coordinate was being treated as a real position and written to `salary-settings.json`, leaving the window stranded offscreen and invisible on the desktop. The move event, the position capture, and the settings write now all reject it, and a coordinate poisoned by an older build is cleared as soon as settings are read on the next launch, with no manual file editing needed.
-- **The tray and a second launch can always bring the window back**: `show()` does not un-minimize on Windows, so the tray menu, a tray left-click, and re-running the app all failed to recover a window a full-screen game had minimized. All three paths now un-minimize first and re-check that the window really lands inside a visible monitor work area. A window that is already partly visible is left exactly where the user put it.
-- **Minimizing no longer affects the saved window size**: minimizing collapses the window client area, and nothing previously stopped that reading from reaching settings. Minimized state and zero-size readings are now both skipped.
+- **Fixed the window disappearing after a full-screen game**: Windows parks a minimized window at the sentinel position `-32000, -32000`, and that coordinate was being treated as a real position and written to `salary-settings.json`, stranding the window offscreen. The move event, the position capture, and the settings write now all reject it, and a coordinate poisoned by an older build is cleared as soon as settings are read on the next launch.
+- **The tray and a second launch can always bring the window back**: `show()` does not un-minimize on Windows, so a window a full-screen game had minimized could not be recovered. The tray menu, a tray left-click, and re-running the app now un-minimize first and re-check that the window lands inside a visible monitor work area; a window that is already partly visible stays where the user put it.
+- **Minimizing no longer affects the saved window size**: the collapsed client area reported while minimized, and zero-size readings, are both skipped.
 - **Hardened settings against corrupt values**: window sizes now reject `NaN`, `Infinity`, and non-numeric content and are capped at a sane maximum, while coordinates also reject non-finite values and absurd magnitudes. A failure while applying the window mode at startup no longer aborts the rest of initialization, so the ticker, tray actions, and exit-save always register.
-- **Guard for the window settings schema gate**: the version the window size compatibility check compares against is a different counter from the `settingsVersion` actually written to disk, so raising the former would reset every user's window size. It is now documented and covered by an ordering assertion.
-- **Regression tests**: added coverage for the minimize sentinel, corrupt sizes, offscreen recovery, and tray un-minimize. None of these write paths had any test before.
+- **Guard for the window settings schema gate**: the version the window size compatibility check compares against is a different counter from the `settingsVersion` written to disk, so raising the former would reset every user's window size. It is now documented and covered by an ordering assertion.
+- **Regression tests**: added coverage for the minimize sentinel, corrupt sizes, offscreen recovery, and tray un-minimize.
 - **Website demo mode**: Web Preview now opens directly into the full wage dashboard with neutral demo salary, schedule, and preference defaults plus all seven workdays selected, without overwriting existing browser settings.
 - **Onboarding remains available**: Web Preview Settings now includes a First-time setup action that reopens the existing three-step flow; Windows desktop first-run behavior is unchanged.
 
@@ -101,7 +105,7 @@ Build artifacts and verification files are available in [GitHub Releases](https:
 - **License update**: Switched code license to GPL-3.0-only at that time, added trademark notice, and adopted CC BY 4.0 for docs.
 - **Website SEO**: Added Open Graph, Twitter Card, JSON-LD, `robots.txt`, and `sitemap.xml`.
 - **Auto-update**: Added silent background checks with a lightweight update badge.
-- **Code quality and automation**: Improved updater state handling, added Renovate, refreshed dependencies, and updated issue templates.
+- **Code quality and automation**: Improved updater state handling, added Renovate, and refreshed dependencies.
 
 ### v0.8.15
 
@@ -109,39 +113,34 @@ Build artifacts and verification files are available in [GitHub Releases](https:
 - Synced README and Web Preview download links to versioned assets.
 - Split Web Preview into smaller page, brand, hero, action, showcase, opacity-panel, and footer components.
 - Added build-time entry selection and assertions to keep Web and Desktop bundles isolated.
-- Refreshed npm and Rust lockfiles and issue-template versions.
+- Refreshed npm and Rust lockfiles.
 
 ### v0.8.14
 
 - Reverted the v0.8.13 decorative-line direction and rebuilt the Web Preview around quieter titanium-black / warm-white material layers.
 - Added favicon support and strengthened QA assertions for visual stability.
-- Updated issue-template version hints.
 
 ### v0.8.13
 
 - Refined Web Preview light/dark background layers, spacing, and showcase depth.
 - Split showcase state and bottom-tag components; added QA assertions for mobile overlap and stage decoration.
-- Updated issue-template version hints.
 
 ### v0.8.12
 
 - Made desktop release builds explicitly use `build:desktop` before Tauri packaging.
 - Added target assertions so Desktop and Web Preview builds cannot load the wrong runtime entry.
 - Tightened first-screen spacing and reorganized README sections.
-- Updated issue-template version hints.
 
 ### v0.8.11
 
 - Reworked Web Preview hero layout and moved the three value tags into a bottom information strip.
 - Unified product positioning around a desktop real-time wage board and refreshed related copy, tests, and font subsets.
-- Updated issue-template version hints.
 
 ### v0.8.10
 
 - Consolidated Web Preview subtitle copy into one line and simplified the three value tags.
 - Fine-tuned action-button baselines and theme-transition borders.
 - Added repeated light/dark switching QA and refreshed the local Chinese font subset.
-- Updated issue-template version hints.
 
 ### v0.8.9
 
@@ -149,28 +148,24 @@ Build artifacts and verification files are available in [GitHub Releases](https:
 - Kept three value tags horizontally aligned across mobile and narrow widths.
 - Added button icon-centering checks and refined footer alignment.
 - Simplified README and product copy while improving QA cold-start tolerance.
-- Updated issue-template version hints.
 
 ### v0.8.8
 
 - Refined Web Preview subtitle and value tags around tangible labor value, focus, and privacy.
 - Changed Windows download CTA to a direct EXE path and added Windows-style iconography.
 - Corrected author attribution to `Mr.Baoboer` across the repository.
-- Updated issue-template version hints.
 
 ### v0.8.7
 
 - Reverted Web Preview version display to lightweight text instead of a large centered capsule.
 - Rebalanced hero spacing and responsive two-column behavior.
 - Simplified light-mode brand treatment.
-- Updated issue-template version hints.
 
 ### v0.8.6
 
 - Continued Web Preview first-screen refactor around a centered two-line headline.
 - Added a local subset Chinese font and fixed scrolling in small browser windows.
 - Restored matching light/dark mini-preview themes and simplified README hero actions.
-- Updated issue-template version hints.
 
 ### v0.8.5
 
@@ -178,33 +173,28 @@ Build artifacts and verification files are available in [GitHub Releases](https:
 - Refined light-mode logo, version display, GitHub button spacing, and mini-preview opacity behavior.
 - Clarified that Web Preview stores browser-local settings only.
 - Reworked README hero as a formal product entry.
-- Updated issue-template version hints.
 
 ### v0.8.4
 
 - Fixed narrow-width Web Preview title wrapping and scoped the chosen Chinese font to website copy only.
 - Tightened GitHub button spacing and added regression assertions.
-- Updated issue-template version hints.
 
 ### v0.8.3
 
 - Reworked Web Preview headline hierarchy, typography, value tags, mini-preview contrast, and dark-stage depth.
 - Fixed rounded-corner regression at low mini-preview opacity.
-- Updated issue-template version hints.
 
 ### v0.8.2
 
 - Simplified the Web Preview hero to Windows download and GitHub actions.
 - Added product logo, current version, concise value tags, compact mini mode, and opaque dark-mode preview background.
 - Removed a separate README recent-improvements section.
-- Updated issue-template version hints.
 
 ### v0.8.1
 
 - Reworked Web Preview into a product-oriented online storefront.
 - Reduced preview-window size toward the desktop default and refined page hierarchy.
 - Added prominent README Live Preview and Windows download entries.
-- Updated issue-template version hints.
 
 ### v0.8.0
 
@@ -213,33 +203,30 @@ Build artifacts and verification files are available in [GitHub Releases](https:
 - Abstracted settings storage and external-link opening by platform.
 - Hid desktop-only capabilities in Web Preview and documented the preview/full-app boundary.
 - Added Pages deployment and Web Preview verification to local and CI workflows.
-- Updated product docs and issue-template version hints.
+- Updated product docs and confirmed Windows 11 as the officially verified platform.
 
 ### v0.7.16
 
 - Restored the natural single-layer earnings glow from v0.7.9 and removed the harsher pulse introduced later.
 - Preserved adaptive ticker performance optimizations and added regression tests.
-- Updated issue-template version hints.
 
 ### v0.7.15
 
 - Restored stable two-column settings fields in narrower desktop windows.
 - Reworked settings attribution footer layout and removed scale/translation from earnings pulse.
 - Unified onboarding and settings input typography and added regressions.
-- Updated issue-template version hints.
 
 ### v0.7.14
 
 - Changed earnings pulse into a short single-layer keyframe glow.
 - Fixed progress-bar corner rendering and refined focus-ring scope.
-- Added regression tests and updated issue-template version hints.
+- Added regression tests.
 
 ### v0.7.13
 
 - Replaced frame-by-frame salary recomputation with adaptive scheduling based on cent changes and status boundaries.
 - Split salary settings persistence from UI/window preference persistence.
 - Improved progress rendering, verification scripts, keyboard accessibility, and constants.
-- Updated issue-template version hints.
 
 ### v0.7.12
 

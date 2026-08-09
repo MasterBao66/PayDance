@@ -1,12 +1,12 @@
 
 <p align="center">
-  <img src="../src-tauri/icons/icon.png" alt="PayDance" width="88">
+  <img src="../src-tauri/icons/icon.png" alt="PayDance" width="92">
 </p>
 
 <h1 align="center">PayDance 薪跳</h1>
 
 <p align="center">
-  Make your labor tangible. Watch every second of income grow.
+  Put "what you have earned today" on your desktop, and watch every second of it grow
 </p>
 
 <p align="center">
@@ -16,6 +16,14 @@
   &nbsp;&nbsp;·&nbsp;&nbsp;
   <a href="../README.md">中文</a>
 </p>
+
+<p align="center">
+  <a href="https://github.com/MrBaoboer/PayDance/releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/MrBaoboer/PayDance?style=flat&label=release&labelColor=1F2328&color=F59E0B"></a>
+  <a href="https://github.com/MrBaoboer/PayDance/releases"><img alt="Downloads" src="https://img.shields.io/github/downloads/MrBaoboer/PayDance/total?style=flat&label=downloads&labelColor=1F2328&color=3D444D"></a>
+  <a href="../LICENSE"><img alt="License" src="https://img.shields.io/badge/license-AGPL--3.0--only-3D444D?style=flat&labelColor=1F2328"></a>
+</p>
+
+---
 
 ## What It Is
 
@@ -46,7 +54,7 @@ The main window shows today's earnings, work progress, time remaining, and daily
 
 | &nbsp; | Link | Notes |
 |:---:|:---:|:---:|
-| 🌐 | **[Live Preview](https://paydance.vercel.app/en/)** | Browser-based, all core features available |
+| 🌐 | **[Live Preview](https://paydance.vercel.app/en/)** | Browser-based, all core features available, nothing to install |
 | ⬇️ | **[Windows Desktop](https://github.com/MrBaoboer/PayDance/releases/latest)** | Portable EXE with tray, pinning, mini float, auto-start |
 
 </div>
@@ -62,7 +70,7 @@ Each release includes a SHA256 checksum file so you can verify the download.
 | Desktop shell | Tauri 2 + Rust |
 | Frontend | Vue 3 + TypeScript + Vite |
 | UI | Windows 11 styling, CSS Container Queries, Lucide Icons |
-| Storage | Local app data directory (Tauri Store) |
+| Storage | Local app data directory (Tauri Store) / browser localStorage |
 | Testing | Vitest + Rust unit tests + vue-tsc + cargo clippy |
 
 </div>

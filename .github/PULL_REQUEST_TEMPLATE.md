@@ -1,7 +1,7 @@
 ## 变更内容 / What Changed
 
-- 请用 2–4 条说明这次 PR 改了什么，以及为什么需要这样改。
-- Summarize what this PR changes and why in 2–4 bullets.
+用 2–4 条说明改了什么、为什么这样改。
+What changed and why, in 2–4 bullets.
 
 ## 影响范围 / Scope
 
@@ -13,8 +13,8 @@
 
 ## 验证方式 / Verification
 
-请选择与你的改动相关的检查；不适用的项目请说明原因。
-Select the checks relevant to your change. Explain why an item is not applicable when needed.
+勾选与改动相关的检查，不适用的说明原因。
+Check what applies; note why an item does not.
 
 - [ ] `npm run verify:metadata`
 - [ ] `npm run verify:fast`
@@ -26,11 +26,11 @@ Select the checks relevant to your change. Explain why an item is not applicable
 
 ## 风险与回滚 / Risk and Rollback
 
-- 请说明最需要关注的风险，以及如果出现问题应如何回退或缓解。
-- Describe the main risk and how to roll back or mitigate it if something goes wrong.
+最需要关注的风险，以及出问题后如何回退或缓解。
+The main risk, and how to roll it back or mitigate it.
 
-## 提交确认 / Submission Checklist
+## 提交确认 / Checklist
 
-- [ ] 没有更新版本号，除非这个 PR 的目标就是发版 / Version numbers are unchanged unless this PR is a release PR
-- [ ] 没有提交私钥、薪资数据、构建产物或本机缓存 / No private keys, salary data, build artifacts, or local caches are committed
-- [ ] 文档链接已检查，中文默认文档与英文镜像保持一致 / Documentation links are checked, and Chinese default docs stay aligned with English mirrors
+- [ ] 未改动版本号，发版 PR 除外 / Version numbers unchanged unless this is a release PR
+- [ ] 未提交私钥、薪资数据、构建产物或本机缓存 / No private keys, salary data, build artifacts, or local caches
+- [ ] 文档链接可解析，中文文档与英文镜像保持一致 / Doc links resolve; Chinese docs and English mirrors stay aligned

@@ -2,7 +2,7 @@
 
 > [中文版 →](ARCHITECTURE.md)
 
-This is not a technology brochure. It is a map from a desired change to the code and checks that own it.
+This is not a tech-stack tour. It maps the change you want to make to the code that owns it.
 
 ## Runtime Shape
 
@@ -22,15 +22,15 @@ flowchart LR
 - `src/composables/`: application behavior that combines calculation, settings, window state, and UI state.
 - `src/components/`: Vue UI shared by desktop and Web Preview.
 - `src/platform/`: the Web/Tauri boundary; Web adapters must not import Tauri modules.
-- `src/web-preview/`: storefront page, browser state, and responsibility-based styles.
+- `src/web-preview/`: website page, browser-side state, and section stylesheets.
 - `src-tauri/src/tray.rs`: tray menu, localization, and tray actions.
 - `src-tauri/src/portable_update.rs`: Windows portable update flow.
-- `src-tauri/src/lib.rs`: plugin, command, setup, and startup orchestration only.
+- `src-tauri/src/lib.rs`: plugin and command registration plus startup wiring only.
 
 ## Data Flow
 
 1. `useSalarySettings.ts` loads configuration from the platform settings store.
-2. `settings-migration.ts` normalizes legacy or damaged values and resets only the necessary fields.
+2. `settings-migration.ts` normalizes legacy or corrupt values, falling back to defaults only where needed.
 3. `useSalaryTicker.ts` drives salary snapshots with a monotonic wall clock.
 4. `src/lib/salary/` calculates earnings, progress, and the next state transition.
 5. `useDashboardModel.ts` turns calculation results into display text.
@@ -43,11 +43,11 @@ flowchart LR
 | Salary rules, lunch, overnight shifts | `src/lib/salary/` | `npm test -- src/lib/salary` |
 | Settings fields or migration | `src/lib/settings-migration.ts`, `src/composables/useSalarySettings.ts` | `npm test -- settings` |
 | Main window or settings UI | `src/components/` | `npm test`, `npm run build:desktop` |
-| Storefront layout or CSS | `src/web-preview/` | `npm run build:web`, `npm run qa:web-preview` |
+| Website layout or CSS | `src/web-preview/` | `npm run build:web`, `npm run qa:web-preview` |
 | Tray or desktop window behavior | `src-tauri/src/tray.rs`, `src/composables/useWindowMode.ts` | `cargo test`, focused Vitest |
 | Autostart | `src/lib/autostart.ts` | `npm test -- autostart` |
 | Updates and releases | `src-tauri/src/portable_update.rs`, `.github/workflows/release.yml` | `npm run verify:release` |
-| Dependency updates | `.github/renovate.json` | `npm run verify:metadata` |
+| Dependency updates | `.github/dependabot.yml` (when changing a hold, sync `scripts/repository-metadata.test.js`) | `npm run verify:metadata` |
 
 ## Important Boundaries
 
@@ -57,3 +57,5 @@ flowchart LR
 - `src/web-preview/web-preview.css` imports CSS sections in a fixed order; order changes require visual regression QA.
 - The Rust entrypoint does not own tray or updater implementation details.
 - Automation cannot reliably prove real sleep/resume, system-tray clicks, or post-reboot autostart. Release smoke testing still covers them manually.
+
+Before changing the UI, read [DESIGN.md](DESIGN.md) (Chinese only) — it constrains the visual direction of the main window, mini floating window, settings, and Web Preview.

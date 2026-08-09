@@ -1,12 +1,12 @@
 
 <p align="center">
-  <img src="src-tauri/icons/icon.png" alt="薪跳 PayDance" width="88">
+  <img src="src-tauri/icons/icon.png" alt="薪跳 PayDance" width="92">
 </p>
 
 <h1 align="center">薪跳 PayDance</h1>
 
 <p align="center">
-  具象化你的劳动价值，让每一秒的收入增长都看得见。
+  把「今天正在挣到的钱」放到桌面上，让每一秒的收入增长都看得见
 </p>
 
 <p align="center">
@@ -16,6 +16,14 @@
   &nbsp;&nbsp;·&nbsp;&nbsp;
   <a href="docs/README_EN.md">English</a>
 </p>
+
+<p align="center">
+  <a href="https://github.com/MrBaoboer/PayDance/releases/latest"><img alt="最新版本" src="https://img.shields.io/github/v/release/MrBaoboer/PayDance?style=flat&label=release&labelColor=1F2328&color=F59E0B"></a>
+  <a href="https://github.com/MrBaoboer/PayDance/releases"><img alt="下载量" src="https://img.shields.io/github/downloads/MrBaoboer/PayDance/total?style=flat&label=downloads&labelColor=1F2328&color=3D444D"></a>
+  <a href="LICENSE"><img alt="许可" src="https://img.shields.io/badge/license-AGPL--3.0--only-3D444D?style=flat&labelColor=1F2328"></a>
+</p>
+
+---
 
 ## 它是什么
 
@@ -46,7 +54,7 @@
 
 | &nbsp; | 入口 | 说明 |
 |:---:|:---:|:---:|
-| 🌐 | **[在线体验](https://paydance.vercel.app/)** | 网页端，含所有核心功能 |
+| 🌐 | **[在线体验](https://paydance.vercel.app/)** | 网页端，含所有核心功能，打开即用，无需下载 |
 | ⬇️ | **[Windows 桌面版](https://github.com/MrBaoboer/PayDance/releases/latest/download/pay-dance-v0.9.9-windows-x64.exe)** | 便携 EXE，含托盘、置顶、迷你悬浮、开机自启动等完整能力 |
 
 </div>
@@ -62,7 +70,7 @@ Release 页面同时提供 SHA256 校验文件，下载后可验证完整性。
 | 桌面壳 | Tauri 2 + Rust |
 | 前端 | Vue 3 + TypeScript + Vite |
 | UI | Windows 11 风格、CSS Container Queries、Lucide Icons |
-| 存储 | 本机应用数据目录（Tauri Store） |
+| 存储 | 本机应用数据目录（Tauri Store）/ 浏览器 localStorage |
 | 测试 | Vitest + Rust 单元测试 + vue-tsc + cargo clippy |
 
 </div>
