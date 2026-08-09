@@ -6,7 +6,7 @@
 <h1 align="center">PayDance 薪跳</h1>
 
 <p align="center">
-  Put the money you are earning today on your desktop
+  Put "the money you are earning today" on your desktop, and watch it grow, second by second
 </p>
 
 <p align="center">
@@ -27,7 +27,7 @@
 
 ## What It Is
 
-PayDance (薪跳) is a desktop real-time salary dashboard. Set your salary and working hours, and it shows today's earnings on your desktop in real time.
+PayDance (薪跳) is a desktop real-time salary dashboard. Set your salary and working hours, and it shows your income growing second by second on your desktop, making the value of your working time visible.
 
 The main window shows today's earnings, work progress, time remaining, and daily estimate. The mini floating window keeps only the amount, ready for a quick glance from the corner of your screen.
 
@@ -46,22 +46,30 @@ The main window shows today's earnings, work progress, time remaining, and daily
 
 ## Get It
 
-| Version | Notes |
-| ------- | ----- |
-| [Web Preview](https://paydance.vercel.app/en/) | Try the interface and salary calculations in a browser |
-| [Windows desktop app](https://github.com/MrBaoboer/PayDance/releases/latest) | Portable EXE with tray, always-on-top, mini-window, and auto-start support |
+<div align="center">
+
+| &nbsp; | Link | Notes |
+|:---:|:---:|:---:|
+| 🌐 | **[Live Preview](https://paydance.vercel.app/en/)** | Browser-based, all core features available, nothing to install |
+| ⬇️ | **[Windows Desktop](https://github.com/MrBaoboer/PayDance/releases/latest/download/pay-dance-v0.9.9-windows-x64.exe)** | Portable EXE with tray, always-on-top, mini float, and auto-start |
+
+</div>
 
 Each release includes a SHA256 checksum file so you can verify the download.
 
 ## Tech Stack
 
+<div align="center">
+
 | Layer | Technologies |
-| ----- | ------------ |
+|:---:|:---:|
 | Desktop shell | Tauri 2 + Rust |
 | Frontend | Vue 3 + TypeScript + Vite |
 | UI | Windows 11 styling, CSS Container Queries, Lucide Icons |
 | Storage | Local app data directory (Tauri Store) / browser localStorage |
 | Testing | Vitest + Rust unit tests + vue-tsc + cargo clippy |
+
+</div>
 
 The Web Preview and desktop app share the same core salary logic and frontend UI.
 
@@ -70,7 +78,7 @@ The Web Preview and desktop app share the same core salary logic and frontend UI
 **Install dependencies**
 
 ```powershell
-npm ci
+npm install
 ```
 
 **Desktop app**
@@ -107,7 +115,7 @@ For commit conventions, verification commands, and contribution workflow, see th
 
 ## Privacy
 
-PayDance requires no login, does not upload salary or settings data, and includes no telemetry. Tauri Store saves the configuration locally in `salary-settings.json`, including salary parameters, working hours, and UI preferences.
+PayDance requires no login, uploads no data, and includes no telemetry. All configuration is saved locally via Tauri Store in `salary-settings.json`, containing only salary parameters, work hours, and UI preferences.
 
 ## Documentation
 
@@ -122,3 +130,7 @@ PayDance requires no login, does not upload salary or settings data, and include
 Designed and developed by Mr.Baoboer. Code licensed under [AGPL-3.0-only](../LICENSE).
 
 For full license information and trademark policy, see the [Legal Guide](../legal/LEGAL_EN.md).
+
+---
+
+> [中文版 README →](../README.md)

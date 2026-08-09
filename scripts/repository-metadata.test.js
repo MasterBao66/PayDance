@@ -87,22 +87,26 @@ describe("repository metadata", () => {
     }
   });
 
+  // 中英文 README 都用版本化直链，缺一个就会在发版后静默 404。
   it("keeps README desktop download links on the versioned Windows release executable", () => {
-    const readme = read("README.md");
-    const desktopDownloadLinks = readme.match(
-      new RegExp(
-        `https://github\\.com/MrBaoboer/PayDance/releases/latest/download/${versionedDesktopAssetName}`,
-        "g",
-      ),
-    );
+    for (const path of ["README.md", "docs/README_EN.md"]) {
+      const readme = read(path);
+      const desktopDownloadLinks = readme.match(
+        new RegExp(
+          `https://github\\.com/MrBaoboer/PayDance/releases/latest/download/${versionedDesktopAssetName}`,
+          "g",
+        ),
+      );
 
-    expect(desktopDownloadLinks?.length).toBeGreaterThanOrEqual(1);
-    expect(readme).toContain(desktopDownloadUrl);
-    expect(readme).toContain(versionedDesktopAssetName);
+      expect(desktopDownloadLinks?.length).toBeGreaterThanOrEqual(1);
+      expect(readme).toContain(desktopDownloadUrl);
+      expect(readme).toContain(versionedDesktopAssetName);
+      expect(readme).not.toContain("releases/download/v0.7.16/pay-dance.exe");
+      expect(readme).not.toContain("mrbaoboer.github.io/PayDance/pay-dance.exe");
+    }
+
     // versionedDesktopChecksumName is removed from README to prevent hardcoded version churn
     expect(read("src/lib/app-meta.ts")).toContain("windowsDownloadAssetName");
-    expect(readme).not.toContain("releases/download/v0.7.16/pay-dance.exe");
-    expect(readme).not.toContain("mrbaoboer.github.io/PayDance/pay-dance.exe");
   });
 
   it("keeps the English README on its dedicated first-time setup poster", () => {
@@ -358,9 +362,7 @@ describe("repository metadata", () => {
     ];
 
     expect(read("README.md")).toContain("网页端，含所有核心功能");
-    expect(read("docs/README_EN.md")).toContain(
-      "Try the interface and salary calculations in a browser",
-    );
+    expect(read("docs/README_EN.md")).toContain("Browser-based, all core features");
     expect(read("docs/ROADMAP.md")).toContain("长期排除方向");
     expect(read("docs/ROADMAP_EN.md")).toContain("Long-Term Exclusions");
 
