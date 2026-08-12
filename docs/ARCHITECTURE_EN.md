@@ -61,4 +61,4 @@ flowchart LR
 - Tray and portable-updater implementation stays in dedicated Rust modules, not `src-tauri/src/lib.rs`.
 - `src/architecture-size.test.ts` caps the line count of `OnboardingPanel.vue`, `SettingsPanel.vue`, `src/lib/salary.ts`, `web-preview.css`, and `lib.rs`. Split new logic into submodules instead of growing those files.
 
-UI changes follow [DESIGN.md](DESIGN.md) (Chinese only). Release and persistence rules are in [MAINTENANCE_EN.md](MAINTENANCE_EN.md).
+UI changes follow the [design guide](DESIGN.md), which is Chinese-only. Release and persistence rules live in [Maintenance](MAINTENANCE_EN.md).
