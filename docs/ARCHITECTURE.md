@@ -46,6 +46,7 @@ flowchart LR
 | 薪资设置或迁移 | `src/lib/settings-migration.ts`、`src/lib/settings-store.ts`、`src/composables/useSalarySettings.ts` | `npm test -- src/lib/settings-migration.test.ts src/composables/useSalarySettings.test.ts` |
 | 窗口尺寸、位置或迷你模式 | `src/lib/window-mode.ts`、`src/composables/useWindow*.ts` | `npm test -- src/lib/window-mode.test.ts src/composables/useWindowMode.test.ts src/composables/useWindowPositionRecovery.test.ts` |
 | 主窗口、设置或首次向导 | `src/components/`、`src/styles/`、`src/DesktopApp.vue` | `npm test`、`npm run build:desktop` |
+| 界面文案与翻译 | `src/i18n/types.ts`、`src/i18n/locales/zh-CN.ts`、`src/i18n/locales/en.ts` | `npm run build:desktop`（缺键由 `vue-tsc` 报出） |
 | Web Preview 页面、路由或样式 | `src/web-preview/`、`src/WebPreviewApp.vue`、`index.html`、`en/index.html` | `npm run build:web`、`npm run qa:web-preview` |
 | 托盘、单实例或 Rust 窗口事件 | `src-tauri/src/tray.rs`、`src-tauri/src/lib.rs` | `cargo test --manifest-path src-tauri/Cargo.toml`、相关 Vitest |
 | 自启动 | `src/lib/autostart.ts`、`src/composables/useAutostart.ts` | `npm test -- autostart` |
@@ -58,5 +59,6 @@ flowchart LR
 - 目标差异通过 Vite 别名和平台适配器隔离；Web 构建不得包含桌面入口或 Tauri 运行代码。
 - `src/web-preview/web-preview.css` 的分区导入顺序影响层叠结果；调整后必须运行 Web Preview QA。
 - 托盘和便携版更新的实现留在独立 Rust 模块，不回填到 `src-tauri/src/lib.rs`。
+- `src/architecture-size.test.ts` 锁定 `OnboardingPanel.vue`、`SettingsPanel.vue`、`src/lib/salary.ts`、`web-preview.css` 和 `lib.rs` 的行数上限；新增逻辑拆到子模块，不要撑大这几个文件。
 
 界面改动遵循 [设计规范](DESIGN.md)。发布和持久化规则见[维护约定](MAINTENANCE.md)。

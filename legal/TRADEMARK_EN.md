@@ -40,7 +40,7 @@ Without explicit prior written permission, you may not:
 
 ## Minimum distinction requirements for modified versions and forks
 
-When distributing a modified version, binary build, installer, portable executable, or hosted version, ordinary users must be able to distinguish it clearly from official PayDance. At a minimum, replace or modify:
+When you distribute a modified version, binary build, installer, portable executable, or hosted version, ordinary users must be able to distinguish it clearly from official PayDance. At a minimum, replace or modify:
 
 - Product name
 - Application icon and tray icon

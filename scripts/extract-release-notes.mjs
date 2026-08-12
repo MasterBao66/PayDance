@@ -41,7 +41,7 @@ if (startIndex < 0) {
   writeNotes([
     `## PayDance ${normalizedVersion}`,
     "",
-    "This release was built by GitHub Actions. Download `pay-dance.exe` and verify it with `pay-dance.exe.sha256`.",
+    "This release was built by GitHub Actions. Download the assets from this GitHub Release page, and verify the executable against its `.sha256` file before running it.",
   ]);
   console.warn(
     `Release notes section ${heading} was not found in CHANGELOG.md. Wrote fallback notes to ${outputPath}.`,

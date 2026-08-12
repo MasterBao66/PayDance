@@ -4,7 +4,7 @@
 
 This Contributor License Agreement ("CLA") applies only when a contributor explicitly signs this agreement and submits a contribution to the PayDance project (the "Project"), maintained by Mr.Baoboer.
 
-By signing this CLA and submitting a contribution—including source code, documentation, translations, tests, graphics, or other materials—you agree to the following terms.
+By signing this CLA and submitting a contribution—including but not limited to source code, documentation, translations, tests, graphics, or other materials—you agree to the following terms.
 
 ## 1. Grant of license
 

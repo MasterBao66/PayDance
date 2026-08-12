@@ -2,18 +2,17 @@
 
 > [中文版 →](web-preview-qa.md)
 
-Web Preview QA validates the website showcase's content, layout, themes, languages, accessibility, and visual baselines. `npm run qa:web-preview` starts a local Vite server and uses Playwright Chromium. The default URL is `http://127.0.0.1:4174/PayDance/`, and the script stops the server when it finishes.
+Web Preview QA validates the content, layout, themes, languages, accessibility, and visual baselines of the showcase site. `npm run qa:web-preview` starts a local Vite server and uses Playwright Chromium. The default URL is `http://127.0.0.1:4174/PayDance/`, and the script stops the server when it finishes.
 
-Do not replace this workflow with ad hoc headless Chrome, CDP, or command-line screenshots. The repository script does use headless Chromium, but also runs DOM, interaction, accessibility, console, and pixel-difference assertions.
+Do not replace this workflow with ad hoc headless Chrome, CDP, or command-line screenshots: the script runs on headless Chromium too, but also asserts DOM, interaction, accessibility, console, and pixel-difference results.
 
 ## Coverage
 
-The script validates every combination of:
+The script walks all 12 combinations of:
 
 - Chinese and English.
 - Light and dark themes.
 - `1440x900`, `960x760`, and `390x844` viewports.
-- Real mobile navigation from Chinese `/PayDance/` to English `/PayDance/en/`.
 
 Each combination checks:
 
@@ -23,6 +22,8 @@ Each combination checks:
 - Stable first theme paint and consistent preview-window edges through repeated theme changes.
 - Critical or serious accessibility findings from `@axe-core/playwright`.
 - Browser console errors and page errors; any such error fails the run.
+
+Outside those combinations, the script also runs one check of real mobile navigation from Chinese `/PayDance/` to English `/PayDance/en/`.
 
 Local and GitHub Pages routes use `/PayDance/` for Chinese and `/PayDance/en/` for English. The Vercel primary site uses `/` and `/en/`. This command accesses only the local server and does not validate either deployed site.
 
@@ -57,13 +58,11 @@ Pixel comparison covers four fixed states:
 - Chinese light mode on desktop and mobile.
 - English dark mode on desktop and mobile.
 
-Minor antialiasing differences are ignored; more than `0.5%` changed pixels fails the run. Update baselines only after confirming that the visual change is intentional:
+Minor antialiasing differences are ignored; more than `0.5%` changed pixels fails the run. Baselines live in `tests/visual-baselines/`; update them only after confirming that the visual change is intentional, and commit them with the change:
 
 ```powershell
 npm run qa:web-preview:update
 ```
-
-Normal QA never accepts new screenshots automatically.
 
 ## Result Files
 
@@ -73,12 +72,8 @@ Screenshots are stored in a per-run directory under the system temporary directo
 paydance-web-preview-qa-{version}-{commit}-{timestamp}
 ```
 
-On success, `summary.json` in the same directory records the version, commit, local URL, observed Chinese and English page copy, screenshot paths, and visual comparisons. A failed visual comparison retains the expected, actual, and diff images.
+On success the script prints the full path of that directory, and `summary.json` in the same directory records the version, commit, local URL, observed Chinese and English page copy, screenshot paths, and visual comparisons. When a visual comparison fails, the error message gives the full expected, actual, and diff image paths.
 
 ## Passing Criteria
 
-- All 12 locale, theme, and viewport combinations plus the language-switch flow complete.
-- DOM, SEO, layout, theme-switching, and accessibility checks pass.
-- Each of the four fixed visual states stays within the `0.5%` pixel-difference budget.
-- There are no console errors or page errors.
-- The local server exits when the script finishes.
+`npm run qa:web-preview` passes only when it exits 0. A failed assertion prints the reason together with the case it came from, then exits non-zero.

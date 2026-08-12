@@ -14,7 +14,7 @@ Before opening an Issue, check:
 Choose the appropriate form on the [new Issue page](https://github.com/MrBaoboer/PayDance/issues/new/choose):
 
 - Bugs: include the version, affected surface, reproduction steps, expected result, and actual result.
-- Feature requests: describe the use case and desired outcome. For platform adaptations, also define the target system, validation method, and maintenance scope.
+- Feature requests: describe the use case and desired outcome. For the validation boundary a platform adaptation must define, see the [Contributing Guide](CONTRIBUTING_EN.md).
 - Other questions: use a blank Issue and explain the context and expected outcome.
 
 Issues are public. Do not attach salary data, `salary-settings.json`, private or signing keys, or other sensitive information. Redact logs and screenshots before posting them.

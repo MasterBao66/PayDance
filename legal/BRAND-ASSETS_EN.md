@@ -26,7 +26,7 @@ These uses must not imply that a third-party release is official or that Mr.Baob
 
 ## Fork and modified distribution requirements
 
-Modified distributions must use distinct branding and must not use official assets as product identity or promotional material. At a minimum, replace the logo, application icon, tray icon, promotional images, website visuals, any reused official screenshots, and any visual composition that would make users mistake the product for an official release. See [TRADEMARK_EN.md](TRADEMARK_EN.md) for product name, application identifier, and release-channel requirements.
+Modified distributions must use distinct branding and must not use official assets as product identity or promotional material. At a minimum, replace the logo, application icon, tray icon, promotional images, website visuals, any reused official screenshots, and any visual composition that would make users mistake the product for an official release. [Official Brand Assets](../docs/brand/official_EN.md) lists where these assets live in the repository. See [TRADEMARK_EN.md](TRADEMARK_EN.md) for product name, application identifier, and release-channel requirements.
 
 ## Official screenshots
 
@@ -35,7 +35,3 @@ Official screenshots may be used for factual reference. Without written permissi
 ## Separate authorization
 
 For commercial promotion, courses, media kits, partnerships, OEM, white-label, or other uses beyond factual reference, request written authorization through the email listed on the [author's GitHub profile](https://github.com/MrBaoboer).
-
----
-
-See also: [TRADEMARK_EN.md](TRADEMARK_EN.md).

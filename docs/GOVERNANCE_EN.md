@@ -13,7 +13,7 @@ The maintainer has final authority over product scope, merges, releases, securit
 - Verification results, risk, and maintenance cost
 - Clear provenance and licensing for code and assets
 
-Issues and pull requests may be closed or deferred when their scope, verification, risk, or maintenance cost is unclear.
+Issues and pull requests may be closed or deferred when they fall outside the product scope, lack verification, or carry unclear risk or maintenance cost.
 
 ## Governance Changes
 

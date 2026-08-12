@@ -19,15 +19,9 @@
 
 ## 桌面发布前冒烟
 
-每次 Windows 发布前，使用 `docs/desktop-smoke-checklist.md` 或英文版清单。记录至少包含：
+每次 Windows 发布前，按[桌面端冒烟清单](desktop-smoke-checklist.md)人工验证，并保留清单要求的测试记录。
 
-- PayDance 版本号和 commit。
-- Windows 版本。
-- 显示器数量和 DPI 缩放。
-- 失败项截图或说明。
-- 是否验证托盘、迷你悬浮、置顶、自启动和更新入口。
-
-Release workflow 还会运行 `scripts/smoke-windows-exe.ps1`，自动确认便携 EXE 能创建主窗口、稳定运行并阻止第二实例。人工清单继续覆盖自动化暂时无法可靠操作的托盘、自启动和休眠场景。
+Release workflow 还会运行 `scripts/smoke-windows-exe.ps1` 生成自动冒烟报告，覆盖范围见清单的“测试记录”。
 
 ## 发布链路
 
@@ -41,7 +35,7 @@ Release workflow 还会运行 `scripts/smoke-windows-exe.ps1`，自动确认便�
 
 ## 主分支推送
 
-- 维护者可将文案、图片、README 和低风险文档修改直接推送到 `main`，推送前运行 `npm run verify:metadata`。
+- 维护者可将文案、图片、README 和低风险文档修改直接推送到 `main`，推送用 `npm run push:main`，它会先运行 `npm run verify:metadata`。
 - 程序功能、Bug 修复、依赖升级、发布流程和安全相关修改优先走 PR，并等待 CI 与 CodeQL 通过。
 - 纯文档变更仍保留 `CI gate` 与 `CodeQL gate`，但 CodeQL 会跳过耗时的 JavaScript 和 Rust 分析。
 
@@ -50,11 +44,10 @@ Release workflow 还会运行 `scripts/smoke-windows-exe.ps1`，自动确认便�
 - 依赖更新由 Dependabot 负责，配置位于 `.github/dependabot.yml`，覆盖 npm、cargo、github-actions 三个 ecosystem，每周一 09:00（Asia/Shanghai）检查，不开自动合并。
 - 被上游卡住、故意不升的依赖写在两处并保持同步：`dependabot.yml` 的 `ignore`，以及 `scripts/repository-metadata.test.js` 里 “keeps the upgrades that are blocked upstream pinned with a reason”。当前有两条：`typescript` 锁在 6.x（TS 7 是原生移植版，vue-tsc 解析不到 `tsc.js`，typescript-eslint 拒绝加载），`@types/node` 锁在 24.x（跟随运行时主版本）。
 - 2026-10 待办：Node 26 转为 LTS 后，把 CI 各处 `node-version` 推到 26，同步放开 `@types/node` 的 major 封锁并删掉对应测试断言。
-- `package.json` 当前不声明 `overrides`。确需新增时只作为临时措施，上游补齐后立即撤掉，否则会长期把某个 major 硬塞进声明了低版本区间的依赖里。
 - `glob@10.5.0` 带 deprecated 标记，属于已知可接受：它只在 `js-beautify` 的 CLI 入口被 `require`，本仓库的测试路径不会加载，等 js-beautify 自己升级即可。
 - 声明区间只是文档，真正决定安装结果的是提交进仓库的 `package-lock.json`。调整 `^` 下限时以锁定并验证过的版本为准，`@tauri-apps/*` 尤其要跟上——它们与 Rust 侧 crate 配套，下限过旧会让人误以为老 IPC 接口仍在支持范围内。
 
 ## 本地工具链对齐
 
 - CI 的 Rust 用 `stable`，本地落后会导致 `cargo clippy -D warnings` 的结论与 CI 不一致。定期 `rustup update stable`（含 `rustup check` 先看差距）。
-- `npm run verify:release` 调用的是**本地**的 cargo-audit / cargo-deny，而 CI 装的是固定版本。两边版本不一致时本地结论不作数，用 `cargo install cargo-audit cargo-deny --locked` 追平。
+- `npm run verify:release` 调用的是**本地**的 cargo-audit / cargo-deny，而 CI 装的是固定版本，两边不一致时本地审计结论不作数。安装命令与当前固定版本见[贡献指南](../.github/CONTRIBUTING.md)的“维护者流程”。

@@ -46,6 +46,7 @@ flowchart LR
 | Salary settings or migration | `src/lib/settings-migration.ts`, `src/lib/settings-store.ts`, `src/composables/useSalarySettings.ts` | `npm test -- src/lib/settings-migration.test.ts src/composables/useSalarySettings.test.ts` |
 | Window size, position, or mini mode | `src/lib/window-mode.ts`, `src/composables/useWindow*.ts` | `npm test -- src/lib/window-mode.test.ts src/composables/useWindowMode.test.ts src/composables/useWindowPositionRecovery.test.ts` |
 | Main window, settings, or onboarding | `src/components/`, `src/styles/`, `src/DesktopApp.vue` | `npm test`, `npm run build:desktop` |
+| UI copy and translations | `src/i18n/types.ts`, `src/i18n/locales/zh-CN.ts`, `src/i18n/locales/en.ts` | `npm run build:desktop` (`vue-tsc` reports missing keys) |
 | Web Preview page, routing, or styles | `src/web-preview/`, `src/WebPreviewApp.vue`, `index.html`, `en/index.html` | `npm run build:web`, `npm run qa:web-preview` |
 | Tray, single instance, or Rust window events | `src-tauri/src/tray.rs`, `src-tauri/src/lib.rs` | `cargo test --manifest-path src-tauri/Cargo.toml`, focused Vitest |
 | Autostart | `src/lib/autostart.ts`, `src/composables/useAutostart.ts` | `npm test -- autostart` |
@@ -58,5 +59,6 @@ flowchart LR
 - Vite aliases and platform adapters isolate target differences. Web builds must not contain the desktop entry point or Tauri runtime code.
 - Import order in `src/web-preview/web-preview.css` affects the cascade; run Web Preview QA after changing it.
 - Tray and portable-updater implementation stays in dedicated Rust modules, not `src-tauri/src/lib.rs`.
+- `src/architecture-size.test.ts` caps the line count of `OnboardingPanel.vue`, `SettingsPanel.vue`, `src/lib/salary.ts`, `web-preview.css`, and `lib.rs`. Split new logic into submodules instead of growing those files.
 
 UI changes follow [DESIGN.md](DESIGN.md) (Chinese only). Release and persistence rules are in [MAINTENANCE_EN.md](MAINTENANCE_EN.md).

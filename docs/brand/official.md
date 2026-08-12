@@ -8,9 +8,9 @@
 
 | 资产 | 位置 | 用途 |
 | ---- | ---- | ---- |
-| 应用图标 | `src-tauri/icons/icon.png` | Windows 应用图标、托盘图标 |
+| 应用图标 | `src-tauri/icons/` | Windows 应用图标、托盘图标 |
 | 网站图标 | `public/favicon.png` | 官网 favicon、快捷方式图标 |
-| 宣传海报 | `docs/posters/` | README、官网，以及 `index.html` 的 Open Graph / Twitter Card 图 |
+| 宣传海报 | `docs/posters/` | README，以及 `index.html`、`en/index.html` 的 Open Graph / Twitter Card 图 |
 
 ## Fork 与再分发版本
 

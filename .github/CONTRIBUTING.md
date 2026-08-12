@@ -29,10 +29,6 @@ npm run dev:web   # Web Preview
 
 从带 `good first issue` 或 `help wanted` 标签的 Issue 入手。这类任务通常只涉及 1–2 个主要文件，不需要发布密钥、更新签名或跨模块迁移。
 
-- Issue 仍处于打开状态，并写明了**用户能看到的结果**、复现证据或截图、涉及范围、**验收标准**和一条**验证命令**。
-- UI 改动附修改前后截图；行为修复附一个修复前失败、修复后通过的测试。
-- PR 描述写清简短摘要、已运行的验证命令，并包含 `Signed-off-by:` 行。
-
 认领后 7 天没有方案、提交或进度说明时，维护者可以释放认领。
 
 ## PR 要求
@@ -82,12 +78,11 @@ cargo test
 
 ## 维护者流程
 
-只验证待推送内容时运行 `npm run verify:push`；向 `main` 推送时运行 `npm run push:main`。正式发布前用 `npm run verify:release`，它依赖以下本地工具，版本要与 CI 固定的一致，否则本地审计结论不作数：
+只验证待推送内容时运行 `npm run verify:push`；向 `main` 推送时运行 `npm run push:main`，需要已登录的 GitHub CLI（`gh auth login`）。正式发布前用 `npm run verify:release`，它依赖以下本地工具，版本要与 CI 固定的一致，否则本地审计结论不作数：
 
 ```powershell
 cargo install cargo-audit --version 0.22.2 --locked
 cargo install cargo-deny --version 0.20.2 --locked
-gh auth login
 ```
 
 发布流程与工具链对齐方式见[维护约定](https://github.com/MrBaoboer/PayDance/blob/main/docs/MAINTENANCE.md)。

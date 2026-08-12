@@ -14,7 +14,7 @@
 在 [Issue 选择页](https://github.com/MrBaoboer/PayDance/issues/new/choose) 使用对应表单：
 
 - Bug：填写版本、发生位置、复现步骤、期望结果和实际结果。
-- 功能建议：说明使用场景和希望改善的结果。平台适配建议还需说明目标系统、验证方式和维护范围。
+- 功能建议：说明使用场景和希望改善的结果。平台适配建议的验证边界要求见[贡献指南](../.github/CONTRIBUTING.md)。
 - 其他问题：使用空白 Issue，写清背景和期望结果。
 
 Issue 是公开的。请勿附上薪资数据、`salary-settings.json`、私钥、签名密钥或其他敏感信息；日志和截图应先脱敏。
