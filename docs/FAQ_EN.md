@@ -43,7 +43,7 @@ No. The Web Preview keeps settings in browser `localStorage`; the desktop app us
 
 ### How is today's amount calculated?
 
-Choose monthly, daily, or hourly pay. PayDance first works out the day's effective working time from your workdays, start and end times, and lunch-break setting, then the day's pay: monthly salary divided by the "Work days per month" setting, daily salary as entered, or hourly rate times the effective working time. Today's amount grows in proportion to the effective working time already elapsed.
+Choose monthly, daily, or hourly pay. PayDance first works out the day's effective working time from your workdays, start and end times, and lunch-break setting, then works out the day's pay: monthly salary divided by the "Work days per month" setting, daily salary as entered, or hourly rate times the effective working time. Today's amount grows in proportion to the effective working time already elapsed.
 
 ### Is the lunch break included in the calculation?
 

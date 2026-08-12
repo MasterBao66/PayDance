@@ -102,7 +102,7 @@ Build artifacts and verification files are available in [GitHub Releases](https:
 ### v0.9.0
 
 - **Bilingual UI**: Added Simplified Chinese and English across UI, tray menu, and validation messages.
-- **License update**: Switched code license to GPL-3.0-only at that time, added trademark notice, and adopted CC BY 4.0 for docs.
+- **License update**: Switched the code license to GPL-3.0-only, added a trademark notice, and adopted CC BY 4.0 for docs.
 - **Website SEO**: Added Open Graph, Twitter Card, JSON-LD, `robots.txt`, and `sitemap.xml`.
 - **Auto-update**: Added silent background checks with a lightweight update badge.
 - **Code quality and automation**: Improved updater state handling, added Renovate, and refreshed dependencies.

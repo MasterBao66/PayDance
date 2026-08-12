@@ -2,7 +2,7 @@
 
 > [中文版 →](ROADMAP.md)
 
-This document records PayDance's development direction. It is not a release-date promise.
+This document records PayDance's development direction and does not commit to release dates.
 
 ## Recently Completed
 
@@ -25,7 +25,7 @@ Where the product stands today. For the per-version detail, see the [CHANGELOG](
 - Authenticode code signing to reduce Windows SmartScreen warnings.
 - Mini floating-window context menu: reset window position, restore main window.
 - Extend coverage that only a real Windows session can validate: tray clicks, autostart after reboot, real sleep/resume.
-- Publish starter tasks that have passed product-boundary review and deliver a user-visible result, building a public feedback loop.
+- Publish starter tasks that have passed product-boundary review, each with a user-visible result, as an entry point for public feedback.
 
 ## Later
 

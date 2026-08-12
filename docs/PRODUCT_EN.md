@@ -2,9 +2,9 @@
 
 > [中文版 →](PRODUCT.md)
 
-## One-Sentence Positioning
+## Positioning
 
-PayDance is a desktop real-time salary dashboard that keeps today's earnings on screen, rising as you work and visible at a glance.
+PayDance is a desktop real-time salary dashboard: today's earnings stay on screen and keep rising as you work, so one glance tells you where you are.
 
 ## Who It Is For
 
