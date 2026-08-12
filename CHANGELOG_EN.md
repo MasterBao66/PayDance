@@ -8,7 +8,7 @@ Build artifacts and verification files are available in [GitHub Releases](https:
 
 ## Unreleased
 
-Nothing unreleased.
+- **EXE file properties**: the portable EXE now carries publisher, description, copyright, and license fields, visible in the Windows file properties panel.
 
 ## Released
 

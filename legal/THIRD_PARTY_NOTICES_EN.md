@@ -69,7 +69,7 @@ Used only for builds, tests, and verification; not shipped as standalone package
 
 ## Fonts
 
-The desktop UI uses the system font stack (`Segoe UI Variable`, `Segoe UI`, `Bahnschrift`, `system-ui`) and does not bundle font files.
+The desktop UI references locally installed fonts by name only (`Segoe UI Variable`, `Bahnschrift`, `JetBrains Mono`, `Consolas`, and similar) and does not bundle font files.
 
 The web build loads two Noto CJK subset fonts from `src/assets/fonts/` through `@font-face` in `src/web-preview/web-preview.css`. Both ship with the build under the [SIL Open Font License 1.1](https://openfontlicense.org/):
 

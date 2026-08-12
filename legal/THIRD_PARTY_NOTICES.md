@@ -69,7 +69,7 @@
 
 ## 字体
 
-桌面端 UI 使用系统字体栈（`Segoe UI Variable`、`Segoe UI`、`Bahnschrift`、`system-ui`），不捆绑字体文件。
+桌面端 UI 只按名称引用本机字体（`Segoe UI Variable`、`Bahnschrift`、`JetBrains Mono`、`Consolas` 等），不捆绑字体文件。
 
 Web 构建通过 `src/web-preview/web-preview.css` 中的 `@font-face` 加载 `src/assets/fonts/` 内的两个 Noto CJK 子集字体，并随构建产物分发。两者采用 [SIL Open Font License 1.1](https://openfontlicense.org/)：
 

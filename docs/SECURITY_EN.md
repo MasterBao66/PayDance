@@ -30,7 +30,7 @@ Include a description of the vulnerability, steps to reproduce, the affected ver
 
 ## Local Data and Sensitive Information
 
-PayDance is a local-first application. Salary figures, work schedules, and preferences stay in `salary-settings.json` under the local app data directory and are never sent to a remote server. That file contains personal information, so keep it private.
+Salary figures, work schedules, and preferences stay in `salary-settings.json` under the local app data directory and are never sent to a remote server. That file contains personal information, so keep it private.
 
 Do not paste salary data, configuration files, logs, private keys, or signing keys into any public channel.
 

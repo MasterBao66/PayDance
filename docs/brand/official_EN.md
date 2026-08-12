@@ -8,9 +8,9 @@ The official brand assets below are not covered by AGPL-3.0-only or CC BY-SA 4.0
 
 | Asset | Location | Usage |
 | ----- | -------- | ----- |
-| Application icon | `src-tauri/icons/icon.png` | Windows app icon, tray icon |
+| Application icon | `src-tauri/icons/` | Windows app icon, tray icon |
 | Favicon | `public/favicon.png` | Website favicon and shortcuts |
-| Marketing posters | `docs/posters/` | README, website, and the Open Graph / Twitter Card image in `index.html` |
+| Marketing posters | `docs/posters/` | README, and the Open Graph / Twitter Card image in `index.html` and `en/index.html` |
 
 ## Forks and redistributed builds
 

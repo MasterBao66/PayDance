@@ -29,10 +29,6 @@ Platform adaptations must define their validation boundary: target system, build
 
 Start with an Issue labeled `good first issue` or `help wanted`. These usually touch one or two main files and require no release keys, update signing, or cross-module migration.
 
-- The Issue is still open and states the **user-visible result**, reproduction evidence or screenshots, scope, **acceptance criteria**, and one **verification command**.
-- UI changes include before-and-after screenshots; behavior fixes include a test that fails before and passes after.
-- The pull request description has a short summary, the verification commands you ran, and a `Signed-off-by:` line.
-
 If a claimed Issue sees no plan, commit, or progress update for 7 days, a maintainer may release the claim.
 
 ## Pull Request Requirements
@@ -82,12 +78,11 @@ For dependency or security changes, also run `npm audit --audit-level=high`. Rus
 
 ## Maintainer Workflow
 
-Run `npm run verify:push` to check pending changes without pushing, or `npm run push:main` to push to `main`. Before a release, run `npm run verify:release`. It depends on these local tools, whose versions must match the ones pinned in CI — otherwise the local audit result does not count:
+Run `npm run verify:push` to check pending changes without pushing, or `npm run push:main` to push to `main`; `push:main` requires an authenticated GitHub CLI (`gh auth login`). Before a release, run `npm run verify:release`. It depends on these local tools, whose versions must match the ones pinned in CI — otherwise the local audit result does not count:
 
 ```powershell
 cargo install cargo-audit --version 0.22.2 --locked
 cargo install cargo-deny --version 0.20.2 --locked
-gh auth login
 ```
 
 See [Maintenance](MAINTENANCE_EN.md) for the release process and toolchain alignment.

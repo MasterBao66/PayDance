@@ -8,15 +8,24 @@ For product scope, see [PRODUCT_EN.md](PRODUCT_EN.md); for support and feedback 
 
 ### Web Preview or the Windows desktop app?
 
-Use the [Web Preview](https://paydance.vercel.app/en/) to try the interface and calculation logic. The system tray, always-on-top mode, mini window, and auto-start are available only in the Windows desktop app.
+Use the [Web Preview](https://paydance.vercel.app/en/) to try the interface and calculation logic. The mini window and opacity control are simulated in the browser; the system tray, always-on-top mode, and auto-start are available only in the Windows desktop app.
 
 ### Which file should I download?
 
-From the [latest Release](https://github.com/MrBaoboer/PayDance/releases/latest), download the file named `pay-dance-v<version>-windows-x64.exe`. The same page provides a SHA256 checksum file so you can verify the download.
+From the [latest Release](https://github.com/MrBaoboer/PayDance/releases/latest), download `pay-dance-v<version>-windows-x64.exe`. Verify it against the `.sha256` file on the same page:
 
-### Why a portable EXE instead of an installer?
+```powershell
+Get-FileHash .\pay-dance-v<version>-windows-x64.exe -Algorithm SHA256
+```
 
-A portable EXE runs without installation. If auto-start is enabled, turn it off in Settings first. Exit PayDance, delete the EXE, and delete the local settings file only if you also want to remove your salary settings.
+The printed hash must match the one inside the `.sha256` file; case does not matter.
+
+### How do I remove PayDance completely?
+
+1. If auto-start was ever enabled, turn it off in Settings.
+2. Quit PayDance from the tray.
+3. Delete the EXE file.
+4. To also erase your salary settings, delete `%APPDATA%\com.masterbao.paydance\salary-settings.json`.
 
 ### How do I open the first-run wizard again?
 
@@ -34,7 +43,7 @@ No. The Web Preview keeps settings in browser `localStorage`; the desktop app us
 
 ### How is today's amount calculated?
 
-Choose monthly, daily, or hourly pay. PayDance calculates the day's effective working time from your workdays, start and end times, and lunch-break setting, then estimates earnings from the time elapsed.
+Choose monthly, daily, or hourly pay. PayDance first works out the day's effective working time from your workdays, start and end times, and lunch-break setting, then the day's pay: monthly salary divided by the "Work days per month" setting, daily salary as entered, or hourly rate times the effective working time. Today's amount grows in proportion to the effective working time already elapsed.
 
 ### Is the lunch break included in the calculation?
 
@@ -42,7 +51,7 @@ It depends on your settings. With lunch-break exclusion on, the break is not cou
 
 ### Are night shifts and work past midnight supported?
 
-Yes. PayDance handles shifts that cross midnight.
+Yes. When the end time is earlier than the start time, the shift is treated as crossing midnight, and earnings keep accumulating for that same shift past 00:00.
 
 ### Does the amount match my actual paycheck?
 
@@ -56,17 +65,17 @@ No. PayDance has no account, cloud sync, telemetry, or advertising. Salary, work
 
 ### Where are settings stored?
 
-The Windows desktop app writes settings through Tauri Store to `salary-settings.json` in your local app data directory. That file holds your salary figures, so it counts as personal data. Delete it and the next launch starts from the first-run wizard.
+The Windows desktop app writes settings through Tauri Store to `%APPDATA%\com.masterbao.paydance\salary-settings.json`. That file holds your salary figures, so it counts as personal data. Delete it and the next launch starts from the first-run wizard.
 
 ## Desktop Capabilities
 
 ### How does the mini floating window work?
 
-Double-click the amount in the main window to switch to mini floating mode. The mini window shows only the amount; double-click it to restore the main window.
+Double-click the amount in the main window to switch to mini floating mode. The mini window shows only the amount. Right-click it to adjust opacity, and double-click to restore the main window.
 
 ### Why does PayDance keep running after I close the main window?
 
-The close button hides PayDance in the system tray. Use the tray menu to reopen the window or quit the app. Always-on-top and auto-start can be changed independently in Settings.
+The main window's close button hides PayDance to the system tray. Use the tray menu to reopen the window or quit the app. Always-on-top and auto-start can be changed independently in Settings.
 
 ### Multi-monitor or high-DPI display looks wrong — what now?
 

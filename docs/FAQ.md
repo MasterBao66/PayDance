@@ -8,15 +8,24 @@
 
 ### 用 Web Preview 还是 Windows 桌面版？
 
-[Web Preview](https://paydance.vercel.app/) 用于体验界面和计算逻辑。托盘、置顶、迷你悬浮窗和开机自启动仅在 Windows 桌面版提供。
+[Web Preview](https://paydance.vercel.app/) 用于体验界面和计算逻辑。迷你悬浮窗和透明度可在浏览器内模拟；托盘、置顶和开机自启动仅在 Windows 桌面版提供。
 
 ### 该下载哪个文件？
 
-在 [最新 Release](https://github.com/MrBaoboer/PayDance/releases/latest) 里下载名为 `pay-dance-v<版本>-windows-x64.exe` 的文件。同一页面提供 SHA256 校验文件，可用于验证下载完整性。
+在 [最新 Release](https://github.com/MrBaoboer/PayDance/releases/latest) 里下载 `pay-dance-v<版本>-windows-x64.exe`。同一页面的 `.sha256` 文件用于核对完整性：
 
-### 为什么是便携 EXE，而不是安装包？
+```powershell
+Get-FileHash .\pay-dance-v<版本>-windows-x64.exe -Algorithm SHA256
+```
 
-便携 EXE 下载后即可运行，无需安装。删除前如已开启开机自启动，请先在设置中关闭；退出应用后删除 EXE。需要同时清除薪资设置时，再删除本地配置文件。
+输出的哈希与 `.sha256` 文件中的一致即可，大小写不影响。
+
+### 如何彻底删除 PayDance？
+
+1. 如果开启过开机自启动，先在设置中关闭。
+2. 从托盘退出应用。
+3. 删除 EXE 文件。
+4. 需要同时清除薪资设置时，删除 `%APPDATA%\com.masterbao.paydance\salary-settings.json`。
 
 ### 如何重新进入首次启动向导？
 
@@ -34,7 +43,7 @@ Remove-Item "$env:APPDATA\com.masterbao.paydance\salary-settings.json"
 
 ### 今日入账是怎么算出来的？
 
-你可以选择月薪、日薪或时薪。PayDance 根据工作日、上下班时间和午休设置计算当天的有效工作时长，再按已经过的工作时间估算今日入账。
+你可以选择月薪、日薪或时薪。PayDance 先按工作日、上下班时间和午休设置算出当天的有效工作时长，再折算出当天应得：月薪除以设置里的「每月工作天数」，日薪直接取用，时薪乘以有效工作时长。今日入账按已经过的有效工作时间同比例累加。
 
 ### 午休时间会计入计算吗？
 
@@ -42,7 +51,7 @@ Remove-Item "$env:APPDATA\com.masterbao.paydance\salary-settings.json"
 
 ### 支持夜班或跨零点工作吗？
 
-支持。PayDance 会处理跨零点的夜班场景。
+支持。下班时间早于上班时间时按跨零点班次处理，过零点后继续累计同一班次的收入。
 
 ### 显示金额等于真实到账工资吗？
 
@@ -56,13 +65,13 @@ Remove-Item "$env:APPDATA\com.masterbao.paydance\salary-settings.json"
 
 ### 配置保存在哪里？
 
-Windows 桌面版通过 Tauri Store 把配置保存在本机应用数据目录下的 `salary-settings.json`。这个文件包含你的薪资信息，属于个人数据。删除它之后，下一次启动会重新进入首次启动向导。
+Windows 桌面版通过 Tauri Store 保存在 `%APPDATA%\com.masterbao.paydance\salary-settings.json`。这个文件包含你的薪资信息，属于个人数据。删除它之后，下一次启动会重新进入首次启动向导。
 
 ## 桌面能力
 
 ### 迷你悬浮窗口怎么用？
 
-在主窗口双击金额进入迷你悬浮模式。迷你窗口只显示金额；双击它可以恢复主窗口。
+在主窗口双击金额进入迷你悬浮模式。迷你窗口只显示金额，右键调出透明度面板，双击恢复主窗口。
 
 ### 关闭主窗口后为什么仍在运行？
 
