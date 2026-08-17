@@ -59,7 +59,7 @@
     "eslint": "^10.8.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-vue": "^10.10.0",
-    "eslint-plugin-vuejs-accessibility": "^2.5.0",
+    "eslint-plugin-vuejs-accessibility": "^2.6.0",
     "globals": "^17.9.0",
     "happy-dom": "^20.11.2",
     "pixelmatch": "^7.2.0",
