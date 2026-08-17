@@ -38,7 +38,7 @@
     "tauri": "tauri"
   },
   "dependencies": {
-    "@lucide/vue": "^1.30.0",
+    "@lucide/vue": "^1.31.0",
     "@tauri-apps/api": "^2.11.1",
     "@tauri-apps/plugin-autostart": "^2.5.1",
     "@tauri-apps/plugin-opener": "^2.5.4",
