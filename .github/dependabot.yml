@@ -2,6 +2,8 @@
 # https://docs.github.com/code-security/dependabot/dependabot-version-updates
 #
 # 三个 ecosystem 都不开 automerge：升级 PR 必须过 CI 门禁并由人确认后再合。
+# 机器人自己开的升级 PR 在 DCO 门禁里有收紧的豁免，见 scripts/check-dco.mjs。
+# 每个 ecosystem 一个 catch-all group：一周最多三条 PR，一条挂了不连累另外两条。
 
 version: 2
 
@@ -20,31 +22,9 @@ updates:
       prefix: chore(deps)
       prefix-development: chore(deps-dev)
     groups:
-      tauri:
+      npm:
         patterns:
-          - "@tauri-apps/*"
-      vue:
-        patterns:
-          - vue
-          - vue-tsc
-          - "@vitejs/plugin-vue"
-          - "@vue/test-utils"
-          - eslint-plugin-vue
-          - eslint-plugin-vuejs-accessibility
-      build-tooling:
-        patterns:
-          - vite
-          - vitest
-          - happy-dom
-          - "@tailwindcss/vite"
-          - tailwindcss
-      linting:
-        patterns:
-          - eslint
-          - prettier
-          - typescript-eslint
-          - "@eslint/js"
-          - eslint-config-prettier
+          - "*"
     # 只挡主版本跳跃，6.x / 24.x 范围内的小版本照常提 PR。
     # 解除封锁时删掉对应条目即可。
     ignore:
@@ -74,15 +54,9 @@ updates:
     commit-message:
       prefix: chore(deps)
     groups:
-      tauri:
+      cargo:
         patterns:
-          - tauri
-          - tauri-build
-          - "tauri-plugin-*"
-      rust-serde:
-        patterns:
-          - serde
-          - serde_json
+          - "*"
 
   - package-ecosystem: github-actions
     directory: /

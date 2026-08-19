@@ -80,7 +80,9 @@ jobs:
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
-        run: node scripts/check-dco.mjs --base "$BASE_SHA" --head "$HEAD_SHA"
+          # 机器人豁免只认这个字段：提交里的作者信息可以伪造，它不能。
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
+        run: node scripts/check-dco.mjs --base "$BASE_SHA" --head "$HEAD_SHA" --pr-author "$PR_AUTHOR"
 
   metadata:
     name: Metadata, format, and hygiene

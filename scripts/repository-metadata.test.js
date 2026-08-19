@@ -74,6 +74,19 @@ describe("repository metadata", () => {
     expect(dependabotSettings).not.toMatch(/automerge/i);
   });
 
+  // 每个 ecosystem 一个 catch-all group：不分组就会按包拆成一堆 PR（8-17 那周六条）。
+  // 试过 multi-ecosystem group 把三个 ecosystem 并成一条，因为配置非法时 Dependabot
+  // 完全静默（不开 PR、不起 run、只在 Insights 页面显示错误）而放弃，别再改回去。
+  it("keeps one catch-all group per ecosystem so a week yields at most three pull requests", () => {
+    expect(dependabotSettings).not.toContain("multi-ecosystem");
+
+    const ecosystems = dependabotSettings.match(/package-ecosystem: /g) ?? [];
+    const catchAllGroups = dependabotSettings.match(/patterns:\r?\n\s+- "\*"/g) ?? [];
+
+    expect(ecosystems).toHaveLength(3);
+    expect(catchAllGroups).toHaveLength(ecosystems.length);
+  });
+
   it("keeps the upgrades that are blocked upstream pinned with a reason", () => {
     // TypeScript 7 breaks vue-tsc (ERR_PACKAGE_PATH_NOT_EXPORTED) and
     // typescript-eslint refuses to load against it. @types/node must track the

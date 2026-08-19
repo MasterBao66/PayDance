@@ -47,6 +47,8 @@ Ordinary contributions only need a DCO sign-off; no CLA is required upfront.
 
 Every non-merge commit must contain a `Signed-off-by:` line whose email matches the commit author. Use `git commit -s` to add it; CI checks each commit.
 
+The only exception is a dependency-update pull request opened by Dependabot itself: those commits only rewrite version numbers and hashes, carry no human authorship to certify, and are confined to `package.json`, `package-lock.json`, `src-tauri/Cargo.*`, and `.github/workflows/*.yml`. Bot commits that reach beyond those paths, and commits a person adds to the same branch, still need a sign-off.
+
 Code contributions enter the project under [AGPL-3.0-only](../LICENSE) with [additional terms under AGPL Section 7](../legal/ADDITIONAL_TERMS_EN.md). Original documentation enters under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) unless otherwise noted. By contributing, you confirm that you have the right to submit the material and accept the applicable project license.
 
 A maintainer will request the [Contributor License Agreement (CLA)](../legal/CLA_EN.md) before merge only when a contribution is needed for commercial, OEM, or other non-AGPL licensing. A DCO sign-off does not sign the CLA.

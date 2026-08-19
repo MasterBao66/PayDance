@@ -47,6 +47,8 @@ npm run dev:web   # Web Preview
 
 每个非合并提交都必须包含与提交作者邮箱一致的 `Signed-off-by:` 行。可用 `git commit -s` 自动添加；CI 会逐个提交检查。
 
+例外只有 Dependabot 自己开的依赖升级 PR：它的提交只重写版本号与哈希，没有可认证的人类著作权，且改动被限制在 `package.json`、`package-lock.json`、`src-tauri/Cargo.*` 与 `.github/workflows/*.yml` 之内。越界的机器人提交、以及人往同一分支补的提交，仍然要签署。
+
 代码贡献按 [AGPL-3.0-only](https://github.com/MrBaoboer/PayDance/blob/main/LICENSE) 和 [AGPL 第 7 条附加条款](https://github.com/MrBaoboer/PayDance/blob/main/legal/ADDITIONAL_TERMS.md)并入项目；原创文档按 [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) 并入，另有说明的除外。提交贡献即表示你有权提交相关内容，并同意适用的项目许可。
 
 仅当某项贡献需要用于商业、OEM 或其他非 AGPL 授权时，维护者才会在合并前明确要求签署[贡献者许可协议（CLA）](https://github.com/MrBaoboer/PayDance/blob/main/legal/CLA.md)。DCO 签署行不等同于签署 CLA。

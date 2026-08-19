@@ -86,9 +86,7 @@ describe("CI workflow routing", () => {
     expect(ciWorkflow).toMatch(
       /- name: Audit all npm dependencies\r?\n\s+run: npm audit --audit-level=high(?:\r?\n|$)/,
     );
-    expect(ciWorkflow).not.toMatch(
-      /\bnpm audit\b[^\r\n]*(?:--omit(?:=|\s+)dev)\b/,
-    );
+    expect(ciWorkflow).not.toMatch(/\bnpm audit\b[^\r\n]*(?:--omit(?:=|\s+)dev)\b/);
     expect(ciWorkflow).not.toMatch(/\bNPM_CONFIG_OMIT:\s*dev\b/);
     expect(ciWorkflow).toContain("name: Rust checks");
     expect(ciWorkflow).toContain("if: needs.changes.outputs.requires_rust == 'true'");
@@ -128,6 +126,9 @@ describe("CI workflow routing", () => {
     expect(ciWorkflow).toContain("needs.dco.result");
     // push 事件里该 job 是 skipped，gate 必须放行，否则 main 永远红。
     expect(ciWorkflow).toContain('[ "$DCO_RESULT" != "skipped" ]');
+    // 机器人豁免必须挂在 GitHub 侧的 PR 作者上：提交里的作者字段谁都能伪造。
+    expect(ciWorkflow).toContain("github.event.pull_request.user.login");
+    expect(ciWorkflow).toContain('--pr-author "$PR_AUTHOR"');
   });
 
   it("does not cancel main validation or deployment runs", () => {
