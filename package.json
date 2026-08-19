@@ -38,7 +38,7 @@
     "tauri": "tauri"
   },
   "dependencies": {
-    "@lucide/vue": "^1.30.0",
+    "@lucide/vue": "^1.33.0",
     "@tauri-apps/api": "^2.11.1",
     "@tauri-apps/plugin-autostart": "^2.5.1",
     "@tauri-apps/plugin-opener": "^2.5.4",
@@ -48,7 +48,7 @@
     "vue": "^3.5.41"
   },
   "devDependencies": {
-    "@axe-core/playwright": "^4.12.1",
+    "@axe-core/playwright": "^4.13.0",
     "@eslint/js": "^10.0.1",
     "@tailwindcss/vite": "^4.3.3",
     "@tauri-apps/cli": "^2.11.4",
@@ -59,8 +59,8 @@
     "eslint": "^10.8.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-vue": "^10.10.0",
-    "eslint-plugin-vuejs-accessibility": "^2.5.0",
-    "globals": "^17.9.0",
+    "eslint-plugin-vuejs-accessibility": "^2.6.0",
+    "globals": "^17.11.0",
     "happy-dom": "^20.11.2",
     "pixelmatch": "^7.2.0",
     "playwright": "^1.62.1",
@@ -68,7 +68,7 @@
     "prettier": "^3.9.6",
     "tailwindcss": "^4.3.3",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.66.0",
+    "typescript-eslint": "^8.67.0",
     "vite": "^8.2.1",
     "vitest": "^4.1.10",
     "vue-tsc": "^3.3.9"
