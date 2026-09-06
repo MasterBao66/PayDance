@@ -4,5 +4,5 @@ contact_links:
     url: https://github.com/MrBaoboer/PayDance/releases/latest
     about: 从 GitHub Releases 下载最新 Windows 便携版。 / Download the latest Windows portable release.
   - name: 获取帮助 / Get Help
-    url: https://github.com/MrBaoboer/PayDance/blob/main/docs/SUPPORT.md
+    url: https://github.com/MrBaoboer/PayDance/blob/main/docs/FAQ.md
     about: 查看常见问题、反馈方式和安全漏洞报告渠道。 / Read the FAQ, feedback options, and security reporting process.

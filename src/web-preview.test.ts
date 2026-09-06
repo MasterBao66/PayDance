@@ -680,39 +680,6 @@ describe("PayDance Web Preview", () => {
     expect(webPreviewSource).not.toContain("width: min(100%, 720px)");
   });
 
-  it("keeps README focused without a separate recent updates section", () => {
-    const readmeSource = read("README.md");
-
-    expect(readmeSource).not.toContain("## 近期改进");
-    expect(readmeSource).toContain('<h1 align="center">薪跳 PayDance</h1>');
-    expect(readmeSource).toContain("桌面实时工资看板");
-    expect(readmeSource).toContain("在线体验");
-    expect(readmeSource).toContain("Windows 桌面版");
-    expect(readmeSource).toContain("Mr.Baoboer");
-    for (const heading of [
-      "## 它是什么",
-      "## 主要功能",
-      "## 获取",
-      "## 技术栈",
-      "## 开发",
-      "## 隐私",
-      "## 相关文档",
-      "## 许可",
-    ]) {
-      expect(readmeSource).toContain(heading);
-    }
-    expect(readmeSource).not.toContain("## 快速下载与安全校验");
-    expect(readmeSource).not.toContain("## 隐私声明、作者与许可");
-    expect(readmeSource).toContain("网页端，含所有核心功能");
-    expect(readmeSource).toContain(
-      "便携 EXE，含托盘、置顶、迷你悬浮、开机自启动等完整能力",
-    );
-    expect(readmeSource).not.toContain("poster-01-live-dashboard-v3.png");
-    expect(readmeSource).not.toContain(["Mr", "Ba" + "ober"].join("."));
-    expect(readmeSource).not.toContain("actions/workflows/ci.yml/badge.svg");
-    expect(readmeSource).not.toContain("Web Preview 是产品橱窗，不替代桌面版");
-  });
-
   it("builds the web preview for the Vercel primary site and GitHub Pages mirror", () => {
     const viteConfig = read("vite.config.ts");
 

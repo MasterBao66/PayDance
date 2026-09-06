@@ -6,7 +6,7 @@
 <h1 align="center">PayDance 薪跳</h1>
 
 <p align="center">
-  Put "the money you are earning today" on your desktop, and watch it grow, second by second
+  Real-time salary dashboard for your desktop · watch every second turn into earnings
 </p>
 
 <p align="center">
@@ -25,24 +25,24 @@
 
 ---
 
+<p align="center">
+  <img src="posters/poster-02-three-step-setup-en-v1.png" alt="PayDance: three-step setup, then today's earnings grow live on your desktop" width="100%">
+</p>
+
 ## What It Is
 
-PayDance (薪跳) is a desktop real-time salary dashboard. Set your salary and working hours, and it shows your income growing second by second on your desktop, making the value of your working time visible.
+PayDance (薪跳) is a desktop real-time salary dashboard. Enter your salary and working hours, and today's earnings grow on your desktop as you work, with progress, time left, and the daily estimate in one glance.
 
-The main window shows today's earnings, work progress, time remaining, and daily estimate. The mini floating window keeps only the amount, ready for a quick glance from the corner of your screen.
-
-<p align="center">
-  <img src="posters/poster-02-three-step-setup-en-v1.png" alt="PayDance first-time setup in three steps" width="100%">
-</p>
+When you need to focus, switch to the mini window: a single line with the amount, tucked into a corner of the screen.
 
 ## Features
 
-- **Live earnings**: Today's amount updates continuously and is shown to two decimal places.
-- **Common pay schedules**: Supports monthly, daily, and hourly pay, configurable workdays, lunch-break exclusion, and overnight shifts.
-- **Mini window**: Shows only the amount, stays draggable and always on top, and supports 10%–100% opacity. Double-click it to restore the main window.
-- **Local-first**: No account required; your salary settings stay on your own machine.
-- **Bilingual UI**: The interface, tray menu, and validation messages support Simplified Chinese and English.
-- **Windows integration**: Includes light and dark themes, a system tray, auto-start, and background updates.
+- **Live earnings**: today's amount updates every second, to two decimal places.
+- **Real schedules**: monthly, daily, and hourly pay with automatic conversion, plus weekly workdays, lunch-break exclusion, and shifts across midnight.
+- **Mini window**: amount only, draggable and always on top, with 10%–100% opacity. Double-click to return to the main window.
+- **Local-first**: no account, no upload. Your salary settings stay on your own machine.
+- **Bilingual**: the interface, tray, and messages fully cover Simplified Chinese and English.
+- **Windows integration**: light and dark themes, system tray, launch at startup, background update checks.
 
 ## Get It
 
@@ -50,87 +50,22 @@ The main window shows today's earnings, work progress, time remaining, and daily
 
 | &nbsp; | Link | Notes |
 |:---:|:---:|:---:|
-| 🌐 | **[Live Preview](https://paydance.vercel.app/en/)** | Browser-based, all core features available, nothing to install |
-| ⬇️ | **[Windows Desktop](https://github.com/MrBaoboer/PayDance/releases/latest/download/pay-dance-v0.9.9-windows-x64.exe)** | Portable EXE with tray, always-on-top, mini float, and auto-start |
+| 🌐 | **[Live Preview](https://paydance.vercel.app/en/)** | Browser-based, all core features, nothing to install |
+| ⬇️ | **[Windows Desktop](https://github.com/MrBaoboer/PayDance/releases/latest/download/pay-dance-v0.9.9-windows-x64.exe)** | Portable EXE with tray, always-on-top, mini window, and launch at startup |
 
 </div>
-
-Each release includes a SHA256 checksum file so you can verify the download.
-
-## Tech Stack
-
-<div align="center">
-
-| Layer | Technologies |
-|:---:|:---:|
-| Desktop shell | Tauri 2 + Rust |
-| Frontend | Vue 3 + TypeScript + Vite |
-| UI | Windows 11 styling, CSS Container Queries, Lucide Icons |
-| Storage | Local app data directory (Tauri Store) / browser localStorage |
-| Testing | Vitest + Rust unit tests + vue-tsc + cargo clippy |
-
-</div>
-
-The Web Preview and desktop app share the same core salary logic and frontend UI.
-
-## Development
-
-**Install dependencies**
-
-```powershell
-npm install
-```
-
-**Desktop app**
-
-```powershell
-npm run tauri dev
-```
-
-**Web Preview**
-
-```powershell
-npm run dev:web
-```
-
-**Build Windows portable EXE**
-
-```powershell
-npm run build:exe
-```
-
-**Build web preview**
-
-```powershell
-npm run build:web
-```
-
-**Reset local config to open the first-run wizard again**
-
-```powershell
-Remove-Item "$env:APPDATA\com.masterbao.paydance\salary-settings.json"
-```
-
-For commit conventions, verification commands, and contribution workflow, see the [Contributing Guide](CONTRIBUTING_EN.md).
 
 ## Privacy
 
-PayDance requires no login, uploads no data, and includes no telemetry. All configuration is saved locally via Tauri Store in `salary-settings.json`, containing only salary parameters, work hours, and UI preferences.
+No login, no upload, no telemetry. Everything is saved locally in `salary-settings.json`, which holds only your salary parameters, working hours, and UI preferences.
 
-## Documentation
+## Learn More
 
 - [FAQ](FAQ_EN.md)
-- [Architecture and Change Map](ARCHITECTURE_EN.md)
-- [Product Positioning & Boundaries](PRODUCT_EN.md)
-- [Roadmap](ROADMAP_EN.md)
 - [Changelog](../CHANGELOG_EN.md)
+- [Product Positioning & Boundaries](PRODUCT_EN.md) · [Roadmap](ROADMAP_EN.md)
+- [Technical Guide](DEVELOPMENT_EN.md): for developers and maintainers
 
 ## License
 
-Designed and developed by Mr.Baoboer. Code licensed under [AGPL-3.0-only](../LICENSE).
-
-For full license information and trademark policy, see the [Legal Guide](../legal/LEGAL_EN.md).
-
----
-
-> [中文版 README →](../README.md)
+Designed and developed by Mr.Baoboer. Code licensed under [AGPL-3.0-only](../LICENSE). For full license information and trademark policy, see the [Legal Guide](../legal/LEGAL_EN.md).

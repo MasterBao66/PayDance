@@ -39,10 +39,6 @@ For the licenses covering third-party dependencies and assets, see **[THIRD_PART
 
 Code contributions enter the project under AGPL-3.0-only and the additional terms. Original documentation contributions enter under CC BY-SA 4.0 unless otherwise noted. See **[CONTRIBUTING_EN.md](../docs/CONTRIBUTING_EN.md)** for the submission process. The maintainer requests a **[CLA](CLA_EN.md)** only when a contribution needs to be included in commercial, OEM, or white-label licensing.
 
-## Legal Notice
-
-For the project-wide legal notice, see **[NOTICE_EN.md](NOTICE_EN.md)**.
-
 ---
 
 © 2026 Mr.Baoboer

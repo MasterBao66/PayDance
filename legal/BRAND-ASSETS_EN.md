@@ -26,7 +26,15 @@ These uses must not imply that a third-party release is official or that Mr.Baob
 
 ## Fork and modified distribution requirements
 
-Modified distributions must use distinct branding and must not use official assets as product identity or promotional material. At a minimum, replace the logo, application icon, tray icon, promotional images, website visuals, any reused official screenshots, and any visual composition that would make users mistake the product for an official release. [Official Brand Assets](../docs/brand/official_EN.md) lists where these assets live in the repository. See [TRADEMARK_EN.md](TRADEMARK_EN.md) for product name, application identifier, and release-channel requirements.
+Modified distributions must use distinct branding and must not use official assets as product identity or promotional material. At a minimum, replace the logo, application icon, tray icon, promotional images, website visuals, any reused official screenshots, and any visual composition that would make users mistake the product for an official release. See [TRADEMARK_EN.md](TRADEMARK_EN.md) for product name, application identifier, and release-channel requirements.
+
+Where the official assets live in the repository:
+
+| Asset | Location | Usage |
+| ----- | -------- | ----- |
+| Application icon | `src-tauri/icons/` | Windows app icon, tray icon |
+| Favicon | `public/favicon.png` | Website favicon and shortcuts |
+| Marketing posters | `docs/posters/` | README, and the Open Graph / Twitter Card image in `index.html` and `en/index.html` |
 
 ## Official screenshots
 

@@ -2,16 +2,7 @@
 
 > [English version →](ROADMAP_EN.md)
 
-本文记录薪跳 PayDance 的开发方向，不承诺发布时间。
-
-## 最近完成
-
-当前能力基线，逐版本明细见 [CHANGELOG](../CHANGELOG.md)：
-
-- **桌面可靠性**：混合时钟在长时间休眠或系统时间跳变后重新校准；跑出屏幕的窗口能被拉回可见区域，仍然可见的副屏位置保持不动；迷你悬浮模式不再占用任务栏图标。
-- **本地设置**：配置迁移走显式版本链，损坏或未来版本的设置按项修复后写回，写盘失败在界面可见。
-- **发布与供应链**：Release 执行 Windows EXE 自动启动冒烟与单实例检查，并生成 SPDX SBOM；CodeQL 覆盖 TypeScript 与 Rust；GitHub Actions 固定到 Commit SHA，安全工具下载全部校验 SHA256。
-- **官网与可访问性**：Web Preview 接入 CI 的多视口截图、axe-core 与像素差异门禁；中英文入口在 Vercel 主站与 GitHub Pages 镜像上线。
+本文记录薪跳 PayDance 的开发方向，不承诺发布时间。已完成的变化见 [CHANGELOG](../CHANGELOG.md)。
 
 ## 当前
 
@@ -24,7 +15,7 @@
 
 - Authenticode 代码签名，降低 Windows SmartScreen 误报。
 - 迷你悬浮窗口右键菜单：重置窗口位置、恢复主窗口。
-- 继续扩大只能在真实 Windows 会话验证的覆盖范围：托盘点击、重启后自启动、真实休眠恢复。
+- 扩大只能在真实 Windows 会话验证的覆盖范围：托盘点击、重启后自启动、真实休眠恢复。
 - 发布通过产品边界审核的新手任务，每个任务都带用户可见的结果，作为公开反馈的入口。
 
 ## 以后
@@ -33,4 +24,4 @@
 
 ## 长期排除方向
 
-见 [PRODUCT.md](PRODUCT.md) 的产品边界。相关提案先开 Issue，说明它为什么仍服务“桌面实时工资看板”的核心体验；提交流程见[贡献指南](../.github/CONTRIBUTING.md)。
+见 [PRODUCT.md](PRODUCT.md) 的产品边界。相关提案先开 Issue，说明它为什么仍服务「桌面实时工资看板」的核心体验。

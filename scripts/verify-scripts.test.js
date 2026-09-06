@@ -113,8 +113,8 @@ describe("verification scripts", () => {
     expect(releaseWorkflowScript).toContain("release-manifest.json");
     expect(releaseWorkflowScript).toContain("assertTagDoesNotExist");
 
-    expect(readRoot(".github/CONTRIBUTING.md")).toContain("npm run push:main");
-    expect(readRoot("docs/CONTRIBUTING_EN.md")).toContain("npm run push:main");
+    expect(readRoot("docs/DEVELOPMENT.md")).toContain("npm run push:main");
+    expect(readRoot("docs/DEVELOPMENT_EN.md")).toContain("npm run push:main");
   });
 
   it("keeps Rust dependency governance explicit and warning-free", () => {
@@ -187,7 +187,7 @@ describe("verification scripts", () => {
     );
     expect(qaScript).toContain('getByRole("link", { name: "Switch to English" })');
 
-    const qaGuide = readRoot("docs/web-preview-qa.md");
+    const qaGuide = readRoot("docs/DEVELOPMENT.md");
     expect(qaGuide).toContain("Web Preview QA 用来确认官网橱窗");
     expect(qaGuide).toContain("本地和 GitHub Pages 镜像从 `/PayDance/` 进入中文页");
     expect(qaGuide).toContain("PLAYWRIGHT_NODE_MODULES");

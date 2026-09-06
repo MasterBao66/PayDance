@@ -26,7 +26,15 @@
 
 ## Fork 与修改版要求
 
-修改发行版必须使用独立品牌，不得将官方素材用作产品标识或宣传素材。至少应替换 Logo、应用图标、托盘图标、宣传图片、官网视觉、沿用的官方截图，以及任何会让用户误认为官方版本的视觉组合。这些素材在仓库中的位置见[官方品牌资产](../docs/brand/official.md)。产品名称、应用标识符和发布渠道的要求见 [TRADEMARK.md](TRADEMARK.md)。
+修改发行版必须使用独立品牌，不得将官方素材用作产品标识或宣传素材。至少应替换 Logo、应用图标、托盘图标、宣传图片、官网视觉、沿用的官方截图，以及任何会让用户误认为官方版本的视觉组合。产品名称、应用标识符和发布渠道的要求见 [TRADEMARK.md](TRADEMARK.md)。
+
+官方素材在仓库中的位置：
+
+| 素材 | 位置 | 用途 |
+| ---- | ---- | ---- |
+| 应用图标 | `src-tauri/icons/` | Windows 应用图标、托盘图标 |
+| 网站图标 | `public/favicon.png` | 官网 favicon、快捷方式图标 |
+| 宣传海报 | `docs/posters/` | README，以及 `index.html`、`en/index.html` 的 Open Graph / Twitter Card 图 |
 
 ## 官方截图
 

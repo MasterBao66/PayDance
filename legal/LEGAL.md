@@ -39,10 +39,6 @@ AGPL-3.0-only 允许合规的商业使用。如需闭源集成、OEM、白标、
 
 代码贡献按 AGPL-3.0-only 和附加条款进入项目；原创文档贡献按 CC BY-SA 4.0 进入项目，另有说明的除外。提交流程见 **[CONTRIBUTING.md](../.github/CONTRIBUTING.md)**。只有在需要把贡献纳入商业、OEM 或白标授权时，维护者才会另行要求贡献者签署 **[CLA.md](CLA.md)**。
 
-## 法律声明
-
-项目整体的法律声明见 **[NOTICE.md](NOTICE.md)**。
-
 ---
 
 © 2026 Mr.Baoboer

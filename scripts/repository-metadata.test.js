@@ -122,6 +122,32 @@ describe("repository metadata", () => {
     expect(read("src/lib/app-meta.ts")).toContain("windowsDownloadAssetName");
   });
 
+  // README 只面向用户；开发者内容归 docs/DEVELOPMENT.md。
+  it("keeps the README a user-facing product page", () => {
+    const readme = read("README.md");
+
+    expect(readme).toContain('<h1 align="center">薪跳 PayDance</h1>');
+    expect(readme).toContain("在线体验");
+    expect(readme).toContain("Windows 桌面版");
+    expect(readme).toContain("便携 EXE，含托盘、置顶、迷你悬浮、开机自启动等完整能力");
+    expect(readme).toContain("Mr.Baoboer");
+    for (const heading of [
+      "## 它是什么",
+      "## 主要功能",
+      "## 获取",
+      "## 隐私",
+      "## 了解更多",
+      "## 许可",
+    ]) {
+      expect(readme).toContain(heading);
+    }
+    for (const heading of ["## 技术栈", "## 开发", "## 近期改进"]) {
+      expect(readme).not.toContain(heading);
+    }
+    expect(readme).not.toContain("actions/workflows/ci.yml/badge.svg");
+    expect(readme).not.toContain(["Mr", "Ba" + "ober"].join("."));
+  });
+
   it("keeps the English README on its dedicated first-time setup poster", () => {
     const posterPath = "docs/posters/poster-02-three-step-setup-en-v1.png";
     const englishReadme = read("docs/README_EN.md");
@@ -228,16 +254,14 @@ describe("repository metadata", () => {
     expect(read("CODE_OF_CONDUCT.md")).toContain("English version");
     expect(read("CODE_OF_CONDUCT.md")).toContain("行为准则");
     expect(read("docs/CODE_OF_CONDUCT_EN.md")).toContain("Code of Conduct");
-    expect(read("docs/MAINTAINERS.md")).toContain("维护者说明");
-    expect(read("docs/MAINTAINERS_EN.md")).toContain("Maintainers");
-    expect(read("docs/GOVERNANCE.md")).toContain("治理说明");
-    expect(read("docs/GOVERNANCE_EN.md")).toContain("Governance");
-    expect(read("docs/MAINTENANCE.md")).toContain("配置迁移");
-    expect(read("docs/MAINTENANCE_EN.md")).toContain("Settings Migration");
-    expect(read("README.md")).toContain("docs/ARCHITECTURE.md");
-    expect(read("docs/README_EN.md")).toContain("ARCHITECTURE_EN.md");
-    expect(read("docs/ARCHITECTURE.md")).toContain("修改导航");
-    expect(read("docs/ARCHITECTURE_EN.md")).toContain("Change Map");
+    expect(read("README.md")).toContain("docs/DEVELOPMENT.md");
+    expect(read("docs/README_EN.md")).toContain("DEVELOPMENT_EN.md");
+    for (const heading of ["### 修改导航", "### 配置迁移", "## 治理"]) {
+      expect(read("docs/DEVELOPMENT.md")).toContain(heading);
+    }
+    for (const heading of ["### Change Map", "### Settings Migration", "## Governance"]) {
+      expect(read("docs/DEVELOPMENT_EN.md")).toContain(heading);
+    }
     expect(read(".github/CONTRIBUTING.md")).toContain("good first issue");
     expect(read("docs/CONTRIBUTING_EN.md")).toContain("good first issue");
     expect(read(".github/CONTRIBUTING.md")).toContain("用户能看到的结果");
@@ -257,27 +281,15 @@ describe("repository metadata", () => {
     );
   });
 
-  it("keeps bilingual roadmap status aligned with implemented reliability work", () => {
-    const roadmap = read("docs/ROADMAP.md");
-    const roadmapEn = read("docs/ROADMAP_EN.md");
-
-    expect(roadmap).toContain("CodeQL");
-    expect(roadmap).toContain("SBOM");
-    expect(roadmap).toContain("Windows EXE 自动启动冒烟");
-    expect(roadmapEn).toContain("CodeQL");
-    expect(roadmapEn).toContain("SBOM");
-    expect(roadmapEn).toContain("automated Windows EXE launch smoke");
-  });
-
   it("keeps .github contributing governance links on canonical GitHub blob URLs", () => {
     const contributing = read(".github/CONTRIBUTING.md");
     const githubBlobBase = "https://github.com/MrBaoboer/PayDance/blob/main";
 
     for (const path of [
       "CODE_OF_CONDUCT.md",
-      "docs/MAINTAINERS.md",
-      "docs/GOVERNANCE.md",
-      "docs/MAINTENANCE.md",
+      ".github/SECURITY.md",
+      "docs/DEVELOPMENT.md",
+      "docs/PRODUCT.md",
     ]) {
       expect(contributing).toContain(`${githubBlobBase}/${path}`);
     }
@@ -320,12 +332,13 @@ describe("repository metadata", () => {
     expect(config).not.toContain("PayDance#");
   });
 
-  it("keeps official brand asset documentation Chinese-first with an English mirror", () => {
-    expect(read("docs/brand/official.md")).toContain("# 官方品牌资产");
-    expect(read("docs/brand/official.md")).toContain(
-      "> [English version →](official_EN.md)",
-    );
-    expect(read("docs/brand/official_EN.md")).toContain("# Official Brand Assets");
+  it("keeps official brand asset locations listed in the brand license", () => {
+    for (const file of ["legal/BRAND-ASSETS.md", "legal/BRAND-ASSETS_EN.md"]) {
+      const source = read(file);
+      for (const location of ["src-tauri/icons/", "public/favicon.png", "docs/posters/"]) {
+        expect(source, file).toContain(location);
+      }
+    }
   });
 
   it("keeps maintainer contact guidance on the public GitHub profile email", () => {
@@ -337,8 +350,8 @@ describe("repository metadata", () => {
       ["联系", "Mr.Baoboer"].join(" "),
     ];
 
-    expect(read("docs/SUPPORT.md")).toContain(githubProfile);
-    expect(read("docs/SUPPORT_EN.md")).toContain(githubProfile);
+    expect(read("docs/FAQ.md")).toContain(githubProfile);
+    expect(read("docs/FAQ_EN.md")).toContain(githubProfile);
     expect(read("legal/LEGAL.md")).toContain(githubProfile);
     expect(read("legal/LEGAL_EN.md")).toContain(githubProfile);
 
@@ -352,7 +365,7 @@ describe("repository metadata", () => {
 
   it("keeps platform positioning Windows-focused but community-extensible", () => {
     expect(read("README.md")).toContain(
-      "薪跳 PayDance 是一款桌面实时工资看板。配置薪资与上下班时间后",
+      "薪跳 PayDance 是一款桌面实时工资看板。填好薪资和上下班时间",
     );
     expect(read("docs/README_EN.md")).toContain(
       "PayDance (薪跳) is a desktop real-time salary dashboard.",

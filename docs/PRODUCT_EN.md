@@ -8,34 +8,34 @@ PayDance is a desktop real-time salary dashboard: today's earnings stay on scree
 
 ## Who It Is For
 
-- Windows 11 users who want to see today's earnings on their desktop in real time.
+- People who want today's earnings on their Windows 11 desktop in real time.
 - People who need a tray icon, always-on-top mode, or a mini window.
-- People who want to try the interface and calculations in Web Preview first.
+- People who want to try the interface and calculations in the browser first.
 
 ## Product Boundaries
 
-The following are currently out of scope:
+The following are out of scope for now:
 
 - Keyboard shortcuts / hotkeys
 - Reminders / notifications / alerts
 - Historical timelines, charts, or trend analysis
 - Clock-in, attendance, or timesheet tracking
-- Cloud sync, account systems, or online services
-- Turning mini floating mode into a complex panel
+- Cloud sync, accounts, or online services
+- Turning mini mode into a complex panel
 - Presenting the Web Preview as the full desktop app
 
-New features should directly support viewing today's live earnings.
+New features should directly serve "seeing the money you are earning today".
 
 ## Experience Principles
 
 - The main window shows the full dashboard; the mini window shows only the live amount.
-- Salary rules stay close to real schedules: monthly, daily, and hourly modes, weekly workdays, lunch-break exclusion, and night shifts crossing midnight.
+- Salary rules stay close to real schedules: monthly, daily, and hourly pay, weekly workdays, lunch-break exclusion, and shifts across midnight.
 - Salary and schedule settings stay on the device, with no telemetry and no advertising.
-- Salary details and settings remain secondary to the dashboard.
-- Error messages stay concise, direct, and actionable.
+- Salary details and Settings are low-frequency entries that stay out of the dashboard's way.
+- Error messages are concise, direct, and actionable.
 
 ## Platform Strategy
 
-The official desktop app currently targets Windows 11 and supports a system tray, always-on-top mode, transparent windows, a mini window, and auto-start. Web Preview is deployed on Vercel, with GitHub Pages as a repository mirror.
+The official desktop app targets Windows 11 and supports a system tray, always-on-top mode, transparent windows, a mini window, and launch at startup. The Web Preview is deployed on Vercel, with GitHub Pages as a repository mirror.
 
-This does not exclude macOS, Linux, or other platforms. Community contributors can start by submitting porting proposals with build and validation results. Before an official release, the update and maintenance scope must also be settled.
+This does not exclude macOS, Linux, or other platforms. Community contributors can start with a porting proposal plus build and validation results; before an official release, the update and maintenance scope must also be settled.
