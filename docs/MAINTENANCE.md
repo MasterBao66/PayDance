@@ -36,6 +36,7 @@ CI 按改动文件裁剪 job（`scripts/ci-change-scope.mjs`），两个 gate �
 - 故意不升的依赖写在两处并保持同步：`dependabot.yml` 的 `ignore`，以及 `scripts/repository-metadata.test.js` 里 "keeps the upgrades that are blocked upstream pinned with a reason"。当前两条：
   - `typescript` 锁在 6.x：TS 7 是原生移植版，vue-tsc 解析不到 `tsc.js`，typescript-eslint 拒绝加载。
   - `@types/node` 锁在 24.x，跟随运行时主版本。Node 26 转为 LTS 后，把 CI 各处 `node-version` 推到 26，放开这条封锁并删掉对应测试断言。
+- 新增或移除直接依赖时，同步更新 `legal/THIRD_PARTY_NOTICES.md` 及其英文版；`npm run check:notices` 双向核对，`verify:metadata` 与 `verify:fast` 都包含这一步。
 - 声明区间只是文档，决定安装结果的是 `package-lock.json`。调整 `^` 下限以锁定并验证过的版本为准；`@tauri-apps/*` 与 Rust 侧 crate 配套，下限过旧会让人误以为老 IPC 接口仍受支持。
 
 ## 工具链

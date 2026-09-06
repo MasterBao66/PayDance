@@ -36,6 +36,7 @@ CI trims jobs by changed files (`scripts/ci-change-scope.mjs`), and both gates c
 - Upgrades deliberately held back live in two places that must stay in sync: the `ignore` block in `dependabot.yml`, and the test "keeps the upgrades that are blocked upstream pinned with a reason" in `scripts/repository-metadata.test.js`. Two entries today:
   - `typescript` stays on 6.x: TypeScript 7 is the native port, vue-tsc cannot resolve `tsc.js` from it, and typescript-eslint refuses to load.
   - `@types/node` stays on 24.x to track the runtime major. Once Node 26 reaches LTS, move every CI `node-version` to 26, lift this block, and drop the matching test assertion.
+- When adding or removing a direct dependency, update `legal/THIRD_PARTY_NOTICES.md` and its English mirror; `npm run check:notices` compares both directions and runs inside `verify:metadata` and `verify:fast`.
 - Declared ranges are documentation; the committed `package-lock.json` decides installs. When raising a `^` floor, follow the locked and verified version. `@tauri-apps/*` moves in lockstep with the Rust crates, and a stale floor suggests an old IPC surface is still supported.
 
 ## Toolchain

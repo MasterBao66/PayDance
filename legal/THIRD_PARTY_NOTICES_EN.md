@@ -2,11 +2,7 @@
 
 > [中文版 →](THIRD_PARTY_NOTICES.md)
 
-This file lists PayDance's direct dependencies and bundled assets. Each is governed by its own license terms.
-
-Direct dependencies are defined in `package.json` and `src-tauri/Cargo.toml`. For the full transitive set, see `package-lock.json`, `src-tauri/Cargo.lock`, and the SPDX SBOM attached to every release.
-
-`npm run check:notices` compares direct dependencies with this file in both directions. Update both language versions whenever a dependency is added or removed.
+This file lists PayDance's direct dependencies and bundled fonts. Each is governed by its own license terms. Direct dependencies are defined in `package.json` and `src-tauri/Cargo.toml`; for the full transitive set, see `package-lock.json`, `src-tauri/Cargo.lock`, and the SPDX SBOM attached to every release.
 
 ## npm runtime dependencies
 

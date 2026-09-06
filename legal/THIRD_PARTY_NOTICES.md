@@ -2,11 +2,7 @@
 
 > [English version →](THIRD_PARTY_NOTICES_EN.md)
 
-本文件列出 PayDance 的直接依赖和捆绑素材，各项均受其自身许可条款约束。
-
-直接依赖以 `package.json` 和 `src-tauri/Cargo.toml` 为准。完整传递依赖见 `package-lock.json`、`src-tauri/Cargo.lock`，以及每个 Release 附带的 SPDX SBOM。
-
-`npm run check:notices` 会双向核对直接依赖与本文件；新增或移除依赖时，必须同步更新中英文清单。
+本文件列出 PayDance 的直接依赖和捆绑字体，各项均受其自身许可条款约束。直接依赖以 `package.json` 和 `src-tauri/Cargo.toml` 为准；完整传递依赖见 `package-lock.json`、`src-tauri/Cargo.lock`，以及每个 Release 附带的 SPDX SBOM。
 
 ## npm 运行时依赖
 

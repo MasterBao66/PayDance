@@ -320,12 +320,14 @@ describe("repository metadata", () => {
     expect(config).not.toContain("PayDance#");
   });
 
-  it("keeps official brand asset documentation Chinese-first with an English mirror", () => {
-    expect(read("docs/brand/official.md")).toContain("# 官方品牌资产");
-    expect(read("docs/brand/official.md")).toContain(
-      "> [English version →](official_EN.md)",
+  it("keeps brand asset documentation Chinese-first with an English mirror", () => {
+    expect(read("legal/BRAND-ASSETS.md")).toContain("# 品牌与素材许可");
+    expect(read("legal/BRAND-ASSETS.md")).toContain(
+      "> [English version →](BRAND-ASSETS_EN.md)",
     );
-    expect(read("docs/brand/official_EN.md")).toContain("# Official Brand Assets");
+    expect(read("legal/BRAND-ASSETS.md")).toContain("`src-tauri/icons/`");
+    expect(read("legal/BRAND-ASSETS_EN.md")).toContain("# Brand and Asset Licensing");
+    expect(read("legal/BRAND-ASSETS_EN.md")).toContain("`src-tauri/icons/`");
   });
 
   it("keeps maintainer contact guidance on the public GitHub profile email", () => {
