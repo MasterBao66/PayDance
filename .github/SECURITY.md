@@ -17,7 +17,7 @@
 请不要通过公开 Issue 报告安全漏洞，改用以下任一私下渠道：
 
 - **GitHub 安全通告**（推荐）：在 [Security Advisories](https://github.com/MrBaoboer/PayDance/security/advisories/new) 提交
-- **电子邮件**：使用 [作者 GitHub 首页](https://github.com/MrBaoboer) 公示的邮箱，主题注明 `[SECURITY]`
+- **电子邮件**：使用[作者 GitHub 首页](https://github.com/MrBaoboer)公示的邮箱，主题注明 `[SECURITY]`
 
 报告中请包含漏洞描述、复现步骤、受影响版本，以及你已发现的缓解措施。
 
@@ -33,13 +33,3 @@
 薪资、工作时间与偏好设置只保存在本机应用数据目录的 `salary-settings.json`，不会发送到远程服务器。该文件含有个人信息，不要对外分享。
 
 任何公开渠道都不要粘贴薪资数据、配置文件、日志，以及私钥、签名密钥等凭据。
-
-## 签名密钥泄露
-
-若 Tauri 更新签名密钥发生泄露：
-
-1. 立即撤销已泄露的密钥
-2. 生成新的密钥对
-3. 用新公钥更新 `tauri.conf.json`
-4. 发布用新密钥签名的版本
-5. 旧版本将无法再通过自动更新升级，用户需手动下载
