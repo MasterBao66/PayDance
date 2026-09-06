@@ -33,13 +33,3 @@ Include a description of the vulnerability, steps to reproduce, the affected ver
 Salary figures, work schedules, and preferences stay in `salary-settings.json` under the local app data directory and are never sent to a remote server. That file contains personal information, so keep it private.
 
 Do not paste salary data, configuration files, logs, private keys, or signing keys into any public channel.
-
-## Signing Key Compromise
-
-If the Tauri updater signing key is compromised:
-
-1. Revoke the compromised key immediately
-2. Generate a new key pair
-3. Update `tauri.conf.json` with the new public key
-4. Ship a new release signed with the new key
-5. Earlier releases can no longer auto-update; users must download manually

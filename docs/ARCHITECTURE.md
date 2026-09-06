@@ -61,4 +61,4 @@ flowchart LR
 - 托盘和便携版更新的实现留在独立 Rust 模块，不回填到 `src-tauri/src/lib.rs`。
 - `src/architecture-size.test.ts` 锁定 `OnboardingPanel.vue`、`SettingsPanel.vue`、`src/lib/salary.ts`、`web-preview.css` 和 `lib.rs` 的行数上限；新增逻辑拆到子模块，不要撑大这几个文件。
 
-界面改动遵循 [设计规范](DESIGN.md)。发布和持久化规则见[维护约定](MAINTENANCE.md)。
+界面改动遵循[设计规范](DESIGN.md)；持久化、推送和发布规则见[维护约定](MAINTENANCE.md)；验证流程见 [Web Preview QA](web-preview-qa.md) 与[桌面端冒烟清单](desktop-smoke-checklist.md)。

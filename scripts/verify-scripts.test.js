@@ -113,8 +113,8 @@ describe("verification scripts", () => {
     expect(releaseWorkflowScript).toContain("release-manifest.json");
     expect(releaseWorkflowScript).toContain("assertTagDoesNotExist");
 
-    expect(readRoot(".github/CONTRIBUTING.md")).toContain("npm run push:main");
-    expect(readRoot("docs/CONTRIBUTING_EN.md")).toContain("npm run push:main");
+    expect(readRoot("docs/MAINTENANCE.md")).toContain("npm run push:main");
+    expect(readRoot("docs/MAINTENANCE_EN.md")).toContain("npm run push:main");
   });
 
   it("keeps Rust dependency governance explicit and warning-free", () => {

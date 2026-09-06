@@ -5,9 +5,8 @@
 ## Before You Start
 
 - Windows 11 is the release and validation baseline for the desktop app.
-- Use Node.js 24, Rust stable, and npm.
-- Desktop development also requires the [Tauri prerequisites for Windows](https://v2.tauri.app/start/prerequisites/): Microsoft C++ Build Tools and WebView2.
-- Read the [Product Boundaries](PRODUCT_EN.md) first. Use the [Architecture and Change Map](ARCHITECTURE_EN.md) to find the relevant code.
+- Use Node.js 24, Rust stable, and npm. Desktop development also requires the [Tauri prerequisites for Windows](https://v2.tauri.app/start/prerequisites/): Microsoft C++ Build Tools and WebView2.
+- Read the [Product Boundaries](PRODUCT_EN.md) first. Use the [Architecture and Change Map](ARCHITECTURE_EN.md) to find the relevant code; UI changes follow the [design guide](DESIGN.md), which is Chinese-only.
 
 Install dependencies, then start either the desktop app or Web Preview:
 
@@ -16,6 +15,8 @@ npm ci
 npm run tauri dev # Desktop app
 npm run dev:web   # Web Preview
 ```
+
+If PowerShell garbles Chinese text, run `npm run setup:encoding`. It writes UTF-8 settings into your PowerShell profile and changes the global git encoding configuration.
 
 ## Confirm the Scope
 
@@ -47,8 +48,6 @@ Ordinary contributions only need a DCO sign-off; no CLA is required upfront.
 
 Every non-merge commit must contain a `Signed-off-by:` line whose email matches the commit author. Use `git commit -s` to add it; CI checks each commit.
 
-The only exception is a dependency-update pull request opened by Dependabot itself: those commits only rewrite version numbers and hashes, carry no human authorship to certify, and are confined to `package.json`, `package-lock.json`, `src-tauri/Cargo.*`, and `.github/workflows/*.yml`. Bot commits that reach beyond those paths, and commits a person adds to the same branch, still need a sign-off.
-
 Code contributions enter the project under [AGPL-3.0-only](../LICENSE) with [additional terms under AGPL Section 7](../legal/ADDITIONAL_TERMS_EN.md). Original documentation enters under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) unless otherwise noted. By contributing, you confirm that you have the right to submit the material and accept the applicable project license.
 
 A maintainer will request the [Contributor License Agreement (CLA)](../legal/CLA_EN.md) before merge only when a contribution is needed for commercial, OEM, or other non-AGPL licensing. A DCO sign-off does not sign the CLA.
@@ -78,20 +77,9 @@ cargo test
 
 For dependency or security changes, also run `npm audit --audit-level=high`. Rust dependency changes additionally require `cargo audit` and `cargo deny check`.
 
-## Maintainer Workflow
-
-Run `npm run verify:push` to check pending changes without pushing, or `npm run push:main` to push to `main`; `push:main` requires an authenticated GitHub CLI (`gh auth login`). Before a release, run `npm run verify:release`. It depends on these local tools, whose versions must match the ones pinned in CI — otherwise the local audit result does not count:
-
-```powershell
-cargo install cargo-audit --version 0.22.2 --locked
-cargo install cargo-deny --version 0.20.2 --locked
-```
-
-See [Maintenance](MAINTENANCE_EN.md) for the release process and toolchain alignment.
-
 ## Related Policies
 
 - [Code of Conduct](CODE_OF_CONDUCT_EN.md)
 - [Maintainers](MAINTAINERS_EN.md)
 - [Governance](GOVERNANCE_EN.md)
-- [Maintenance](MAINTENANCE_EN.md)
+- [Maintenance](MAINTENANCE_EN.md): the maintainer's push, dependency, and release workflow
